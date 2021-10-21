@@ -1,0 +1,48 @@
+[
+  {
+    "type": "Program",
+    "name": "Workers Retreat",
+    "time": "18:00:00",
+    "date": "Sept 30, 2021",
+    "host": "Pst Jude Eke",
+    "guest": [],
+    "status": "Active",
+    "description": "A Day of Training and Empowerment",
+    "test": "March 10,2022 03:09:5"
+  },
+  {
+    "type": "Program",
+    "name": "Too Hot To Be Hurt",
+    "time": "11:59:00",
+    "date": "Dec 4, 2021",
+    "host": "Pst Jude Eke",
+    "guest": ["Pst Cyril Levi", "Pst Evans Smith"],
+    "status": "Active",
+    "description": "A Night To Remember!",
+    "test": "Dec 10,2021 23:59:5"
+  },
+
+  {
+    "type": "Weekly Activity",
+    "name": "Sunday Worship Service",
+    "time": "09:00:00",
+    "date": "Dec 17, 2021",
+    "host": "Pst Jude Eke",
+    "guest": [],
+    "status": "Active",
+    "description": "Worship Service",
+    "test": "Feb 10,2024 20:29:5"
+  },
+
+  {
+    "type": "Program",
+    "name": "Youth Day: Blissful Age",
+    "time": "10:30:59",
+    "date": "Jan 13, 2022",
+    "host": "Pst Jude Eke",
+    "guest": [],
+    "status": "Active",
+    "description": "Alive for christ!",
+    "test": "March 10,2022 03:09:5"
+  }
+]
