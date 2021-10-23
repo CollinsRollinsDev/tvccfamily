@@ -25,6 +25,7 @@ import AddEvent from "./components/Events/AddEvent.js";
 import UpdateNote from "./components/Landing/Nested/UpdateNote.js";
 import Profile_Settings from "./components/Profile_Seetings/Profile_Settings.js";
 import ReadNotifications from "./components/Notification/ReadNotification";
+import Location from "./components/Landing/Nested/Location.js";
 
 export default function App() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
         {/* <AddEvent /> */}
         {/* <UpdateNote/> */}
         <Index />
+        {/* <Location />         */}
         {/* <ReadNotifications /> */}
         {/* <Register /> */}
         {/* <Profile_Settings /> */}

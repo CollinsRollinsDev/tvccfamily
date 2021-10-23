@@ -63,25 +63,34 @@ const Notification = ({navigation}) => {
     fetchNotitifications()
   }, [])
 
-  const handlePress = async(heading, sender, message) => {
+  const handlePress = async(heading, sender, message, id) => {
     let currentNotification = {
                     heading,
                     sender,
                     message
                   }
-
     await dispatch(setCurrentNotification(currentNotification))
+    // set notification to read!
+    try {
+      const res = await fetch(`http://192.168.43.37:8080/notifications/readnotification?id=${userDetails.id}&notificationId=${id}`)
+      const data = await res.json();
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   const notify = notifications.map((notification, index) => {
     return(
       <TouchableOpacity onPress={async() => {
-
-                  await handlePress(notification.heading, notification.sender, notification.message);
+                  await handlePress(notification.heading, notification.sender, notification.message, notification._id);
                     navigation.push("ReadNotifications");
                 }} key={index} style={styles.card}>
         <Text style={styles.heading}>{notification.heading}</Text>
         <Text style={styles.message}>{notification.message.substring(0, 70) + "..."}</Text>
+        {
+          notification.isRead == false ? <View style={styles.isReadDot}></View> : null
+        }
     </TouchableOpacity>
     )
   })
@@ -131,5 +140,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
       },
+      isReadDot:{
+        height: 10,
+        width:10,
+        borderRadius: 10,
+        backgroundColor: 'red',
+        position: 'absolute',
+        top: '-5%',
+        right: 0,
+      }
       
 })

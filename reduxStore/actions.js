@@ -9,10 +9,7 @@ export const SET_CURRENT_MINISTERING = "SET_CURRENT_MINISTERING";
 export const SET_CURRENT_POSTBODY = "SET_CURRENT_POSTBODY";
 export const SET_USER_DETAILS = "SET_USER_DETAILS";
 export const SET_UPDATE_TAB_SWITCH = "SET_UPDATE_TAB_SWITCH";
-
 export const SET_Current_Notification = "SET_Current_Notification";
-
-
 
 export let setCurrentNotification = (payload) => (dispatch) => {
   dispatch({

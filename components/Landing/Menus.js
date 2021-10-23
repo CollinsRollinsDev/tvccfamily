@@ -35,15 +35,15 @@ const Menus = ({navigation}) => {
             <Text style={styles.content}>About</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.menu}>
+            <TouchableOpacity onPress={() => navigation.push("Location")} style={styles.menu}>
             <FontAwesome5 name={'map-marker-alt'} size={18} color={'white'}/>
                 <Text style={styles.content}>Location</Text>
             </TouchableOpacity>
-
+{/* 
             <TouchableOpacity style={styles.menu}>
             <FontAwesome5 name={'book-reader'} size={18} color={'white'}/>
                 <Text style={styles.content}>Word Bliss</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity onPress={() => navigation.push("Notes")} style={styles.menu}>
             <FontAwesome5 name={'sticky-note'} size={18} color={'white'}/>
@@ -55,10 +55,10 @@ const Menus = ({navigation}) => {
                 <Text style={styles.content}>Bible</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.menu}>
+            {/* <TouchableOpacity style={styles.menu}>
             <FontAwesome5 name={'play'} size={18} color={'white'}/>
                 <Text style={styles.content}>Sermon/Word of God</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity onPress={() => navigation.push("Event")}  style={styles.menu}>
             <FontAwesome5 name={'calendar-check'} size={18} color={'white'}/>

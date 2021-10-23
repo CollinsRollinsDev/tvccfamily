@@ -28,6 +28,7 @@ import Profile_Settings from "../Profile_Seetings/Profile_Settings";
 import TabNavigator from "./TabNavigator";
 import Notification from '../Notification/Notification'
 import ReadNotifications from "../Notification/ReadNotification";
+import Location from "./Nested/Location";
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +52,7 @@ const Index = () => {
             <Stack.Screen name="Profile" component={Profile_Settings} options={{ headerShown: false }}/>
             <Stack.Screen name="Notification" component={Notification} options={{ headerShown: false }}/>
             <Stack.Screen name="ReadNotifications" component={ReadNotifications} options={{ headerShown: false }}/>
+            <Stack.Screen name="Location" component={Location} options={{ headerShown: false }}/>
         </Stack.Navigator>
     </NavigationContainer>
     
