@@ -79,7 +79,7 @@ const Notes = ({navigation}) => {
 
 
   const fetchNote = async() => {
-    const res = await fetch(`http://192.168.43.37:8080/notes?id=${userDetails.id}`);
+    const res = await fetch(`http://192.168.43.49:8080/notes?id=${userDetails.id}`);
     const data = await res.json();
     if(data.success === true){
       setNotes(data.response.reverse())
@@ -110,7 +110,7 @@ const Notes = ({navigation}) => {
         text: "Yes",
         onPress: async() =>{
 
-          const res = await fetch("http://192.168.43.37:8080/notes", {
+          const res = await fetch("http://192.168.43.49:8080/notes", {
             body: JSON.stringify({
               userId: userId,
               postId: postId

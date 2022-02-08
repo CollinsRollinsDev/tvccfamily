@@ -29,6 +29,8 @@ const Register = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState();
   const [btnMsg, setBtnMsg] = useState("Create My Account");
   const [isExco, setIsExco] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [code, setCode] = useState();
 
   const deptToggle =
     userRole == "worker" ? (
@@ -53,7 +55,94 @@ const Register = ({ navigation }) => {
       </View>
     ) : null;
 
+    const validateEmail = async() => {
+      if (
+        !firstName ||
+        !lastName ||
+        !phoneNumber ||
+        !userRole ||
+        userRole == "" ||
+        !emailAddress ||
+        churchBranch == ''
+      ){
+        Alert.alert(
+          `ERROR!!!`,
+          `It seems you are mising something. Please check the information provided and try again`,
+          [
+            //   {
+            //     text: "Cancel",
+            //     onPress: () => console.log("Cancel Pressed"),
+            //     style: "cancel"
+            //   },
+            { text: "OK", onPress: () => console.log("OK Pressed") },
+          ]
+        );
+        return;
+      }
+      if (password !== confirmPassword) {
+        Alert.alert(`ERROR!!!`, `Sorry, mismatched credentials!`, [
+          //   {
+          //     text: "Cancel",
+          //     onPress: () => console.log("Cancel Pressed"),
+          //     style: "cancel"
+          //   },
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+        ]);
+        return;
+      }
+      try {
+        setBtnMsg("Registering, please wait...");
+        const res = await fetch("http://192.168.43.49:8080/validateemail", {
+          body: JSON.stringify({
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phoneNumber,
+            userRole: userRole,
+            password: password,
+            churchBranch: churchBranch,
+            emailAddress: emailAddress,
+            userDepartment:
+              userRole == "member"
+                ? (userDepartment = null)
+                : (userDepartment = {
+                    exco: isExco,
+                    deptName: userDepartment,
+                    churchBranch,
+                  }),
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+        });
+        const data = await res.json()
+        if(data.message !== 'message is on its way!'){
+          console.log(data.message)
+            // setSignupbtnEnabler(false)
+            setBtnMsg("Sign Up")
+            alert(data.message)
+           return;
+        } 
+        setShowConfirm(true)
+        setBtnMsg("Proceed to sign up")
+        return 
+
+      } catch (error) {
+        
+      }
+    }
+
   const handleSubmit = async () => {
+    if(!code){
+      Alert.alert(
+        `ERROR!!!`,
+        `Input Code And Try Again.`,
+        [
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+        ]
+      );
+      return;
+    }
     if (
       !firstName ||
       !lastName ||
@@ -77,6 +166,7 @@ const Register = ({ navigation }) => {
           { text: "OK", onPress: () => console.log("OK Pressed") },
         ]
       );
+      return;
     } else {
       if (password !== confirmPassword) {
         Alert.alert(`ERROR!!!`, `Sorry, mismatched credentials!`, [
@@ -87,12 +177,13 @@ const Register = ({ navigation }) => {
           //   },
           { text: "OK", onPress: () => console.log("OK Pressed") },
         ]);
+        return;
       } else {
 
           try {
             
         setBtnMsg("Registering, please wait...");
-        const res = await fetch("http://192.168.43.37:8080/signup", {
+        const res = await fetch(`http://192.168.43.49:8080/signup?code=${code}`, {
           body: JSON.stringify({
             firstName: firstName,
             lastName: lastName,
@@ -107,6 +198,7 @@ const Register = ({ navigation }) => {
                 : (userDepartment = {
                     exco: isExco,
                     deptName: userDepartment,
+                    churchBranch,
                   }),
           }),
           headers: {
@@ -117,24 +209,66 @@ const Register = ({ navigation }) => {
 
         const result = await res.json();
 
-        Alert.alert(`CONGRATULATIONS!!!`, `${JSON.stringify(result.message)}`, [
+        if (result.success === true) {
+          //  router.push("/login")
+          Alert.alert(`CONGRATULATIONS!!!`, `${JSON.stringify(result.message)}`, [
+            {
+              text: "OK",
+              onPress: () =>
+                navigation.replace("Login")
+            },
+          ]);
+          setBtnMsg("Login success");
+          return;
+        }
+        Alert.alert(`ERROR!!!`, `${JSON.stringify(result.message)}`, [
           {
             text: "OK",
             onPress: () =>
-              navigation.push("Login")
+              console.log('')
           },
         ]);
-        if (result.success === true) {
-          //  router.push("/login")
-          setBtnMsg("Login success");
-        }
+        setBtnMsg("Proceed to sign up");
+        return;
           } catch (error) {
+            Alert.alert(`ERROR!!!`, `Internal Server Error. Please try again later.`, [
+              {
+                text: "OK",
+                onPress: () =>
+                  console.log('')
+              },
+            ]);
+            setShowConfirm(false);
               setBtnMsg("Sign Up");
               console.log(error)
+
           }
       }
     }
   };
+
+  const showConfirmArea = (
+    <View style={styles.confirmArea}>
+         <Text style={styles.info}>
+            {" "}
+              One more step, Check your inbox and put code here.
+          </Text>
+          <TextInput
+            onChangeText={(e) => setCode(e)}
+            style={styles.confirmInput}
+            keyboardType='numeric'
+            underlineColorAndroid='transparent'
+            placeholder="What's the code?"
+          />
+           <TouchableOpacity onPress={handleSubmit} style={styles.Confirmbtn}>
+            <Text style={styles.ConfirmbtnText}>{btnMsg}</Text>
+          </TouchableOpacity>
+    </View>
+  )
+
+  if(showConfirm){
+    return showConfirmArea
+  }
 
   return (
     <ScrollView>
@@ -201,7 +335,7 @@ const Register = ({ navigation }) => {
             style={styles.input}
             placeholder="Confirm Password"
           />
-          <TouchableOpacity onPress={handleSubmit} style={styles.btn}>
+          <TouchableOpacity onPress={validateEmail} style={styles.btn}>
             <Text style={styles.btnText}>{btnMsg}</Text>
           </TouchableOpacity>
 
@@ -289,5 +423,33 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     color: "white",
+  },
+  confirmArea:{
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#3464eb",
+    minHeight: "100%",
+    marginBottom: 50,
+  },
+  confirmInput:{
+    backgroundColor: "white",
+    width: "80%",
+    height: 40,
+    marginTop: 40,
+    paddingLeft: 10,
+    borderRadius: 10,
+  },
+  ConfirmbtnText:{
+    fontSize: 17,
+    color: "black",
+  },
+  Confirmbtn:{
+    backgroundColor: "white",
+    borderRadius: 10,
+    width: "80%",
+    height: 40,
+    justifyContent: "center",
+    marginTop: 40,
+    alignItems: "center",
   },
 });

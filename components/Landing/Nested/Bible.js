@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "../../Header/Header";
 // import { SearchBar } from 'react-native-elements';
 import { Picker } from "@react-native-picker/picker";
@@ -11,8 +11,11 @@ import {
   setCurrentVerse,
   setCurrentScripture,
 } from "../../../reduxStore/actions";
+import Slider from 'react-slick'
+import Slick from 'react-native-slick';
 
 import {
+  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -32,6 +35,18 @@ import useSafeState from "react-use-safe-state";
 const updateSearch = () => {};
 
 const Bible = ({ navigation }) => {
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 7,
+    slidesToScroll: 7,
+    speed: 300,
+    // nextArrow: <SampleNextArrow />,
+    // prevArrow: <SamplePrevArrow />,
+}
+const slider = useRef(null)
+
   const { currentBook, currentChapter, currentVerse, currentScripture } =
     useSelector((state) => state.useTheReducer);
   // const state = useSelector(state => state.state)
@@ -150,7 +165,7 @@ const Bible = ({ navigation }) => {
   return (
     <View style={styles.body}>
       <Header name="Bible" leftSide="Search" />
-
+    
       <View style={styles.top}>
         <TextInput
           style={styles.input}
@@ -159,6 +174,28 @@ const Bible = ({ navigation }) => {
           placeholder="Search Here..."
         />
       </View>
+
+          {/* <Slider 
+          // ref={slider} 
+          {...settings}>
+                        <Text>i am one</Text>
+                        <Text>i am two</Text>
+                        <Text>i am three</Text>
+                    </Slider> */}
+
+      {/* <Slick style={styles.wrapper} showsButtons={false} showsPagination={false}>
+        <View style={styles.slide1}>
+          <Text style={styles.text}>Hello Slick</Text>
+        </View>
+        <View style={styles.slide2}>
+          <Text style={styles.text}>Beautiful</Text>
+        </View>
+        <View style={styles.slide3}>
+          <Text style={styles.text}>And simple</Text>
+        </View>
+      </Slick> */}
+
+                    {/* TODO: stop here */}
 
       <SelectTestament setTestamentPicked={setTestamentPicked} />
 
@@ -269,6 +306,8 @@ const Bible = ({ navigation }) => {
               <Text style={styles.verseDecleartion}>Verses</Text>
             ) : null}
           <ScrollView>
+            {/* TODO: to modify soon */}
+      
             <View style={styles.chapterArea}>
               {displayChapters ? (
                 <FlatList

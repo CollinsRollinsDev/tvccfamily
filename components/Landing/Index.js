@@ -29,6 +29,7 @@ import TabNavigator from "./TabNavigator";
 import Notification from '../Notification/Notification'
 import ReadNotifications from "../Notification/ReadNotification";
 import Location from "./Nested/Location";
+import Payment from "../Payment/Payment";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +45,7 @@ const Index = () => {
             <Stack.Screen name="ReadPage" component={ReadPage} options={{ headerShown: false }}/>
             <Stack.Screen name="Event" component={Event} options={{ headerShown: false }}/>
             <Stack.Screen name="Notes" component={Notes} options={{ headerShown: false }}/>
+            <Stack.Screen name="Payment" component={Payment} options={{ headerShown: false }}/>
             <Stack.Screen name="UpdateNote" component={UpdateNote} options={{ headerShown: false }}/>
             <Stack.Screen name="Note" component={Note} options={{ headerShown: false }}/>
             <Stack.Screen name="AddNote" component={AddNote} options={{ headerShown: false }}/>

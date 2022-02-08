@@ -53,7 +53,7 @@ const HomePage = ({ navigation }) => {
             {userDetails.firstName} {userDetails.lastName}
           </Text>
           <View style={styles.churchText}>
-            <Text style={styles.churchName}>Truevine Christian Center</Text>
+            <Text style={styles.churchName}>Truevine Christian Centre</Text>
             <Text style={styles.churchSlogan}>Mount of Grace and Glory</Text>
           </View>
 

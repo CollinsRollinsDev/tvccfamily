@@ -74,7 +74,7 @@ const Event = ({ navigation }) => {
         {
           text: "Yes",
           onPress: async () => {
-            const res = await fetch("http://192.168.43.37:8080/event", {
+            const res = await fetch("http://192.168.43.49:8080/event", {
               body: JSON.stringify({
                 id: id,
               }),
@@ -125,7 +125,7 @@ const Event = ({ navigation }) => {
           text: "Yes",
           onPress: async () => {
             // console.log(id)
-            const res = await fetch("http://192.168.43.37:8080/event", {
+            const res = await fetch("http://192.168.43.49:8080/event", {
               body: JSON.stringify({
                 id: id,
               }),
@@ -419,7 +419,7 @@ const Event = ({ navigation }) => {
     : null;
 
   const getEvent = async () => {
-    const res = await fetch("http://192.168.43.37:8080/event");
+    const res = await fetch("http://192.168.43.49:8080/event");
     const data = await res.json();
     setEvents(data.response);
   };
@@ -436,8 +436,6 @@ const Event = ({ navigation }) => {
   const isExco = userDetails.userDepartment.filter(dept => {
       return dept.exco === true
   })
-
-  console.log(isExco)
 
   return (
     <View style={styles.body}>

@@ -47,7 +47,7 @@ const Login = ({ navigation }) => {
       ]);
     } else {
       setBtnMsg("Authenticating...");
-      const res = await fetch("http://192.168.43.37:8080/signin", {
+      const res = await fetch("http://192.168.43.49:8080/signin", {
         body: JSON.stringify({
           emailAddress: emailAddress,
           password: password,
@@ -71,7 +71,8 @@ const Login = ({ navigation }) => {
         Alert.alert(
           `ACCESS GRANTED!!!`,
           `Welcome ${user_data.firstName} ${user_data.lastName}`,
-          [{ text: "OK", onPress: () => navigation.push("TabNavigator") }]
+          [{ text: "OK", onPress: () => navigation.replace("TabNavigator") }]
+          // [{ text: "OK", onPress: () => navigation.push("TabNavigator") }]
         );
       } else {
         setBtnMsg("Sign In");

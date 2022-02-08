@@ -36,12 +36,13 @@ const ReadNotifications = ({navigation}) => {
     }, []);
   
     const { userDetails, currentNotification } = useSelector((state) => state.useTheReducer);
+    console.log(currentNotification, "as current notification")
     const dispatch = useDispatch();
     let [notifications, setNotifications] = useState([]);
 
     
   // const fetchNotitifications = async() => {
-  //   const res = await fetch(`http://192.168.43.37:8080/notifications?id=${userDetails.id}`);
+  //   const res = await fetch(`http://192.168.43.49:8080/notifications?id=${userDetails.id}`);
   //   const data = await res.json();
   //   if(data.success === true){
   //     console.log(data.response)
@@ -54,14 +55,25 @@ const ReadNotifications = ({navigation}) => {
   //   }
   // }
 
-//   useEffect(() => {
-//     fetchNotitifications()
-//   }, [])
+  useEffect(() => {
+    // fetchNotitifications()
+    // const existed = currentNotification?.addOns.find(item => {
+    //   if(item.name === 'request signup emai'){
+    //     console.log(item, "as item");
+    //   }
+    // });
+  }, [])
 
 const handleDeny = async() => {
+  let emailToAuth;
   const response = "deny";
+  const existed = await currentNotification?.addOns.filter(item => {
+    if(item.name === 'request signup email'){
+      emailToAuth = item.value;
+    }
+  });
   try {
-    const res = await fetch(`http://192.168.43.37:8080/signuprequestresponse?response=${response}&email=angela@gmail.com`);
+    const res = await fetch(`http://192.168.43.49:8080/signuprequestresponse?response=${response}&email=${emailToAuth}`);
     const data = await res.json();
     if(data.success === true){
       Alert.alert(`SUCCESS!!!`, `${data.message}.`, [
@@ -79,9 +91,15 @@ const handleDeny = async() => {
 }
 
 const handleAccept = async() => {
+  let emailToAuth;
   const response = "accept";
+  const existed = await currentNotification?.addOns.filter(item => {
+    if(item.name === 'request signup email'){
+      emailToAuth = item.value;
+    }
+  });
   try {
-    const res = await fetch(`http://192.168.43.37:8080/signuprequestresponse?response=${response}&email=angela@gmail.com`);
+    const res = await fetch(`http://192.168.43.49:8080/signuprequestresponse?response=${response}&email=${emailToAuth}`);
     const data = await res.json();
     if(data.success === true){
       Alert.alert(`SUCCESS!!!`, `${data.message}.`, [

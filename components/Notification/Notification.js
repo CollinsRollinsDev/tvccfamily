@@ -42,7 +42,7 @@ const Notification = ({navigation}) => {
 
     
   const fetchNotitifications = async() => {
-    const res = await fetch(`http://192.168.43.37:8080/notifications?id=${userDetails.id}`);
+    const res = await fetch(`http://192.168.43.49:8080/notifications?id=${userDetails.id}`);
     const data = await res.json();
     if(data.success === true){
       console.log(data.response)
@@ -63,16 +63,17 @@ const Notification = ({navigation}) => {
     fetchNotitifications()
   }, [])
 
-  const handlePress = async(heading, sender, message, id) => {
+  const handlePress = async(heading, sender, message, id, addOns) => {
     let currentNotification = {
                     heading,
                     sender,
-                    message
+                    message,
+                    addOns
                   }
     await dispatch(setCurrentNotification(currentNotification))
     // set notification to read!
     try {
-      const res = await fetch(`http://192.168.43.37:8080/notifications/readnotification?id=${userDetails.id}&notificationId=${id}`)
+      const res = await fetch(`http://192.168.43.49:8080/notifications/readnotification?id=${userDetails.id}&notificationId=${id}`)
       const data = await res.json();
     } catch (error) {
       console.log(error);
@@ -83,7 +84,7 @@ const Notification = ({navigation}) => {
   const notify = notifications.map((notification, index) => {
     return(
       <TouchableOpacity onPress={async() => {
-                  await handlePress(notification.heading, notification.sender, notification.message, notification._id);
+                  await handlePress(notification.heading, notification.sender, notification.message, notification._id, notification?.addOns);
                     navigation.push("ReadNotifications");
                 }} key={index} style={styles.card}>
         <Text style={styles.heading}>{notification.heading}</Text>

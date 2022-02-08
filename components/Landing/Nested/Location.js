@@ -34,7 +34,7 @@ const Location = () => {
 
         <Text style={styles.heading}>Lagos Branch</Text>
         <Text style={styles.content}>
-          No 15, Enilolobo Street, Beside Dopemu Market, Agege, Lagos, Nigeria, West-Africa.
+          No 6, Enilolobo Street, Beside Dopemu Market, Agege, Lagos, Nigeria, West-Africa.
         </Text>
 
       </View>

@@ -24,6 +24,7 @@ import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import UpdateNote from "./Nested/UpdateNote";
 import Notification from '../Notification/Notification'
+import Payment from "../Payment/Payment";
 
 // import { createNativeTabNavigator } from "@react-navigation/native-Tab";
 import { NavigationContainer } from "@react-navigation/native";
@@ -55,8 +56,8 @@ const TabNavigator = ({ navigation }) => {
                 iconName = 'calendar-alt';
                 size = focused ? 20 : 17;
                 color = focused ? 'brown' : 'black'
-            } else if(route.name === "Notes"){
-                iconName = 'sticky-note';
+            } else if(route.name === "Payment"){
+                iconName = 'money-check-alt';
                 size = focused ? 20 : 17;
                 color = focused ? 'brown' : 'black'
             } else if(route.name === "Profile"){
@@ -76,17 +77,11 @@ const TabNavigator = ({ navigation }) => {
       })}
       >
             <Tab.Screen name="HomePage" component={HomePage} options={{ headerShown: false }}/>
-            {/* <Tab.Screen name="About" component={About} options={{ headerShown: false }}/> */}
             <Tab.Screen name="Bible" component={Bible} options={{ headerShown: false }}/>
-            {/* <Tab.Screen name="ReadPage" component={ReadPage} options={{ headerShown: false }}/> */}
             <Tab.Screen name="Event" component={Event} options={{ headerShown: false }}/>
-            <Tab.Screen name="Notes" component={Notes} options={{ headerShown: false }}/>
             <Tab.Screen name="Notification" component={Notification} options={{ headerShown: false }}/>
-            {/* <Tab.Screen name="UpdateNote" component={UpdateNote} options={{ headerShown: false }}/> */}
-            {/* <Tab.Screen name="Note" component={Note} options={{ headerShown: false }}/> */}
-            {/* <Tab.Screen name="AddNote" component={AddNote} options={{ headerShown: false }}/> */}
+            <Tab.Screen name="Payment" component={Payment} options={{ headerShown: false }}/>
             <Tab.Screen name="Profile" component={Profile_Settings} options={{ headerShown: false }}/>
-          {/* <Tab.Screen name="Profile" component={Profile_Settings} />{" "} */}
         </Tab.Navigator>
     </>
   );
