@@ -16,6 +16,7 @@ import {
   RefreshControl,
 } from "react-native";
 import Header from "../Header/Header";
+import moment from 'moment'
 // import events from "../../assets/events.json";
 const Event = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -164,13 +165,17 @@ const Event = ({ navigation }) => {
   };
 
   // console.log(userDetails)
-
+  // TODO= might sort out here
   let mappingEvent = events
     ? events.sort(sortFunction).map((event, index) => {
         if (index === 0) {
+          let convertedDate = moment(event.date).format("MMM D YYYY")
+          console.log(convertedDate, "as converted date");
           let stoppageTime = new Date(
-            `${event.date} ${event.hour}:${event.minutes}:${event.seconds}`
+            `${convertedDate} ${event.hour}:${event.minutes}:${event.seconds}`
           ).getTime();
+
+          console.log(stoppageTime, "as stoppage date");
 
           // create static countdown
           let staticDateNow = new Date().getTime();
@@ -245,7 +250,7 @@ const Event = ({ navigation }) => {
               </Text>
 
               <Text style={styles.parentText}>
-                Date: <Text style={styles.childText}>{event.date}</Text>
+                Date: <Text style={styles.childText}>{moment(event.date).format("MMM Do YYYY")}</Text>
               </Text>
 
               <Text style={styles.parentText}>

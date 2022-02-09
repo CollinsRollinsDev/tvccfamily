@@ -120,45 +120,13 @@ const AddEvent = ({ navigation }) => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
 
-  const handleChapterPress = async (event) => {};
-
-  const formatter1 = async () => {
-    if (hour == "00") {
-      setFormattedHour((prevState) => (prevState = "00"));
-      console.log(formattedHour, "as hour");
-    } else if (hour == "12" && format == "AM") {
-      setFormattedHour((prevState) => (prevState = "00"));
-      console.log(formattedHour, "as hour");
-    }
-  };
-
   useEffect(() => {
-    formatter1();
-  }, [hour, formattedHour]);
-
-  useEffect(() => {
-    if (format == "PM" && hour != "12") {
-      let newHour = parseInt(hour) + 12;
-      setFormattedHour((prevState) => (prevState = newHour));
-    } else if (format == "AM" && parseInt(hour) > 12) {
-      let newHour = (parseInt(hour) - 12).toString();
-      setFormattedHour((prevState) => (prevState = newHour));
-      if (hour != "10" || hour != "11") {
-        setFormattedHour((prevState) => (prevState = `0${hour}`));
-      }
-    } else {
-      setFormattedHour(hour);
-      // hour;
-    }
-    console.log(formattedHour, "hour in format place");
-  }, [format]);
-
-  useEffect(() => {
-    setDate(`${month} ${day}, ${year}`);
+    setDate(`${month} ${day} ${year}`);
     
   }, [month, day, year]);
 
   const handleSave = async () => {
+    
     if (allowViewsBy == "all" || allowViewsBy == "worker") {
       if (
         userDetails.accountType === "admin" &&
@@ -206,17 +174,23 @@ const AddEvent = ({ navigation }) => {
         );
       }
     } else {
-      setDate(`${month} ${day}, ${year}`);
+      
+      setDate(`${month} ${day} ${year}`);
+      let allowCreate = false
+    // const result = await userDetails?.userDepartment.find(item => {
+    //   if(item.deptName === allowViewsBy && item.exco === true && churchBranch === item.churchBranch){
+    //     // allowCreate = true;
+    //   } 
+    // })
       const auth = await userDetails.userDepartment.filter((user) => {
         return user.deptName === allowViewsBy;
       });
       console.log("waiting for", auth);
       if (auth.length != 0) {
-        console.log(churchBranch);
-        if (
-          auth[0].exco === true &&
-          userDetails.churchBranch.includes(churchBranch)
-        ) {
+        const result = await userDetails?.userDepartment.find(async(item) => {
+          if(item.deptName === allowViewsBy && item.exco === true && churchBranch === item.churchBranch){
+            // allowCreate = true;
+        
           const res = await fetch("http://192.168.43.49:8080/event", {
             body: JSON.stringify({
               name: name,
@@ -243,7 +217,7 @@ const AddEvent = ({ navigation }) => {
           if (result.success == true) {
             Alert.alert(
               `Event Created!`,
-              `Event with name "${name}" to host on ${date} at ${hour}:${minutes} has been created successfully.`,
+              `Event with name "${name}" to host on ${month} ${day} ${year} at ${hour}:${minutes} has been created successfully.`,
               [{ text: "OK", onPress: () => navigation.push("Event") }]
             );
           } else {
@@ -252,7 +226,9 @@ const AddEvent = ({ navigation }) => {
               { text: "OK", onPress: () => console.log("OK Pressed") },
             ]);
           }
-        } else {
+        
+        } 
+        else {
           // You can not create event here as you are not an exco
           Alert.alert(
             `UNAUTHORIZED!!!`,
@@ -260,6 +236,7 @@ const AddEvent = ({ navigation }) => {
             [{ text: "OK", onPress: () => console.log("OK Pressed") }]
           );
         }
+      })
       } else {
         // Oops! You dont belong to this group
         Alert.alert(`ERROR!!!`, `Opps! You do not belong to this group`, [
