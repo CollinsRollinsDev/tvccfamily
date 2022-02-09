@@ -25,19 +25,45 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 
 const AddEvent = ({ navigation }) => {
-  let date = new Date();
+  // let date = new Date();
+  let [date, setNewDate] = useState(new Date())
   const [dateChoosen, setDate] = useState();
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   const [dateText, setDateText] = useState();
   const [timeText, setTimeText] = useState();
+  const { currentTitle, currentPostBody, currentMinistering, userDetails } =
+  useSelector((state) => state.useTheReducer);
+
+const [name, setName] = useState();
+// const [date, setDate] = useState();
+const [host, setHost] = useState();
+const [day, setDay] = useState("1");
+const [month, setMonth] = useState("Jan");
+const [year, setYear] = useState("2021");
+const [allowViewsBy, setAllowViewsBy] = useState("all");
+const [poster, setPoster] = useState({
+  firstName: userDetails.firstName,
+  lastName: userDetails.lastName,
+  id: userDetails.id,
+});
+const [leaderAccess, setLeaderAccess] = useState();
+let [hour, setHour] = useState("00");
+  const [formattedHour, setFormattedHour] = useState("00");
+  const [minutes, setMinutes] = useState("00");
+  const [seconds, setSeconds] = useState("00");
+  let [format, setFormat] = useState("AM");
+  let [churchBranch, setChurchBranch] = useState("lagos_branch");
+  const [description, setDescription] = useState();
+  const [backupSelectedDate, setBackupSelectedDate] = useState();
 
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
+    selectedDate && setBackupSelectedDate(selectedDate);
+    const currentDate = selectedDate || backupSelectedDate || date
     setShow(Platform.OS === "ios");
-    date = currentDate;
-    // setDate(currentDate)
+    setNewDate(currentDate)
     let tempDate = new Date(currentDate);
+    console.log(tempDate, "as temp date")
     // get month,
     const newMonth = moment(tempDate.getMonth() + 1, "M").format("MMMM");
     setMonth(newMonth);
@@ -75,23 +101,6 @@ const AddEvent = ({ navigation }) => {
     showMode("time");
   };
 
-  const { currentTitle, currentPostBody, currentMinistering, userDetails } =
-    useSelector((state) => state.useTheReducer);
-
-  const [name, setName] = useState();
-  // const [date, setDate] = useState();
-  const [host, setHost] = useState();
-  const [day, setDay] = useState("1");
-  const [month, setMonth] = useState("Jan");
-  const [year, setYear] = useState("2021");
-  const [allowViewsBy, setAllowViewsBy] = useState("all");
-  const [poster, setPoster] = useState({
-    firstName: userDetails.firstName,
-    lastName: userDetails.lastName,
-    id: userDetails.id,
-  });
-  const [leaderAccess, setLeaderAccess] = useState();
-
   useEffect(() => {
     setLeaderAccess(
       allowViewsBy === "ministers_department"
@@ -105,16 +114,6 @@ const AddEvent = ({ navigation }) => {
         : null
     );
   }, [allowViewsBy]);
-
-  // console.log(leaderAccess)
-
-  let [hour, setHour] = useState("00");
-  const [formattedHour, setFormattedHour] = useState("00");
-  const [minutes, setMinutes] = useState("00");
-  const [seconds, setSeconds] = useState("00");
-  let [format, setFormat] = useState("AM");
-  let [churchBranch, setChurchBranch] = useState("AM");
-  const [description, setDescription] = useState();
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -188,9 +187,16 @@ const AddEvent = ({ navigation }) => {
       console.log("waiting for", auth);
       if (auth.length != 0) {
         const result = await userDetails?.userDepartment.find(async(item) => {
+          console.log(item.deptName === allowViewsBy);
+          console.log(item.exco === true);
+          console.log(churchBranch === item.churchBranch);
+          console.log(churchBranch);
+          console.log(item.churchBranch);
           if(item.deptName === allowViewsBy && item.exco === true && churchBranch === item.churchBranch){
             // allowCreate = true;
-        
+            console.log("allowed to create")
+           
+            
           const res = await fetch("http://192.168.43.49:8080/event", {
             body: JSON.stringify({
               name: name,
@@ -229,6 +235,7 @@ const AddEvent = ({ navigation }) => {
         
         } 
         else {
+          console.log("not allowed to create")
           // You can not create event here as you are not an exco
           Alert.alert(
             `UNAUTHORIZED!!!`,
@@ -246,9 +253,14 @@ const AddEvent = ({ navigation }) => {
     }
   };
 
+  useEffect(() => {
+    // console.log(moment(date).format('MMMM Do YYYY, h:mm:ss a'), "currentDate")
+  }, [date]);
+  
+
   return (
     <View style={styles.body}>
-      <Header name="Add a Note" leftSide="Search" />
+      <Header name="Add an Event" leftSide="Search" />
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.info}>Fill in details to add event here</Text>
