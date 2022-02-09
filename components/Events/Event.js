@@ -313,8 +313,9 @@ const Event = ({ navigation }) => {
           return condition
 
         } else {
+          let convertedDate = moment(event.date).format("MMM D YYYY")
           let stoppageTime = new Date(
-            `${event.date} ${event.hour}:${event.minutes}:${event.seconds}`
+            `${convertedDate} ${event.hour}:${event.minutes}:${event.seconds}`
           ).getTime();
 
           // create static countdown
@@ -358,7 +359,7 @@ const Event = ({ navigation }) => {
               </Text>
 
               <Text style={styles.parentText}>
-                Date: <Text style={styles.childText}>{event.date}</Text>
+                Date: <Text style={styles.childText}>{moment(event.date).format("MMM Do YYYY")}</Text>
               </Text>
 
               <Text style={styles.parentText}>
