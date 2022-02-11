@@ -96,6 +96,7 @@ const Register = ({ navigation }) => {
           body: JSON.stringify({
             firstName: firstName,
             lastName: lastName,
+            fullName: `${firstName} ${lastName}`,
             phoneNumber: phoneNumber,
             userRole: userRole,
             password: password,
@@ -187,6 +188,7 @@ const Register = ({ navigation }) => {
           body: JSON.stringify({
             firstName: firstName,
             lastName: lastName,
+            fullName: `${firstName} ${lastName}`,
             phoneNumber: phoneNumber,
             userRole: userRole,
             password: password,

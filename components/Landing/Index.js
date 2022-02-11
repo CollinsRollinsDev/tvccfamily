@@ -30,6 +30,8 @@ import Notification from '../Notification/Notification'
 import ReadNotifications from "../Notification/ReadNotification";
 import Location from "./Nested/Location";
 import Payment from "../Payment/Payment";
+import Admin from "../Admin/Admin";
+import AssignLeader from "../Admin/AssignLeader";
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +51,8 @@ const Index = () => {
             <Stack.Screen name="UpdateNote" component={UpdateNote} options={{ headerShown: false }}/>
             <Stack.Screen name="Note" component={Note} options={{ headerShown: false }}/>
             <Stack.Screen name="AddNote" component={AddNote} options={{ headerShown: false }}/>
+            <Stack.Screen name="Admin" component={Admin} options={{ headerShown: false }}/>
+            <Stack.Screen name="AssignLeader" component={AssignLeader} options={{ headerShown: false }}/>
             <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
             <Stack.Screen name="AddEvent" component={AddEvent} options={{ headerShown: false }}/>
             <Stack.Screen name="Profile" component={Profile_Settings} options={{ headerShown: false }}/>

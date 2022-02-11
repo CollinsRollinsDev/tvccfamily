@@ -75,6 +75,11 @@ const Menus = ({navigation}) => {
                 <Text style={styles.content}>Settings/Profile</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity onPress={() => navigation.push("Admin")} style={styles.menu}>
+            <FontAwesome5 name={'superpowers'} size={18} color={'white'}/>
+                <Text style={styles.content}>Admin</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity onPress={() => {
                   Alert.alert(
                     `Message`,

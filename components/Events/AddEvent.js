@@ -224,7 +224,7 @@ let [hour, setHour] = useState("00");
             Alert.alert(
               `Event Created!`,
               `Event with name "${name}" to host on ${month} ${day} ${year} at ${hour}:${minutes} has been created successfully.`,
-              [{ text: "OK", onPress: () => navigation.push("Event") }]
+              [{ text: "OK", onPress: () => navigation.replace("Event") }]
             );
           } else {
             console.log("else");

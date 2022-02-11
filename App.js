@@ -7,8 +7,9 @@ import {
   Button,
   Linking,
   TextInput,
+  Platform 
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Lunch from "./components/Lunch/Lunch.js";
 import Login from "./components/Auth/Login";
 import HomePage from "./components/Landing/HomePage.js";
@@ -27,7 +28,9 @@ import Profile_Settings from "./components/Profile_Seetings/Profile_Settings.js"
 import ReadNotifications from "./components/Notification/ReadNotification";
 import Location from "./components/Landing/Nested/Location.js";
 
+
 export default function App() {
+
   return (
     <Provider store={Store}>
       <View style={styles.main}>
