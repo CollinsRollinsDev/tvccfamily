@@ -40,7 +40,7 @@ const { currentTitle, currentPostBody, currentMinistering, currentPostId, update
   }
 
   const display = <View style={styles.body}>
-  <Header name="My Note" leftSide="Search" />
+  {/* <Header name="My Note" leftSide="Search" /> */}
   
     <View style={styles.notePreviewContainer}>
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

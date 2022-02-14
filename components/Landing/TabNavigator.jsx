@@ -73,14 +73,18 @@ const TabNavigator = ({ navigation }) => {
                 <FontAwesome5 name={iconName} size={size} color={color}/>
             )
 
-          }
+          },
+          headerMode: 'screen',
+        headerTintColor: 'whitesmoke',
+        headerStyle: { backgroundColor: '#3464eb' },
+          
       })}
       >
             <Tab.Screen name="HomePage" component={HomePage} options={{ headerShown: false }}/>
-            <Tab.Screen name="Bible" component={Bible} options={{ headerShown: false }}/>
-            <Tab.Screen name="Event" component={Event} options={{ headerShown: false }}/>
-            <Tab.Screen name="Notification" component={Notification} options={{ headerShown: false }}/>
-            <Tab.Screen name="Payment" component={Payment} options={{ headerShown: false }}/>
+            <Tab.Screen name="Bible" component={Bible}  options={{ title: "Bible KJV"}}/>
+            <Tab.Screen name="Event" component={Event} options={{ title:"Events"}}/>
+            <Tab.Screen name="Notification" component={Notification} options={{title:"Notifications"}}/>
+            <Tab.Screen name="Payment" component={Payment} options={{title:"Payment"}}/>
             <Tab.Screen name="Profile" component={Profile_Settings} options={{ headerShown: false }}/>
         </Tab.Navigator>
     </>

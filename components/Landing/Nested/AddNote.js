@@ -132,7 +132,7 @@ const { currentTitle, currentPostBody, currentMinistering, userDetails} =
 
   return (
     <View style={styles.body}>
-      <Header name="Add a Note" leftSide="Search" />
+      {/* <Header name="Add a Note" leftSide="Search" /> */}
         <View style={styles.notePreviewContainer}>
         <TextInput onChangeText={(e) => setAddTitle(e)} style={styles.input} placeholder="Title Here...." />
         <TextInput onChangeText={(e) => setAddMinistering(e)} style={styles.input} placeholder="Ministering Here...." />

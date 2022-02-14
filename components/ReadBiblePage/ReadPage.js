@@ -38,7 +38,7 @@ const ReadPage = () => {
 
   return (
     <View style={styles.body}>
-      <Header name={currentBook && currentChapter ? `${currentBook} chapter ${currentChapter}` : "Loading..."} leftSide="Search" />
+      {/* <Header name={currentBook && currentChapter ? `${currentBook} chapter ${currentChapter}` : "Loading..."} leftSide="Search" /> */}
       <ScrollView style={styles.scroll}>
 
         <FlatList
@@ -73,9 +73,9 @@ const styles = StyleSheet.create({
     width: "100%",
     // marginBottom: 100,
   },
-  scroll: {
-    marginBottom: 80
-  },
+  // scroll: {
+  //   marginBottom: 80
+  // },
   scripture: {
     width: "100%",
     color: "black",

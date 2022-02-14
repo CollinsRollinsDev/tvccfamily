@@ -98,7 +98,7 @@ const Notification = ({navigation}) => {
 
     return (
             <View style={styles.bodyPart}>
-            <Header name="Notification" leftSide="" />
+            {/* <Header name="Notification" leftSide="" /> */}
         <ScrollView    refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }

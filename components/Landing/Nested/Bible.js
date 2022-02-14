@@ -164,7 +164,7 @@ const slider = useRef(null)
 
   return (
     <View style={styles.body}>
-      <Header name="Bible" leftSide="Search" />
+      {/* <Header name="Bible" leftSide="Search" /> */}
     
       <View style={styles.top}>
         <TextInput

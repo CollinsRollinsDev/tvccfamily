@@ -39,6 +39,8 @@ const ReadNotifications = ({navigation}) => {
     console.log(currentNotification, "as current notification")
     const dispatch = useDispatch();
     let [notifications, setNotifications] = useState([]);
+    const [acceptBtn, setAcceptBtn] = useState("Approve This Person")
+    const [denyBtn, setDenyBtn] = useState("Deny This Person")
 
     
   // const fetchNotitifications = async() => {
@@ -66,63 +68,119 @@ const ReadNotifications = ({navigation}) => {
 
 const handleDeny = async() => {
   let emailToAuth;
+  let url;
+  let requestDepartment;
+  let churchBranch;
   const response = "deny";
-  const existed = await currentNotification?.addOns.filter(item => {
+  const existed = await currentNotification?.addOns.map(item => {
     if(item.name === 'request signup email'){
       emailToAuth = item.value;
+    } else if(item.name === 'request dept_join email'){
+      emailToAuth = item.value;
+    }
+    if(currentNotification.sender === "Automatic by a user request to join department"){
+      if(item.name === 'request dept_join deptName'){
+        requestDepartment = item.value
+      }
+      if(item.name === 'request dept_join churchbranch'){
+        churchBranch = item.value
+      }
     }
   });
+  const allProcessed = await Promise.all(existed);
+  console.log(requestDepartment, "as requestDepartment")
+  console.log(churchBranch, "as churchBranch")
+  if(currentNotification.sender === "Automatic by a user request to join department"){
+    url = `http://192.168.43.49:8080/responseToDepartmentProposal?response=${response}&email=${emailToAuth}&departmentName=${requestDepartment}&churchBranch=${churchBranch}`
+  } else {
+    url = `http://192.168.43.49:8080/signuprequestresponse?response=${response}&email=${emailToAuth}`
+  }
+ 
   try {
-    const res = await fetch(`http://192.168.43.49:8080/signuprequestresponse?response=${response}&email=${emailToAuth}`);
+    setDenyBtn("Please wait...")
+    const res = await fetch(url);
     const data = await res.json();
     if(data.success === true){
       Alert.alert(`SUCCESS!!!`, `${data.message}.`, [
-        { text: "OK", onPress: () => console.log("OK Pressed") },
+        { text: "OK", onPress: () => navigation.replace("HomePage") },
       ]);
+      setDenyBtn("Done!")
     } else{
       Alert.alert(`ERROR!!!`, `${data.message}.`, [
-        { text: "OK", onPress: () => console.log("OK Pressed") },
+        { text: "OK", onPress: () => navigation.replace("HomePage") },
       ]);
+      setDenyBtn("Deny This Person")
     }
   } catch (error) {
-    console.log("Server or Client error occurred!" + error)
+    setDenyBtn("Deny This Person")
+    Alert.alert(`ERROR!!!`, `An error occured.`, [
+      { text: "OK", onPress: () => navigation.replace("HomePage") },
+    ]);
   }
 
 }
 
 const handleAccept = async() => {
   let emailToAuth;
+  let url;
+  let requestDepartment;
+  let churchBranch;
   const response = "accept";
-  const existed = await currentNotification?.addOns.filter(item => {
+  const existed = await currentNotification?.addOns.map(item => {
     if(item.name === 'request signup email'){
       emailToAuth = item.value;
+    } else if(item.name === 'request dept_join email'){
+      emailToAuth = item.value;
+    }
+    if(currentNotification.sender === "Automatic by a user request to join department"){
+      if(item.name === 'request dept_join deptName'){
+        requestDepartment = item.value
+      }
+      if(item.name === 'request dept_join churchbranch'){
+        churchBranch = item.value
+      }
     }
   });
+  const allProcessed = await Promise.all(existed);
+  console.log(requestDepartment, "as requestDepartment")
+  console.log(churchBranch, "as churchBranch")
+  if(currentNotification.sender === "Automatic by a user request to join department"){
+    url = `http://192.168.43.49:8080/responseToDepartmentProposal?response=${response}&email=${emailToAuth}&departmentName=${requestDepartment}&churchBranch=${churchBranch}`
+  } else {
+    url = `http://192.168.43.49:8080/signuprequestresponse?response=${response}&email=${emailToAuth}`
+  }
+ 
   try {
-    const res = await fetch(`http://192.168.43.49:8080/signuprequestresponse?response=${response}&email=${emailToAuth}`);
+    setAcceptBtn("Please wait...")
+    const res = await fetch(url);
     const data = await res.json();
     if(data.success === true){
       Alert.alert(`SUCCESS!!!`, `${data.message}.`, [
-        { text: "OK", onPress: () => console.log("OK Pressed") },
+        { text: "OK", onPress: () => navigation.replace("HomePage") },
       ]);
+      setAcceptBtn("Done!")
     } 
     else{
       Alert.alert(`ERROR!!!`, `${data.message}.`, [
-        { text: "OK", onPress: () => console.log("OK Pressed") },
+        { text: "OK", onPress: () => navigation.replace("HomePage") },
       ]);
+      setAcceptBtn("Approve This Person")
     }
   } catch (error) {
-    console.log("Server or Client error occurred!" + error)
+    setAcceptBtn("Approve This Person")
+    Alert.alert(`ERROR!!!`, `An error occured.`, [
+      { text: "OK", onPress: () => navigation.replace("HomePage") },
+    ]);
   }
 }
 
 const approveDeny = (
   <View style={styles.responseBox}>
     <TouchableOpacity onPress={handleAccept} style={styles.left}>
-      <Text>Approve This Person</Text>
+      <Text>{acceptBtn}</Text>
     </TouchableOpacity>
     <TouchableOpacity onPress={handleDeny} style={styles.right}>
-      <Text>Deny This Person</Text>
+      <Text>{denyBtn}</Text>
     </TouchableOpacity>
   </View>
 )
@@ -130,7 +188,7 @@ const approveDeny = (
 
     return (
             <View style={styles.bodyPart}>
-            <Header name="My Notifications" leftSide="" />
+            {/* <Header name="My Notifications" leftSide="" /> */}
         <ScrollView    refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
@@ -148,7 +206,7 @@ const approveDeny = (
             </View>
 
             {
-              currentNotification.sender === "Automatic From SignUp" ? approveDeny : null
+              currentNotification.sender === "Automatic From SignUp" || currentNotification.sender === "Automatic by a user request to join department" ? approveDeny : null
             }
 
         </View>

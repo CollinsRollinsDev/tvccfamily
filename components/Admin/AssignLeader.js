@@ -291,6 +291,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#3464eb",
     minHeight: "100%",
     marginBottom: 50,
+    paddingTop:50
   },
   nameSuggestBox: {
     minHeight: 70,

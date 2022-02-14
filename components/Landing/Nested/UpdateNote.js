@@ -104,7 +104,7 @@ const {userDetails, updateTabSwitch, currentPostId} =
   return (
 
         <View style={styles.container}>
-            <Header name="Edit Your Note" leftSide="Search" />
+            {/* <Header name="Edit Your Note" leftSide="Search" /> */}
               <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
               <TextInput defaultValue={currentTitle} onChangeText={(e) => setAddTitle(e)} style={styles.inputArea} placeholder="Title Here...." />
               <TextInput defaultValue={currentMinistering} onChangeText={(e) => setAddMinistering(e)} style={styles.inputArea} placeholder="Ministering Here...." />

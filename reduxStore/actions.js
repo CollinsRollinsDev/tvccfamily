@@ -10,10 +10,18 @@ export const SET_CURRENT_POSTBODY = "SET_CURRENT_POSTBODY";
 export const SET_USER_DETAILS = "SET_USER_DETAILS";
 export const SET_UPDATE_TAB_SWITCH = "SET_UPDATE_TAB_SWITCH";
 export const SET_Current_Notification = "SET_Current_Notification";
+export const SET_IS_NOTIFICATION = "SET_IS_NOTIFICATION";
 
 export let setCurrentNotification = (payload) => (dispatch) => {
   dispatch({
     type: SET_Current_Notification,
+    payload: payload,
+  });
+};
+
+export let setIsNotification = (payload) => (dispatch) => {
+  dispatch({
+    type: SET_IS_NOTIFICATION,
     payload: payload,
   });
 };

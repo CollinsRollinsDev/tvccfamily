@@ -146,7 +146,7 @@ const Notes = ({navigation}) => {
 
   return (
     <View style={styles.body}>
-      <Header name="Notes" leftSide="Search" />
+      {/* <Header name="Notes" leftSide="Search" /> */}
       <ScrollView 
          refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

@@ -18,12 +18,12 @@ import Bible from "./Nested/Bible";
 import ReadPage from '../ReadBiblePage/ReadPage'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-
+import { useSelector, useDispatch } from "react-redux";
 // const Stack = createNativeStackNavigator();
 
 
 const Menus = ({navigation}) => {
-
+  const {isNotification } = useSelector((state) => state.useTheReducer);
     return (
       
 
@@ -66,6 +66,7 @@ const Menus = ({navigation}) => {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.push("Notification")}  style={styles.menu}>
+             {isNotification && <View style={styles.dot}></View>}
             <FontAwesome5 name={'bell'} size={18} color={'white'}/>
                 <Text style={styles.content}>Notifications</Text>
             </TouchableOpacity>
@@ -128,7 +129,17 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        position:'relative'
+      },
+      dot:{
+        height:10,
+        width:10,
+        borderRadius:30,
+        backgroundColor:'red',
+        position:'absolute',
+        top:10,
+        right:10
       },
       content: {
         fontSize: 21,

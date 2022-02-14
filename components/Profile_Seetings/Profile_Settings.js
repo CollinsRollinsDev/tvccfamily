@@ -49,7 +49,8 @@ const Profile_Settings = () => {
   const [password, setPassword] = useState();
   const [showPasswordInput, setShowPasswordInput] = useState(false);
   const [requestingDept, setRequestingDept] = useState();
-
+  const [btnMsg, setBtnMsg] = useState("Proceed")
+  const [churchBranch, setChurchBranch] = useState()
 
   const handleEditDynamic = async () => {
     editableText == "Edit Profile"
@@ -59,6 +60,13 @@ const Profile_Settings = () => {
   };
   const check = userDetails.userDepartment.filter(data => data.deptName === requestingDept)
   const handleSaving = async () => {
+    const isUserBranch = await userDetails?.churchBranch.filter(branch => branch === churchBranch);
+    if(isUserBranch.length === 0){
+      Alert.alert(`Not sent`, `This is not your branch!`, [
+        { text: "OK", onPress: () => console.log("not sent due to user error") },
+      ]);
+      return;
+    }
     if(check.length >= 1){
       Alert.alert(`Not sent`, `You already belong to this group....`, [
         { text: "OK", onPress: () => console.log("not sent due to user error") },
@@ -77,6 +85,7 @@ const Profile_Settings = () => {
           lastName: lastName,
           emailAddress: email,
           phoneNumber: phoneNumber,
+          churchBranch,
           password: password,
           requestingDept: requestingDept == '' ? null : requestingDept
         }),
@@ -92,23 +101,27 @@ const Profile_Settings = () => {
         await AsyncStorage.setItem("userProfile", JSON.stringify(user_data));
         dispatch(setUserDetails(user_data));
         // console.log(user_data)
-        setEditableText("Edit Profile");
+        setEditableText("Cancel Edit");
         setEditable(false);
         setShowPasswordInput(false);
+        Alert.alert(`Done!`, `${data.message}`, [
+          { text: "OK", onPress: () => console.log("done") },
+        ])
+        return;
       }
+      setEditableText("Cancel Edit");
       Alert.alert(`Done!`, `${data.message}`, [
         { text: "OK", onPress: () => console.log("done") },
       ]);
+      return;
     }
     }
-
-    
   };
 
   const currentDepartments = userDetails.userDepartment ? userDetails.userDepartment.map((dept, index) => {
     return (
       <View key={index} style={styles.depts}>
-        <Text style={styles.deptText}>Dept name: {dept.deptName === "media_department" ? 'Media Department' : dept.deptName === "choir_department" ? 'Choir Departmnt' : dept.deptName === "ministers_department" ? 'Ministers Department' : dept.deptName === "ushering_department" ? 'Ushering Department' : null}</Text>
+        <Text style={styles.deptText}>Dept name: {dept.deptName === "media_department" ? 'Media Department' : dept.deptName === "choir_department" ? 'Choir Departmnt' : dept.deptName === "ministers_department" ? 'Ministers Department' : dept.deptName === "ushering_department" ? 'Ushering Department' : dept.deptName === "worker" ? 'Workers' : null}</Text>
         <Text style={styles.deptText}>Exco? {dept.exco === true ? 'true' : 'false'}</Text>
         <Text style={styles.deptText}>Position: {dept.position}</Text>
       </View>
@@ -133,12 +146,12 @@ const Profile_Settings = () => {
             <Text style={styles.editTip}>{editableText}</Text>
           </View>
         </TouchableOpacity>
-        <View style={styles.dp}>
+        {/* <View style={styles.dp}>
           <Image
             style={styles.stretch}
             source={require("../../assets/dp.png")}
           />
-        </View>
+        </View> */}
 
         <ScrollView>
           <View style={styles.formArea}>
@@ -241,13 +254,37 @@ const Profile_Settings = () => {
                   label="Media Department"
                   value="media_department"
                 />
+                 <Picker.Item
+                  label="Workers"
+                  value="worker"
+                />
+              </Picker>
+            </View>
+
+            <View style={styles.roleBox}>
+              <Picker
+                style={styles.role}
+                selectedValue={churchBranch}
+                onValueChange={(itemValue, itemIndex) =>
+                  setChurchBranch(itemValue)
+                }
+              >
+                <Picker.Item label="Which Church Branch?" value="" />
+                <Picker.Item
+                  label="Lagos Branch"
+                  value="lagos_branch"
+                />
+                <Picker.Item
+                  label="HeadQuater Benin"
+                  value="benin_headquater"
+                />
               </Picker>
             </View>
 
             {editable ? (
               <TouchableOpacity onPress={handleSaving}>
                 <View style={styles.customBtn}>
-                  <Text style={styles.customText}>Save Details</Text>
+                  <Text style={styles.customText}>{btnMsg}</Text>
                 </View>
               </TouchableOpacity>
             ) : null}
@@ -262,6 +299,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     backgroundColor: "#3464eb",
+    paddingTop:30
   },
 
   intro: {
@@ -326,7 +364,7 @@ const styles = StyleSheet.create({
   },
   blinkEdit: {},
   formArea: {
-    marginTop: 75,
+    marginTop: 45,
     width: "90%",
     marginLeft: "5%",
   },

@@ -16,7 +16,7 @@ import {
 const About = () => {
   return (
     <View style={styles.body}>
-      <Header name="About" leftSide="menu" />
+      {/* <Header name="About" leftSide="menu" /> */}
       <ScrollView>
       <View style={styles.imgView}>
         <Image

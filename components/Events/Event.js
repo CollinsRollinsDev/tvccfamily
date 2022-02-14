@@ -445,7 +445,7 @@ const Event = ({ navigation }) => {
 
   return (
     <View style={styles.body}>
-      <Header name="Events" leftSide="search" />
+      {/* <Header name="Events" leftSide="search" /> */}
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

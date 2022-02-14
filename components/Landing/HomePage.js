@@ -8,7 +8,7 @@ import {
   Linking,
   TextInput,
   Image,
-  Platform 
+  Platform,
 } from "react-native";
 import Menus from "./Menus";
 import About from "../Landing/Nested/About";
@@ -20,8 +20,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSelector, useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
+import Device from "expo-device";
+import * as Notifications from "expo-notifications";
+import {setIsNotification} from '../../reduxStore/actions';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -35,78 +36,84 @@ Notifications.setNotificationHandler({
 const Tab = createBottomTabNavigator();
 
 const HomePage = ({ navigation }) => {
-  
-  const [expoPushToken, setExpoPushToken] = useState('');
+  const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
 
     // This listener is fired whenever a notification is received while the app is foregrounded
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-    });
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      // console.log(response);
-    });
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        // console.log(response?.notification.request.content.data?.path, "as content");
+        if (
+          response?.notification.request.content.data?.path === "notification"
+        ) {
+          navigation.push("Notification");
+        } else {
+          // console.log("not pushing");
+        }
+      });
 
     return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
 
-
-  
   async function registerForPushNotificationsAsync() {
     let token;
     // if (Device.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      alert("Failed to get push token for push notification!");
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token, "as token");
+    try {
+      const res = await fetch(
+        `http://192.168.43.49:8080/addNotificationToken?emailAddress=${userDetails.emailAddress}&token=${token}`
+      );
+      const data = await res.json();
+      if (data.success !== true) {
+        // not saved successfully to database.
         return;
       }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token, "as token");
-      try {
-        
-        const res = await fetch(`http://192.168.43.49:8080/addNotificationToken?emailAddress=${userDetails.emailAddress}&token=${token}`);
-        const data = await res.json();
-        if(data.success !== true){
-          // not saved successfully to database.
-          return
-        }
-        } catch (error) {
-          
-        }
+    } catch (error) {}
     // } else {
     //   alert('Must use physical device for Push Notifications');
     // }
-  
-    if (Platform.OS === 'android') {
-      Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
+
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
+        lightColor: "#FF231F7C",
       });
     }
-      
-  
+
     return token;
   }
-
-
 
   const initializeNotepadlocalLibrary = async () => {
     const item = await AsyncStorage.getItem("myNotes");
@@ -127,10 +134,28 @@ const HomePage = ({ navigation }) => {
     initializeNotepadlocalLibrary();
   }, []);
 
-  const { userDetails } = useSelector((state) => state.useTheReducer);
+  const { userDetails, isNotification } = useSelector((state) => state.useTheReducer);
+  const dispatch = useDispatch();
+  const checkforNotification = async() => {
+    try {
+      const res = await fetch(`http://192.168.43.49:8080/checkNotification?emailAddress=${userDetails.emailAddress}`);
+      const {isThereNotification} = await res.json();
+      dispatch(setIsNotification(isThereNotification))
+    } catch (error) {
+      
+    }
+  }
+  useEffect(() => {
+    const x = setInterval(() => {
+      userDetails?.emailAddress && checkforNotification();
+    }, 5000);
+    return () => {
+      x
+    }
+  }, [])
+  
   return (
     <>
-     
       <View style={styles.body}>
         <View style={styles.upperContainer}>
           <Text style={styles.welcome}>
@@ -164,6 +189,7 @@ export default HomePage;
 
 const styles = StyleSheet.create({
   body: {
+    paddingTop:30,
     flex: 1,
     justifyContent: "flex-start",
     backgroundColor: "whitesmoke",

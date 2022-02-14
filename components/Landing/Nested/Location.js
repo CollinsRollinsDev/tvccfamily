@@ -16,7 +16,7 @@ import {
 const Location = () => {
   return (
     <View style={styles.body}>
-      <Header name="Location" leftSide="menu" />
+      {/* <Header name="Location" leftSide="menu" /> */}
       <ScrollView>
         <View style={styles.imgView}>
           <Image

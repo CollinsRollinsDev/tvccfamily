@@ -260,7 +260,7 @@ let [hour, setHour] = useState("00");
 
   return (
     <View style={styles.body}>
-      <Header name="Add an Event" leftSide="Search" />
+      {/* <Header name="Add an Event" leftSide="Search" /> */}
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.info}>Fill in details to add event here</Text>

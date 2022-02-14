@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#3464eb",
     minHeight: "100%",
     marginBottom: 50,
+    paddingTop:40
   },
   heading1: {
     fontSize: 17,
