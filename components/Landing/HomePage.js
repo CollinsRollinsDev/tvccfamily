@@ -169,7 +169,8 @@ const HomePage = ({ navigation }) => {
           <View style={styles.imgView}>
             <Image
               style={styles.stretch}
-              source={require("../../assets/study.jpg")}
+              // source={require("../../assets/study.jpg")}
+              source={require("../../assets/tester.jpg")}
             />
           </View>
 
@@ -196,8 +197,8 @@ const styles = StyleSheet.create({
   },
   upperContainer: {
     height: "40%",
-    backgroundColor: "#3464eb",
-    opacity: 0.8,
+    backgroundColor: "#121212",
+    opacity: 0.9,
     position: "relative",
   },
   churchName: {
