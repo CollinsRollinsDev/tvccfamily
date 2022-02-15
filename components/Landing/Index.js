@@ -33,11 +33,14 @@ import Payment from "../Payment/Payment";
 import Admin from "../Admin/Admin";
 import AssignLeader from "../Admin/AssignLeader";
 import { useSelector, useDispatch } from "react-redux";
+import HymnSelect from "../Hymn/HymnSelect";
+import HymnRead from "../Hymn/HymnRead";
 
 const Stack = createNativeStackNavigator();
 const Index = () => {
     const { currentBook, currentChapter, currentVerse, currentScripture } =
     useSelector((state) => state.useTheReducer);
+    
 
     let currentPickedBook = "Loading...";
     if(currentBook && currentChapter){
@@ -58,6 +61,8 @@ const Index = () => {
             <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }}/>
             <Stack.Screen name="About" component={About} options={{ title: "About Us"}}/>
             <Stack.Screen name="Bible" component={Bible} options={{ title: "Bible KJV"}}/>
+            <Stack.Screen name="HymnSelect" component={HymnSelect} options={{ title: "Hymn"}}/>
+            <Stack.Screen name="HymnRead" component={HymnRead} options={{ title: "Hymn"}}/>
             <Stack.Screen name="ReadPage" component={ReadPage} options={{ title:currentPickedBook}}/>
             <Stack.Screen name="Event" component={Event} options={{ title:"Events"}}/>
             <Stack.Screen name="Notes" component={Notes}  options={{ title:"Notes"}}/>

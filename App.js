@@ -27,10 +27,8 @@ import UpdateNote from "./components/Landing/Nested/UpdateNote.js";
 import Profile_Settings from "./components/Profile_Seetings/Profile_Settings.js";
 import ReadNotifications from "./components/Notification/ReadNotification";
 import Location from "./components/Landing/Nested/Location.js";
-
-
+import { useSelector, useDispatch } from "react-redux";
 export default function App() {
-
   return (
     <Provider store={Store}>
       <View style={styles.main}>

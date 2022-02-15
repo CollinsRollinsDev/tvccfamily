@@ -55,6 +55,11 @@ const Menus = ({navigation}) => {
                 <Text style={styles.content}>Bible</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity onPress={() => navigation.push("HymnSelect")}  style={styles.menu}>
+            <FontAwesome5 name={'music'} size={18} color={'white'}/>
+                <Text style={styles.content}>Hymn Book</Text>
+            </TouchableOpacity>
+
             {/* <TouchableOpacity style={styles.menu}>
             <FontAwesome5 name={'play'} size={18} color={'white'}/>
                 <Text style={styles.content}>Sermon/Word of God</Text>

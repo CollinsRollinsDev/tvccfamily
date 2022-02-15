@@ -170,12 +170,12 @@ const Event = ({ navigation }) => {
     ? events.sort(sortFunction).map((event, index) => {
         if (index === 0) {
           let convertedDate = moment(event.date).format("MMM D YYYY")
-          console.log(convertedDate, "as converted date");
+          // console.log(convertedDate, "as converted date");
           let stoppageTime = new Date(
             `${convertedDate} ${event.hour}:${event.minutes}:${event.seconds}`
           ).getTime();
 
-          console.log(stoppageTime, "as stoppage date");
+          // console.log(stoppageTime, "as stoppage date");
 
           // create static countdown
           let staticDateNow = new Date().getTime();

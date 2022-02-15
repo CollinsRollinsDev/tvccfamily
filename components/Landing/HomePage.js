@@ -146,12 +146,12 @@ const HomePage = ({ navigation }) => {
     }
   }
   useEffect(() => {
-    const x = setInterval(() => {
+    // const x = setInterval(() => {
       userDetails?.emailAddress && checkforNotification();
-    }, 5000);
-    return () => {
-      x
-    }
+    // }, 5000);
+    // return () => {
+    //   x
+    // }
   }, [])
   
   return (

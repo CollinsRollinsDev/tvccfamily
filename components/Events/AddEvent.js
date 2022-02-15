@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component, memo } from "react";
 import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import { Picker } from "@react-native-picker/picker";
@@ -23,8 +23,12 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
+import DatePicking from "./DatePicking";
 
 const AddEvent = ({ navigation }) => {
+
+  console.log("re-rendering.....")
+
   // let date = new Date();
   let [date, setNewDate] = useState(new Date())
   const [dateChoosen, setDate] = useState();
@@ -136,7 +140,7 @@ let [hour, setHour] = useState("00");
             name: name,
             host: host,
             description: description,
-            date: dateChoosen,
+            date: date,
             hour: hour,
             minutes: minutes,
             seconds: seconds,
@@ -158,7 +162,7 @@ let [hour, setHour] = useState("00");
           Alert.alert(
             `Event Created!`,
             `Event with name "${name}" to host on ${date} at ${hour}:${minutes} has been created successfully.`,
-            [{ text: "OK", onPress: () => navigation.push("Event") }]
+            [{ text: "OK", onPress: () => navigation.replace("Event") }]
           );
         } else {
           Alert.alert(`UNSUCCESSFUL!!!`, `Something went wrong`, [
@@ -252,10 +256,6 @@ let [hour, setHour] = useState("00");
       }
     }
   };
-
-  useEffect(() => {
-    // console.log(moment(date).format('MMMM Do YYYY, h:mm:ss a'), "currentDate")
-  }, [date]);
   
 
   return (
@@ -309,14 +309,15 @@ let [hour, setHour] = useState("00");
             </TouchableOpacity>
 
             {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode={mode}
-                is24Hour={true}
-                display="default"
-                onChange={onChange}
-              />
+              // <DateTimePicker
+              //   testID="dateTimePicker"
+              //   value={date}
+              //   mode={mode}
+              //   is24Hour={true}
+              //   display="default"
+              //   onChange={onChange}
+              // /> 
+              <DatePicking testID="dateTimePicker" date={date} mode={mode} is24Hour={true} display="default" onChange={onChange} />
             )}
 
             {/* <Text style={styles.columnFeel} >:</Text> */}
@@ -356,7 +357,7 @@ let [hour, setHour] = useState("00");
   );
 };
 
-export default AddEvent;
+export default memo(AddEvent);
 
 const styles = StyleSheet.create({
   body: {
