@@ -5382,6 +5382,15 @@ promise@^8.0.3:
   dependencies:
     asap "~2.0.6"
 
+prop-types@>=15.6.1:
+  version "15.8.1"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
+  integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
+  dependencies:
+    loose-envify "^1.4.0"
+    object-assign "^4.1.1"
+    react-is "^16.13.1"
+
 prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
@@ -5509,6 +5518,13 @@ react-native-screens@^3.8.0:
   integrity sha512-lHrnB/elAoMJKv8O12U6BLgeup4lB6ZKJHEOVuG/D72nv/OE9wUusbou6YCB5tp3YbaSpHflPnkFmHA/vCejpw==
   dependencies:
     warn-once "^0.1.0"
+
+react-native-scroll-into-view@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-scroll-into-view/-/react-native-scroll-into-view-2.0.2.tgz#6c57b8a35e3a60e4cf57a075e2b2c9aa35722334"
+  integrity sha512-oTS2d0AjR8/ppH6YsD3MCj9vlf9+v+JUuLQcMx20IWu3NEMWheNNV13D6HmcJVdmM8WXpAXrTTDwymkD2I2EZg==
+  dependencies:
+    prop-types ">=15.6.1"
 
 react-native-slick@^1.6.0:
   version "1.6.0"

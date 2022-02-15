@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Header from "../../Header/Header";
 // import { SearchBar } from 'react-native-elements';
 import { Picker } from "@react-native-picker/picker";
-import scriptures from "../../../assets/bibleKJV.json";
+import scriptures from "../../../assets/newBible.json";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setCurrentBook,
@@ -36,17 +36,6 @@ const updateSearch = () => {};
 
 const Bible = ({ navigation }) => {
 
-  const settings = {
-    dots: false,
-    infinite: true,
-    slidesToShow: 7,
-    slidesToScroll: 7,
-    speed: 300,
-    // nextArrow: <SampleNextArrow />,
-    // prevArrow: <SamplePrevArrow />,
-}
-const slider = useRef(null)
-
   const { currentBook, currentChapter, currentVerse, currentScripture } =
     useSelector((state) => state.useTheReducer);
   // const state = useSelector(state => state.state)
@@ -66,101 +55,93 @@ const slider = useRef(null)
   let [verseSelected, setVerseSelected] = useState(null);
   let [testamantPicked, setTestamentPicked] = useState(null);
   // let [refreshChapter, setRefreshChapter] = useState();
-
-  const oldTestament = scriptures[0].oldTestament;
-  const newTestament = scriptures[0].newTestament;
-
-  const filterBookPicked = async (e, f) => {
-    await dispatch(setCurrentBook(e));
-    console.log( "the e is:",e)
-    let bibleArr
-    
-    if(f == "oldTestament"){
-      bibleArr = await Object.entries(oldTestament);
-      const filteredArr = await bibleArr.filter(function ([key, value]) {
-        return key === e;
-      });
-
-      setUserPickedOld(filteredArr[0][1].chapters);
-      // console.log(filteredArr[0][1])
-      const newObj = await Object.fromEntries(filteredArr);
-      // console.log(newObj)
-    } else if(f == "newTestament"){
-      bibleArr = await Object.entries(newTestament);
-      const filteredArr = await bibleArr.filter(function ([key, value]) {
-        return key === e;
-      });
-
-      let toCheckFiltered = await filteredArr[0][1];
-
-      setUserPickedOld(toCheckFiltered.chapters);
-      // console.log(filteredArr[0][1].chapters)
-      const newObj = await Object.fromEntries(filteredArr);
-      // console.log(newObj)
-    } else{
-      return
-    }
-    
-    
-  };
+  
+  let testamentIndex = 0;
 
   useEffect(() => {
-    testamantPicked == "newTestament" ? setSelectedBook("Matthew") : testamantPicked == "oldTestament" ? setSelectedBook("Genesis") : null
+    testamantPicked === "newTestament" ? testamentIndex = 0 : testamentIndex = 1;
+    testamantPicked === "newTestament" ? setSelectedBook("Matthew") : setSelectedBook("Genesis")
   }, [testamantPicked])
+  
 
-  useEffect(() => {
-    filterBookPicked(selectedBook, testamantPicked);
-    setDisplayChapters(true);
-  }, [selectedBook]);
+  const displayOldTestanmentMapped = scriptures[0].books.map((book, index) => {
+      return (
+          <Picker.Item key={index} label={book.name} value={book.name} />
+      )
+  })
+  
+  const displayNewTestanmentMapped = scriptures[1].books.map((book, index) => {
+      return (
+          <Picker.Item key={index} label={book.name} value={book.name} />
+      )
+  })
 
-  const getVerses = async (e) => {
-    if(e){
-      console.log("updated")
-    } else{
-      console.log("Stucked!")
-    }
-    // await e.toString();
-    const toFilter = await userPickedOld;
-    const filtered = await toFilter.filter((each) => each.chapter == e);
-    await setVerseArr((verseArr = filtered));
-    //  console.log(e)
-    //  console.log(verseArr[0].verses)
-  };
-
-  useEffect(() => {
-    !displayChapters ? getVerses(selectedChapter) : null;
-  }, [userPickedOld, displayChapters]);
-
-  const handleChapterPress = async (e) => {
-
-    setSelectedChapter(parseInt(e));
-    setSelectedChapter((selectedChapter = e));
-    // console.log(selectedChapter)
+  // useEffect(() => {
+  //   const set
+  // }, [selectedBook])
+  const handleChapterPress = (number) => {
+    setSelectedChapter(prevState => prevState = number);
     setDisplayChapters(false);
-  };
 
-  const handleVersePress = async (e) => {
-    // console.log(e);
-    await setVerseSelected((verseSelected = e));
-    // console.log(verseSelected)
-  };
-
-  async function dispatchItems() {
-     dispatch(setCurrentChapter(selectedChapter));
-     dispatch(setCurrentVerse(verseSelected));
-     dispatch(setCurrentScripture(verseArr));
   }
 
-  useEffect(() => {
-    // console.log("Moving to readable page")
-    dispatchItems();
-    // navigation.push("ReadPage")
-  }, [verseArr]);
+  const handleVersePress = (number) => {
+    setVerseSelected(prevState => prevState = number)
+    navigation.push("ReadPage", { testament: testamantPicked, book: selectedBook, chapter: selectedChapter, verse: verseSelected});
 
-  // console.log("book",currentBook)
-  // console.log("chapter", currentChapter)
-  // console.log("verse", currentVerse)
-  // console.log("scripture", currentScripture)
+  }
+
+  const displayChaptersMapped = scriptures[testamantPicked == "newTestament" ? 1 : 0]?.books?.map((book, index) => {
+      if(book.name === selectedBook){
+        const renderChapter = book.chapters
+         return <FlatList
+          key={index}
+          contentContainerStyle={styles.grid}
+          numColumns={4}
+          data={renderChapter}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => handleChapterPress(item.chapter)}
+              style={styles.individualChapters}
+            >
+              <Text style={styles.numbers}>{item.chapter}</Text>
+            </TouchableOpacity>
+            // {displayChaptersMapped}
+          )}
+        />
+      }
+  })
+
+  const displayVerseMapped = (selectedBook && selectedChapter) && scriptures[testamantPicked == "newTestament" ? 1 : 0]?.books?.map((book, index) => {
+    if(book.name === selectedBook){
+      return book?.chapters?.map((item, index) => {
+        if(item?.chapter == selectedChapter){
+          return <FlatList
+          key={index}
+          contentContainerStyle={styles.grid}
+          numColumns={4}
+          data={item?.verses}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            //  console.log(item.verse)
+            <TouchableOpacity
+              onPress={() => {
+                handleVersePress(item.verse);
+              }}
+              style={styles.individualVerses}
+            >
+              <Text style={styles.numbers}>{item.verse}</Text>
+            </TouchableOpacity>
+          )}
+        />
+        }
+      })
+      
+    }
+  })
+
+
 
   return (
     <View style={styles.body}>
@@ -174,26 +155,6 @@ const slider = useRef(null)
           placeholder="Search Here..."
         />
       </View>
-
-          {/* <Slider 
-          // ref={slider} 
-          {...settings}>
-                        <Text>i am one</Text>
-                        <Text>i am two</Text>
-                        <Text>i am three</Text>
-                    </Slider> */}
-
-      {/* <Slick style={styles.wrapper} showsButtons={false} showsPagination={false}>
-        <View style={styles.slide1}>
-          <Text style={styles.text}>Hello Slick</Text>
-        </View>
-        <View style={styles.slide2}>
-          <Text style={styles.text}>Beautiful</Text>
-        </View>
-        <View style={styles.slide3}>
-          <Text style={styles.text}>And simple</Text>
-        </View>
-      </Slick> */}
 
                     {/* TODO: stop here */}
 
@@ -209,57 +170,19 @@ const slider = useRef(null)
           ) : null}
 
           {testamantPicked == "oldTestament" ? (
-            <View style={styles.bookArea}>
+              <View style={styles.bookArea}>
               <Picker
                 style={styles.oldBook}
                 selectedValue={selectedBook}
                 onValueChange={(itemValue, itemIndex) =>
-                  setSelectedBook(itemValue)
+                  setSelectedBook(prevState=> prevState = itemValue)
                 }
               >
-                <Picker.Item label="Genesis" value="Genesis" />
-                <Picker.Item label="Exodus" value="Exodus" />
-                <Picker.Item label="Leviticus" value="Leviticus" />
-                <Picker.Item label="Numbers" value="Numbers" />
-                <Picker.Item label="Deuteronomy" value="Deuteronomy" />
-                <Picker.Item label="Joshua" value="Joshua" />
-                <Picker.Item label="Judges" value="Judges" />
-                <Picker.Item label="Ruth" value="Ruth" />
-                <Picker.Item label="1 Samuel" value="1 Samuel" />
-                <Picker.Item label="2 Samuel" value="2 Samuel" />
-                <Picker.Item label="1 Kings" value="1 Kings" />
-                <Picker.Item label="2 Kings" value="2 Kings" />
-                <Picker.Item label="1 Chronicles" value="1 Chronicles" />
-                <Picker.Item label="2 Chronicles" value="2 Chronicles" />
-                <Picker.Item label="Ezra" value="Ezra" />
-                <Picker.Item label="Nehemiah" value="Nehemiah" />
-                <Picker.Item label="Esther" value="Esther" />
-                <Picker.Item label="Job" value="Job" />
-                <Picker.Item label="Psalms" value="Psalms" />
-                <Picker.Item label="Proverbs" value="Proverbs" />
-                <Picker.Item label="Ecclesiastes" value="Ecclesiastes" />
-                <Picker.Item label="Song of Solomon" value="Song of Solomon" />
-                <Picker.Item label="Isaiah" value="Isaiah" />
-                <Picker.Item label="Jeremiah" value="Jeremiah" />
-                <Picker.Item label="Lamentations" value="Lamentations" />
-                <Picker.Item label="Ezekiel" value="Ezekiel" />
-                <Picker.Item label="Daniel" value="Daniel" />
-                <Picker.Item label="Hosea" value="Hosea" />
-                <Picker.Item label="Joel" value="Joel" />
-                <Picker.Item label="Amos" value="Amos" />
-                <Picker.Item label="Obadiah" value="Obadiah" />
-                <Picker.Item label="Jonah" value="Jonah" />
-                <Picker.Item label="Micah" value="Micah" />
-                <Picker.Item label="Nahum" value="Nahum" />
-                <Picker.Item label="Habakkuk" value="Habakkuk" />
-                <Picker.Item label="Zephaniah" value="Zephaniah" />
-                <Picker.Item label="Haggai" value="Haggai" />
-                <Picker.Item label="Zechariah" value="Zechariah" />
-                <Picker.Item label="Malachi" value="Malachi" />
+                {displayOldTestanmentMapped}
               </Picker>
             </View>
+            
           ) : testamantPicked == "newTestament" ? (
-            // do something
             <View style={styles.bookArea}>
               <Picker
                 style={styles.oldBook}
@@ -268,33 +191,7 @@ const slider = useRef(null)
                   setSelectedBook(itemValue)
                 }
               >
-                <Picker.Item label="Matthew" value="Matthew" />
-                <Picker.Item label="Mark" value="Mark" />
-                <Picker.Item label="Luke" value="Luke" />
-                <Picker.Item label="John" value="John" />
-                <Picker.Item label="Acts" value="Acts" />
-                <Picker.Item label="Romans" value="Romans" />
-                <Picker.Item label="1 Corinthians" value="1 Corinthians" />
-                <Picker.Item label="2 Corinthians" value="2 Corinthians" />
-                <Picker.Item label="Galatians" value="Galatians" />
-                <Picker.Item label="Ephesians" value="Ephesians" />
-                <Picker.Item label="Philippians" value="Philippians" />
-                <Picker.Item label="Colossians" value="Colossians" />
-                <Picker.Item label="1 Thessalonians" value="1 Thessalonians" />
-                <Picker.Item label="2 Thessalonians" value="2 Thessalonians" />
-                <Picker.Item label="1 Timothy" value="1 Timothy" />
-                <Picker.Item label="2 Timothy" value="2 Timothy" />
-                <Picker.Item label="Titus" value="Titus" />
-                <Picker.Item label="Philemon" value="Philemon" />
-                <Picker.Item label="Hebrews" value="Hebrews" />
-                <Picker.Item label="James" value="James" />
-                <Picker.Item label="1 Peter" value="1 Peter" />
-                <Picker.Item label="2 Peter" value="2 Peter" />
-                <Picker.Item label="1 John" value="1 John" />
-                <Picker.Item label="2 John" value="2 John" />
-                <Picker.Item label="3 John" value="3 John" />
-                <Picker.Item label="Jude" value="Jude" />
-                <Picker.Item label="Revelation" value="Revelation" />
+                {displayNewTestanmentMapped}
               </Picker>
             </View>
           ) : null}
@@ -306,50 +203,45 @@ const slider = useRef(null)
               <Text style={styles.verseDecleartion}>Verses</Text>
             ) : null}
           <ScrollView>
+
+
             {/* TODO: to modify soon */}
       
             <View style={styles.chapterArea}>
               {displayChapters ? (
-                <FlatList
-                  contentContainerStyle={styles.grid}
-                  numColumns={4}
-                  data={userPickedOld}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity
-                      onPress={() => handleChapterPress(item.chapter)}
-                      style={styles.individualChapters}
-                    >
-                      <Text style={styles.numbers}>{item.chapter}</Text>
-                    </TouchableOpacity>
-                  )}
-                />
+                    displayChaptersMapped
+                  
               ) : null}
             </View>
 
             {/* {!displayChapters ? (
               <Text style={styles.verseDecleartion}>Verses</Text>
             ) : null} */}
+
+
+
+            {/* TODO: */}
             <View style={styles.verseArea}>
               {!displayChapters ? (
-                <FlatList
-                  contentContainerStyle={styles.grid}
-                  numColumns={4}
-                  data={verseArr ? verseArr[0].verses : null}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={({ item }) => (
-                    //  console.log(item.verse)
-                    <TouchableOpacity
-                      onPress={() => {
-                        handleVersePress(item.verse);
-                        navigation.push("ReadPage");
-                      }}
-                      style={styles.individualVerses}
-                    >
-                      <Text style={styles.numbers}>{item.verse}</Text>
-                    </TouchableOpacity>
-                  )}
-                />
+                // <FlatList
+                //   contentContainerStyle={styles.grid}
+                //   numColumns={4}
+                //   data={verseArr ? verseArr[0].verses : null}
+                //   keyExtractor={(item, index) => index.toString()}
+                //   renderItem={({ item }) => (
+                //     //  console.log(item.verse)
+                //     <TouchableOpacity
+                //       onPress={() => {
+                //         handleVersePress(item.verse);
+                //         navigation.push("ReadPage");
+                //       }}
+                //       style={styles.individualVerses}
+                //     >
+                //       <Text style={styles.numbers}>{item.verse}</Text>
+                //     </TouchableOpacity>
+                //   )}
+                // />
+                displayVerseMapped
               ) : null}
             </View>
           </ScrollView>
@@ -418,7 +310,8 @@ const styles = StyleSheet.create({
     // marginTop: -150,
     padding: "2%",
     flexDirection: "row",
-    paddingBottom: 110,
+    // paddingBottom: 110,
+    paddingBottom:100,
   },
 
   verseArea: {

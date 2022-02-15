@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 // import { SearchBar } from 'react-native-elements';
 import { Picker } from "@react-native-picker/picker";
-import scriptures from "../../assets/bibleKJV.json";
-
 import {
   StyleSheet,
   Text,
@@ -26,29 +24,59 @@ import {
   setCurrentVerse,
   setCurrentScripture,
 } from "../../reduxStore/actions";
+import scriptures from '../../assets/newBible.json';
+import { useSwipe } from "../../useSwipe";
 
-const ReadPage = () => {
+const ReadPage = ({route, navigation}) => {
+  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight, 100)
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
 
+  const { testament, book, chapter, verse} = route.params;
+  
+  const [myTestament, setMyTestament] = useState(testament);
+  const [myBook, setMyBook] = useState(book);
+  const [myChapter, setMyChapter] = useState(chapter);
+  
+  
   const { currentBook, currentChapter, currentVerse, currentScripture } =
-    useSelector((state) => state.useTheReducer);
-  console.log("currentScripture", currentScripture);
+  useSelector((state) => state.useTheReducer);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setCurrentBook(book))
+    dispatch(setCurrentChapter(chapter))
+  }, [])
 
-  return (
-    <View style={styles.body}>
-      {/* <Header name={currentBook && currentChapter ? `${currentBook} chapter ${currentChapter}` : "Loading..."} leftSide="Search" /> */}
-      <ScrollView style={styles.scroll}>
+  function onSwipeLeft(){
+    console.log('SWIPE_LEFT')
+}
 
-        <FlatList
+function onSwipeRight(){
+    console.log('SWIPE_RIGHT')
+    // setMyBook("John")
+    // dispatch(setCurrentBook(book))
+    // dispatch(setCurrentChapter(chapter))
+}
+
+const handleChapterPress = () => {
+  // do nothing
+}
+
+
+  const mappedVerse = scriptures[myTestament == "newTestament" ? 1 : 0]?.books.map((mappedbook, index) => {
+    if(mappedbook.name === myBook){
+      return mappedbook.chapters.map((episode, index) => {
+        if(episode.chapter == myChapter){
+         return <FlatList
+         key={index}
           // contentContainerStyle={styles.grid}
           // numColumns={4}
-          data={currentScripture ? currentScripture[0].verses : null}
+          data={episode.verses}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             // console.log(item.verse)
-            <TouchableOpacity onPress={() => handleChapterPress(item.chapter)}>
+            <View onPress={() => handleChapterPress(item.chapter)}>
               <View style={styles.scripture}>
                 <View style={styles.eachChapter}>
                   <Text style={styles.verseText}>
@@ -57,9 +85,20 @@ const ReadPage = () => {
                   </Text>
                 </View>
               </View>
-            </TouchableOpacity>
+            </View>
           )}
         />
+        }
+      })
+    }
+  })
+  
+
+  return (
+    <View style={styles.body}>
+      {/* <Header name={currentBook && currentChapter ? `${currentBook} chapter ${currentChapter}` : "Loading..."} leftSide="Search" /> */}
+      <ScrollView onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} style={styles.scroll}>
+        {mappedVerse}
       </ScrollView>
     </View>
   );
