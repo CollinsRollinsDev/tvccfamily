@@ -75,7 +75,7 @@ const Event = ({ navigation }) => {
         {
           text: "Yes",
           onPress: async () => {
-            const res = await fetch("http://192.168.43.49:8080/event", {
+            const res = await fetch("https://tvccserver.vercel.app/event", {
               body: JSON.stringify({
                 id: id,
               }),
@@ -126,7 +126,7 @@ const Event = ({ navigation }) => {
           text: "Yes",
           onPress: async () => {
             // console.log(id)
-            const res = await fetch("http://192.168.43.49:8080/event", {
+            const res = await fetch("https://tvccserver.vercel.app/event", {
               body: JSON.stringify({
                 id: id,
               }),
@@ -425,7 +425,7 @@ const Event = ({ navigation }) => {
     : null;
 
   const getEvent = async () => {
-    const res = await fetch("http://192.168.43.49:8080/event");
+    const res = await fetch("https://tvccserver.vercel.app/event");
     const data = await res.json();
     setEvents(data.response);
   };

@@ -135,7 +135,7 @@ let [hour, setHour] = useState("00");
         userDetails.accountType === "admin" &&
         userDetails.churchBranch.includes(churchBranch)
       ) {
-        const res = await fetch("http://192.168.43.49:8080/event", {
+        const res = await fetch("https://tvccserver.vercel.app/event", {
           body: JSON.stringify({
             name: name,
             host: host,
@@ -201,7 +201,7 @@ let [hour, setHour] = useState("00");
             console.log("allowed to create")
            
             
-          const res = await fetch("http://192.168.43.49:8080/event", {
+          const res = await fetch("https://tvccserver.vercel.app/event", {
             body: JSON.stringify({
               name: name,
               host: host,

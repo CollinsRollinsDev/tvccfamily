@@ -44,7 +44,7 @@ const ReadNotifications = ({navigation}) => {
 
     
   // const fetchNotitifications = async() => {
-  //   const res = await fetch(`http://192.168.43.49:8080/notifications?id=${userDetails.id}`);
+  //   const res = await fetch(`https://tvccserver.vercel.app/notifications?id=${userDetails.id}`);
   //   const data = await res.json();
   //   if(data.success === true){
   //     console.log(data.response)
@@ -91,9 +91,9 @@ const handleDeny = async() => {
   console.log(requestDepartment, "as requestDepartment")
   console.log(churchBranch, "as churchBranch")
   if(currentNotification.sender === "Automatic by a user request to join department"){
-    url = `http://192.168.43.49:8080/responseToDepartmentProposal?response=${response}&email=${emailToAuth}&departmentName=${requestDepartment}&churchBranch=${churchBranch}`
+    url = `https://tvccserver.vercel.app/responseToDepartmentProposal?response=${response}&email=${emailToAuth}&departmentName=${requestDepartment}&churchBranch=${churchBranch}`
   } else {
-    url = `http://192.168.43.49:8080/signuprequestresponse?response=${response}&email=${emailToAuth}`
+    url = `https://tvccserver.vercel.app/signuprequestresponse?response=${response}&email=${emailToAuth}`
   }
  
   try {
@@ -145,9 +145,9 @@ const handleAccept = async() => {
   console.log(requestDepartment, "as requestDepartment")
   console.log(churchBranch, "as churchBranch")
   if(currentNotification.sender === "Automatic by a user request to join department"){
-    url = `http://192.168.43.49:8080/responseToDepartmentProposal?response=${response}&email=${emailToAuth}&departmentName=${requestDepartment}&churchBranch=${churchBranch}`
+    url = `https://tvccserver.vercel.app/responseToDepartmentProposal?response=${response}&email=${emailToAuth}&departmentName=${requestDepartment}&churchBranch=${churchBranch}`
   } else {
-    url = `http://192.168.43.49:8080/signuprequestresponse?response=${response}&email=${emailToAuth}`
+    url = `https://tvccserver.vercel.app/signuprequestresponse?response=${response}&email=${emailToAuth}`
   }
  
   try {

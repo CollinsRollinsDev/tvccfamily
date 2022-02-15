@@ -92,7 +92,7 @@ const Register = ({ navigation }) => {
       }
       try {
         setBtnMsg("Registering, please wait...");
-        const res = await fetch("http://192.168.43.49:8080/validateemail", {
+        const res = await fetch("https://tvccserver.vercel.app/validateemail", {
           body: JSON.stringify({
             firstName: firstName,
             lastName: lastName,
@@ -184,7 +184,7 @@ const Register = ({ navigation }) => {
           try {
             
         setBtnMsg("Registering, please wait...");
-        const res = await fetch(`http://192.168.43.49:8080/signup?code=${code}`, {
+        const res = await fetch(`https://tvccserver.vercel.app/signup?code=${code}`, {
           body: JSON.stringify({
             firstName: firstName,
             lastName: lastName,

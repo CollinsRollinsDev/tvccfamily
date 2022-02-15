@@ -91,7 +91,7 @@ const HomePage = ({ navigation }) => {
     console.log(token, "as token");
     try {
       const res = await fetch(
-        `http://192.168.43.49:8080/addNotificationToken?emailAddress=${userDetails.emailAddress}&token=${token}`
+        `https://tvccserver.vercel.app/addNotificationToken?emailAddress=${userDetails.emailAddress}&token=${token}`
       );
       const data = await res.json();
       if (data.success !== true) {
@@ -138,7 +138,7 @@ const HomePage = ({ navigation }) => {
   const dispatch = useDispatch();
   const checkforNotification = async() => {
     try {
-      const res = await fetch(`http://192.168.43.49:8080/checkNotification?emailAddress=${userDetails.emailAddress}`);
+      const res = await fetch(`https://tvccserver.vercel.app/checkNotification?emailAddress=${userDetails.emailAddress}`);
       const {isThereNotification} = await res.json();
       dispatch(setIsNotification(isThereNotification))
     } catch (error) {

@@ -47,7 +47,7 @@ const Login = ({ navigation }) => {
       ]);
     } else {
       setBtnMsg("Authenticating...");
-      const res = await fetch("http://192.168.43.49:8080/signin", {
+      const res = await fetch("https://tvccserver.vercel.app/signin", {
         body: JSON.stringify({
           emailAddress: emailAddress,
           password: password,
