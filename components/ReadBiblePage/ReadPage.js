@@ -1,20 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import Header from "../Header/Header";
 // import { SearchBar } from 'react-native-elements';
-import { Picker } from "@react-native-picker/picker";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Linking,
-  Image,
-  TextInput,
-  TouchableOpacity,
   ScrollView,
   FlatList,
-  SafeAreaView,
   LogBox,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";

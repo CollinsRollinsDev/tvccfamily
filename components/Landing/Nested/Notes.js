@@ -1,36 +1,27 @@
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
-import Header from "../../Header/Header";
-
 import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Linking,
-  Image,
-  TextInput,
   ScrollView,
   FlatList,
   TouchableOpacity,
   LogBox,
-  ListViewBase,
   Alert,
   RefreshControl,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import {
-    setCurrentTitle,
-    setCurrentMinistering,
-    setCurrentPostBody,
-    setCurrentPostId,
-    
-  } from "../../../reduxStore/actions";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
- 
-const Notes = ({navigation}) => {
+  setCurrentTitle,
+  setCurrentMinistering,
+  setCurrentPostBody,
+  setCurrentPostId,
+} from "../../../reduxStore/actions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
+const Notes = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
 
   const wait = (timeout) => {
@@ -40,20 +31,17 @@ const Notes = ({navigation}) => {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => {
-      setRefreshing(false)
+      setRefreshing(false);
       fetchNote();
     });
   }, []);
 
-
-
-
-    const {userDetails, currentTitle, currentPostBody, currentMinistering} =
+  const { userDetails, currentTitle, currentPostBody, currentMinistering } =
     useSelector((state) => state.useTheReducer);
   const dispatch = useDispatch();
 
-    const [displayNotePage, setDisplayNotePage] = useState(false)
-    const [notes, setNotes] = useState([])
+  const [displayNotePage, setDisplayNotePage] = useState(false);
+  const [notes, setNotes] = useState([]);
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -62,28 +50,29 @@ const Notes = ({navigation}) => {
   const handleChapterPress = async (id, title, ministering, post) => {
     setDisplayNotePage(true);
     // navigation.push("Note")
-    dispatch(setCurrentTitle(title))
-    dispatch(setCurrentMinistering(ministering))
-    dispatch(setCurrentPostBody(post))
-    dispatch(setCurrentPostId(id))
-    console.log("id:", id)
-    console.log("userID", userDetails.id)
+    dispatch(setCurrentTitle(title));
+    dispatch(setCurrentMinistering(ministering));
+    dispatch(setCurrentPostBody(post));
+    dispatch(setCurrentPostId(id));
+    console.log("id:", id);
+    console.log("userID", userDetails.id);
     // console.log("title:", title)
     // console.log("ministering:", ministering)
     // console.log("post:", post)
   };
 
   const handleAddNote = () => {
-    navigation.push("AddNote")
-  }
+    navigation.push("AddNote");
+  };
 
-
-  const fetchNote = async() => {
-    const res = await fetch(`https://tvccserver.vercel.app/notes?id=${userDetails.id}`);
+  const fetchNote = async () => {
+    const res = await fetch(
+      `https://tvccserver.vercel.app/notes?id=${userDetails.id}`
+    );
     const data = await res.json();
-    if(data.success === true){
-      setNotes(data.response.reverse())
-    } else{
+    if (data.success === true) {
+      setNotes(data.response.reverse());
+    } else {
       Alert.alert(`ERROR!!!`, `${data.response}.`, [
         { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
@@ -92,63 +81,62 @@ const Notes = ({navigation}) => {
     const item = await AsyncStorage.getItem("myNotes");
     setNotes(JSON.parse(item));
     // console.log("notes",notes)
-  }
+  };
 
   useEffect(() => {
-  fetchNote();
-  }, [])
+    fetchNote();
+  }, []);
 
-  const handleLongPressDelete = async(userId, postId) => {
-    Alert.alert(`Warning!`, `Are you sure you want to delete this? It will be lost forever!`, [
-                 
-      {
-        text: "No",
-        onPress: () =>
-          console.log("No Clicked")
-      },
-      {
-        text: "Yes",
-        onPress: async() =>{
-
-          const res = await fetch("https://tvccserver.vercel.app/notes", {
-            body: JSON.stringify({
-              userId: userId,
-              postId: postId
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-            method: "DELETE",
-          });
-
-          const response = await res.json();
-
-          if (response.success === true) {
-            Alert.alert(`SUCCESSFUL!`, `Note has been deleted.`, [
-              {
-                text: "OK",
-                onPress: () => {
-                  navigation.push("Notes")
-                },
+  const handleLongPressDelete = async (userId, postId) => {
+    Alert.alert(
+      `Warning!`,
+      `Are you sure you want to delete this? It will be lost forever!`,
+      [
+        {
+          text: "No",
+          onPress: () => console.log("No Clicked"),
+        },
+        {
+          text: "Yes",
+          onPress: async () => {
+            const res = await fetch("https://tvccserver.vercel.app/notes", {
+              body: JSON.stringify({
+                userId: userId,
+                postId: postId,
+              }),
+              headers: {
+                "Content-Type": "application/json",
               },
-            ]);
-          } else {
-            Alert.alert(`ERROR!`, `Something went wrong!.`, [
-              { text: "OK", onPress: () => console.log("err") },
-            ]);
-          }
+              method: "DELETE",
+            });
 
-        }
-      },
-    ]);
-  }
+            const response = await res.json();
 
+            if (response.success === true) {
+              Alert.alert(`SUCCESSFUL!`, `Note has been deleted.`, [
+                {
+                  text: "OK",
+                  onPress: () => {
+                    navigation.push("Notes");
+                  },
+                },
+              ]);
+            } else {
+              Alert.alert(`ERROR!`, `Something went wrong!.`, [
+                { text: "OK", onPress: () => console.log("err") },
+              ]);
+            }
+          },
+        },
+      ]
+    );
+  };
 
   return (
     <View style={styles.body}>
       {/* <Header name="Notes" leftSide="Search" /> */}
-      <ScrollView 
-         refreshControl={
+      <ScrollView
+        refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
@@ -158,31 +146,29 @@ const Notes = ({navigation}) => {
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
               <TouchableOpacity
-              onLongPress={() => {
-                Alert.alert(`Message!`, `Do you wish to delete this note?`, [
-                 
-                  {
-                    text: "No",
-                    onPress: () =>
-                      console.log("No Clicked")
-                  },
-                  {
-                    text: "Yes",
-                    onPress: () =>
-                      handleLongPressDelete(
-                        userDetails.id,
-                        item._id
-                      ),
-                  },
-                ]);
-              }}
-
-                onPress={async() => {
+                onLongPress={() => {
+                  Alert.alert(`Message!`, `Do you wish to delete this note?`, [
+                    {
+                      text: "No",
+                      onPress: () => console.log("No Clicked"),
+                    },
+                    {
+                      text: "Yes",
+                      onPress: () =>
+                        handleLongPressDelete(userDetails.id, item._id),
+                    },
+                  ]);
+                }}
+                onPress={async () => {
                   // await handleChapterPress(item._id, item.title, item.ministering, item.body);
-                  await handleChapterPress(item.id, item.title, item.ministering, item.post);
-                    navigation.push("Note");
-                }
-            }
+                  await handleChapterPress(
+                    item.id,
+                    item.title,
+                    item.ministering,
+                    item.post
+                  );
+                  navigation.push("Note");
+                }}
               >
                 <View style={styles.preview}>
                   <Text style={styles.title}>{item.title}</Text>
@@ -202,12 +188,11 @@ const Notes = ({navigation}) => {
       </ScrollView>
 
       <TouchableOpacity onPress={handleAddNote} style={styles.addBox}>
-            {/* <Text style={styles.icon}>
+        {/* <Text style={styles.icon}>
                 add
             </Text> */}
-            <FontAwesome5 name={'plus'} size={20} color={'white'}/>
+        <FontAwesome5 name={"plus"} size={20} color={"white"} />
       </TouchableOpacity>
-
     </View>
   );
 };
@@ -223,7 +208,7 @@ const styles = StyleSheet.create({
     minHeight: 500,
     width: "100%",
     padding: "2%",
-    marginBottom:65,
+    marginBottom: 65,
   },
   preview: {
     height: 90,
@@ -256,19 +241,19 @@ const styles = StyleSheet.create({
     marginRight: "5%",
   },
   addBox: {
-    backgroundColor: 'blue',
+    backgroundColor: "blue",
     height: 70,
     width: 70,
-    borderRadius:70,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
+    borderRadius: 70,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
     top: "80%",
-    right: '5%',
+    right: "5%",
   },
   icon: {
-      color: 'white',
-      fontWeight: 'bold',
-      fontSize: 17,
-  }
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 17,
+  },
 });

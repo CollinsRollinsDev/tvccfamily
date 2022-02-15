@@ -2,17 +2,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Linking,
-  Image,
   TextInput,
   TouchableOpacity,
-  ScrollView,
-  FlatList,
-  SafeAreaView,
-  LogBox,
-  Alert,
-  RefreshControl,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useState, useRef, useEffect } from "react";
@@ -25,20 +16,27 @@ const Payment = ({ navigation }) => {
   const { userDetails } = useSelector((state) => state.useTheReducer);
   const [paymentReason, setPaymentReason] = useState("");
   const [amount, setAmount] = useState();
-  const [btnText, setBtnText] = useState("Pay Now")
+  const [btnText, setBtnText] = useState("Pay Now");
   const paystackWebViewRef = useRef();
-  const [proceed, setProceed] = useState(false)
+  const [proceed, setProceed] = useState(false);
 
-  const handleClickPay = async(e) => {
-      e.preventDefault();
-      console.log(''+Math.floor((Math.random() * 1000000000) + 1), "as refnum")
-      paystackWebViewRef.current.startTransaction();
-  }
+  const handleClickPay = async (e) => {
+    e.preventDefault();
+    console.log("" + Math.floor(Math.random() * 1000000000 + 1), "as refnum");
+    paystackWebViewRef.current.startTransaction();
+  };
 
   useEffect(() => {
-    if(amount && paymentReason && userDetails.emailAddress && userDetails.phoneNumber && userDetails.lastName && userDetails.firstName){
-      setProceed(true)
-    } else{
+    if (
+      amount &&
+      paymentReason &&
+      userDetails.emailAddress &&
+      userDetails.phoneNumber &&
+      userDetails.lastName &&
+      userDetails.firstName
+    ) {
+      setProceed(true);
+    } else {
       setProceed(false);
     }
     // console.log(userDetails)
@@ -46,7 +44,6 @@ const Payment = ({ navigation }) => {
     //   second;
     // };
   }, [amount, paymentReason]);
-  
 
   return (
     <View style={styles.body}>
@@ -69,12 +66,12 @@ const Payment = ({ navigation }) => {
       </View>
 
       <TextInput
-            onChangeText={(e) => setAmount(e)}
-            style={styles.input}
-            keyboardType='numeric'
-            underlineColorAndroid='transparent'
-            placeholder="Amount To Pay"
-          />
+        onChangeText={(e) => setAmount(e)}
+        style={styles.input}
+        keyboardType="numeric"
+        underlineColorAndroid="transparent"
+        placeholder="Amount To Pay"
+      />
 
       {/* <PaystackWebView  
         paystackKey="your-public-key-here"
@@ -110,15 +107,14 @@ const Payment = ({ navigation }) => {
           console.log(res);
         }}
         ref={paystackWebViewRef}
-        refNumber={''+Math.floor((Math.random() * 1000000000) + 1)}
+        refNumber={"" + Math.floor(Math.random() * 1000000000 + 1)}
       />
 
-     {proceed &&  <TouchableOpacity
-      style={styles.btn}
-        onPress={handleClickPay}
-      >
-        <Text style={styles.btnText}>{btnText}</Text>
-      </TouchableOpacity>}
+      {proceed && (
+        <TouchableOpacity style={styles.btn} onPress={handleClickPay}>
+          <Text style={styles.btnText}>{btnText}</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

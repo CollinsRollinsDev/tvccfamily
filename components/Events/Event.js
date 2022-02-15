@@ -6,16 +6,11 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Linking,
-  TextInput,
-  Image,
   TouchableOpacity,
   ScrollView,
   Alert,
   RefreshControl,
 } from "react-native";
-import Header from "../Header/Header";
 import moment from 'moment'
 // import events from "../../assets/events.json";
 const Event = ({ navigation }) => {

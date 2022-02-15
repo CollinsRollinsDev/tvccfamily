@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
 
@@ -7,25 +7,15 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Linking,
-  Image,
   TextInput,
   TouchableOpacity,
-  ScrollView,
-  FlatList,
-  SafeAreaView,
-  LogBox,
   Alert,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { setUserDetails } from "../../reduxStore/actions";
 import { useSelector, useDispatch } from "react-redux";
-import { NavigationContext } from "react-navigation";
 
-const AssignLeader = ({navigation}) => {
+const AssignLeader = ({ navigation }) => {
   const { userDetails } = useSelector((state) => state.useTheReducer);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [searchResult, setSearchResult] = useState([]);
   const [currentPerson, setCurrentPerson] = useState();
@@ -126,7 +116,7 @@ const AssignLeader = ({navigation}) => {
         {
           text: "Abort!",
           onPress: () => {
-            navigation.replace('Admin')
+            navigation.replace("Admin");
             setDisableBtn(false);
             return null;
           },
@@ -152,32 +142,36 @@ const AssignLeader = ({navigation}) => {
               }
               console.log("assning...");
               setBtnMsg("Assigning Person...");
-              console.log(userDetails)
+              console.log(userDetails);
               const res = await fetch(
-                `https://tvccserver.vercel.app/assignGroupLeader?id=${currentPerson._id}&assignerId=${userDetails?.id}&churchBranch=${churchBranch}&deptName=${userDepartment}`,{
-                  method:"PATCH"
+                `https://tvccserver.vercel.app/assignGroupLeader?id=${currentPerson._id}&assignerId=${userDetails?.id}&churchBranch=${churchBranch}&deptName=${userDepartment}`,
+                {
+                  method: "PATCH",
                 }
               );
 
               const data = await res.json();
               if (data.success !== true) {
-                Alert.alert(
-                  `ERROR!!!`,
-                  `${data.message}`,
-                  [{ text: "OK",  onPress: () => {
-                    // do nothing
-                  }, }]
-                );
+                Alert.alert(`ERROR!!!`, `${data.message}`, [
+                  {
+                    text: "OK",
+                    onPress: () => {
+                      // do nothing
+                    },
+                  },
+                ]);
                 setDisableBtn(false);
                 setBtnMsg("Assign as leader");
                 return;
               }
               Alert.alert(`Completed!`, `Your request is processed!`, [
-                { text: "OK", onPress: () => {
-                  // do nothing
+                {
+                  text: "OK",
+                  onPress: () => {
+                    // do nothing
+                  },
+                  style: "cancel",
                 },
-                style: "cancel",
-               },
               ]);
               setDisableBtn(false);
               setBtnMsg("Request is completed!");
@@ -291,7 +285,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#3464eb",
     minHeight: "100%",
     marginBottom: 50,
-    paddingTop:50
+    paddingTop: 50,
   },
   nameSuggestBox: {
     minHeight: 70,

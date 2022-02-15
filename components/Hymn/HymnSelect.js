@@ -1,54 +1,42 @@
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
-  Button,
-  Linking,
-  Image,
   TextInput,
   TouchableOpacity,
-  ScrollView,
-  FlatList,
-  SafeAreaView,
-  LogBox,
 } from "react-native";
-import React, {useState} from 'react'
-import hymns from '../../assets/hymns.json';
+import React, { useState } from "react";
+import hymns from "../../assets/hymns.json";
 import { useEffect } from "react";
 
-
-const HymnSelect = ({navigation}) => {
-  const [searchTerms, setSearchTerms] = useState();
+const HymnSelect = ({ navigation }) => {
+  // const [searchTerms, setSearchTerms] = useState();
   const [returnedHymn, setReturnedHymn] = useState([]);
-  const [selectedHymn, setSelectedHymn] = useState({title:'', id:''})
+  const [selectedHymn, setSelectedHymn] = useState({ title: "", id: "" });
 
   // console.log(hymns)
 
-  const searchHymn = async(e) => {
+  const searchHymn = async (e) => {
     let match = e.match(/^[a-zA-Z ]*/);
     let match2 = e.match(/\s*/);
     if (match2[0] === e) {
       return;
     }
-    const result = await hymns.filter(hymn => hymn.title.startsWith(e));
+    const result = await hymns.filter((hymn) => hymn.title.startsWith(e));
     // console.log(result.slice(0, 10), "setting hymns")
-    setReturnedHymn(result.slice(0, 10))
-    
-  }
+    setReturnedHymn(result.slice(0, 10));
+  };
 
-  const select_and_push = async(title, id) => {
-    setSelectedHymn({title, id})
-    navigation.navigate("HymnRead",{ title, id})
+  const select_and_push = async (title, id) => {
+    setSelectedHymn({ title, id });
+    navigation.navigate("HymnRead", { title, id });
     // console.log(selectedHymn)
-  }
+  };
 
   useEffect(() => {
-    console.log(selectedHymn, "as selected hymn")
-  }, [selectedHymn])
-  
+    console.log(selectedHymn, "as selected hymn");
+  }, [selectedHymn]);
 
-  
   const mapped = returnedHymn.map((item, index) => {
     if (returnedHymn.length === 0) {
       return (
@@ -78,7 +66,7 @@ const HymnSelect = ({navigation}) => {
 
   return (
     <View style={styles.body}>
-       <View style={styles.top}>
+      <View style={styles.top}>
         <TextInput
           style={styles.input}
           onChangeText={(e) => searchHymn(e)}
@@ -88,10 +76,10 @@ const HymnSelect = ({navigation}) => {
       </View>
       {mapped}
     </View>
-  )
-}
+  );
+};
 
-export default HymnSelect
+export default HymnSelect;
 
 const styles = StyleSheet.create({
   body: {
@@ -122,11 +110,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     marginTop: 20,
-    marginLeft:'10%',
+    marginLeft: "10%",
     justifyContent: "center",
     alignItems: "center",
   },
   suggestText: {
     color: "whitesmoke",
   },
-})
+});

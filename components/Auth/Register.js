@@ -1,19 +1,13 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Linking,
-  Image,
   TextInput,
   TouchableOpacity,
   ScrollView,
-  FlatList,
-  SafeAreaView,
-  LogBox,
   Alert,
 } from "react-native";
 
@@ -55,93 +49,86 @@ const Register = ({ navigation }) => {
       </View>
     ) : null;
 
-    const validateEmail = async() => {
-      if (
-        !firstName ||
-        !lastName ||
-        !phoneNumber ||
-        !userRole ||
-        userRole == "" ||
-        !emailAddress ||
-        churchBranch == ''
-      ){
-        Alert.alert(
-          `ERROR!!!`,
-          `It seems you are mising something. Please check the information provided and try again`,
-          [
-            //   {
-            //     text: "Cancel",
-            //     onPress: () => console.log("Cancel Pressed"),
-            //     style: "cancel"
-            //   },
-            { text: "OK", onPress: () => console.log("OK Pressed") },
-          ]
-        );
-        return;
-      }
-      if (password !== confirmPassword) {
-        Alert.alert(`ERROR!!!`, `Sorry, mismatched credentials!`, [
+  const validateEmail = async () => {
+    if (
+      !firstName ||
+      !lastName ||
+      !phoneNumber ||
+      !userRole ||
+      userRole == "" ||
+      !emailAddress ||
+      churchBranch == ""
+    ) {
+      Alert.alert(
+        `ERROR!!!`,
+        `It seems you are mising something. Please check the information provided and try again`,
+        [
           //   {
           //     text: "Cancel",
           //     onPress: () => console.log("Cancel Pressed"),
           //     style: "cancel"
           //   },
           { text: "OK", onPress: () => console.log("OK Pressed") },
-        ]);
-        return;
-      }
-      try {
-        setBtnMsg("Registering, please wait...");
-        const res = await fetch("https://tvccserver.vercel.app/validateemail", {
-          body: JSON.stringify({
-            firstName: firstName,
-            lastName: lastName,
-            fullName: `${firstName} ${lastName}`,
-            phoneNumber: phoneNumber,
-            userRole: userRole,
-            password: password,
-            churchBranch: churchBranch,
-            emailAddress: emailAddress,
-            userDepartment:
-              userRole == "member"
-                ? (userDepartment = null)
-                : (userDepartment = {
-                    exco: isExco,
-                    deptName: userDepartment,
-                    churchBranch,
-                  }),
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-        });
-        const data = await res.json()
-        if(data.message !== 'message is on its way!'){
-          console.log(data.message)
-            // setSignupbtnEnabler(false)
-            setBtnMsg("Sign Up")
-            alert(data.message)
-           return;
-        } 
-        setShowConfirm(true)
-        setBtnMsg("Proceed to sign up")
-        return 
-
-      } catch (error) {
-        
-      }
-    }
-
-  const handleSubmit = async () => {
-    if(!code){
-      Alert.alert(
-        `ERROR!!!`,
-        `Input Code And Try Again.`,
-        [
-          { text: "OK", onPress: () => console.log("OK Pressed") },
         ]
       );
+      return;
+    }
+    if (password !== confirmPassword) {
+      Alert.alert(`ERROR!!!`, `Sorry, mismatched credentials!`, [
+        //   {
+        //     text: "Cancel",
+        //     onPress: () => console.log("Cancel Pressed"),
+        //     style: "cancel"
+        //   },
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
+      return;
+    }
+    try {
+      setBtnMsg("Registering, please wait...");
+      const res = await fetch("https://tvccserver.vercel.app/validateemail", {
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          fullName: `${firstName} ${lastName}`,
+          phoneNumber: phoneNumber,
+          userRole: userRole,
+          password: password,
+          churchBranch: churchBranch,
+          emailAddress: emailAddress,
+          userDepartment:
+            userRole == "member"
+              ? (userDepartment = null)
+              : (userDepartment = {
+                  exco: isExco,
+                  deptName: userDepartment,
+                  churchBranch,
+                }),
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      });
+      const data = await res.json();
+      if (data.message !== "message is on its way!") {
+        console.log(data.message);
+        // setSignupbtnEnabler(false)
+        setBtnMsg("Sign Up");
+        alert(data.message);
+        return;
+      }
+      setShowConfirm(true);
+      setBtnMsg("Proceed to sign up");
+      return;
+    } catch (error) {}
+  };
+
+  const handleSubmit = async () => {
+    if (!code) {
+      Alert.alert(`ERROR!!!`, `Input Code And Try Again.`, [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
       return;
     }
     if (
@@ -151,7 +138,7 @@ const Register = ({ navigation }) => {
       !userRole ||
       userRole == "" ||
       !emailAddress ||
-      churchBranch == ''
+      churchBranch == ""
     ) {
       // if(!firstName){
 
@@ -180,96 +167,101 @@ const Register = ({ navigation }) => {
         ]);
         return;
       } else {
+        try {
+          setBtnMsg("Registering, please wait...");
+          const res = await fetch(
+            `https://tvccserver.vercel.app/signup?code=${code}`,
+            {
+              body: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                fullName: `${firstName} ${lastName}`,
+                phoneNumber: phoneNumber,
+                userRole: userRole,
+                password: password,
+                churchBranch: churchBranch,
+                emailAddress: emailAddress,
+                userDepartment:
+                  userRole == "member"
+                    ? (userDepartment = null)
+                    : (userDepartment = {
+                        exco: isExco,
+                        deptName: userDepartment,
+                        churchBranch,
+                      }),
+              }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+              method: "POST",
+            }
+          );
 
-          try {
-            
-        setBtnMsg("Registering, please wait...");
-        const res = await fetch(`https://tvccserver.vercel.app/signup?code=${code}`, {
-          body: JSON.stringify({
-            firstName: firstName,
-            lastName: lastName,
-            fullName: `${firstName} ${lastName}`,
-            phoneNumber: phoneNumber,
-            userRole: userRole,
-            password: password,
-            churchBranch: churchBranch,
-            emailAddress: emailAddress,
-            userDepartment:
-              userRole == "member"
-                ? (userDepartment = null)
-                : (userDepartment = {
-                    exco: isExco,
-                    deptName: userDepartment,
-                    churchBranch,
-                  }),
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-        });
+          const result = await res.json();
 
-        const result = await res.json();
-
-        if (result.success === true) {
-          //  router.push("/login")
-          Alert.alert(`CONGRATULATIONS!!!`, `${JSON.stringify(result.message)}`, [
+          if (result.success === true) {
+            //  router.push("/login")
+            Alert.alert(
+              `CONGRATULATIONS!!!`,
+              `${JSON.stringify(result.message)}`,
+              [
+                {
+                  text: "OK",
+                  onPress: () => navigation.replace("Login"),
+                },
+              ]
+            );
+            setBtnMsg("Login success");
+            return;
+          }
+          Alert.alert(`ERROR!!!`, `${JSON.stringify(result.message)}`, [
             {
               text: "OK",
-              onPress: () =>
-                navigation.replace("Login")
+              onPress: () => console.log(""),
             },
           ]);
-          setBtnMsg("Login success");
+          setBtnMsg("Proceed to sign up");
           return;
-        }
-        Alert.alert(`ERROR!!!`, `${JSON.stringify(result.message)}`, [
-          {
-            text: "OK",
-            onPress: () =>
-              console.log('')
-          },
-        ]);
-        setBtnMsg("Proceed to sign up");
-        return;
-          } catch (error) {
-            Alert.alert(`ERROR!!!`, `Internal Server Error. Please try again later.`, [
+        } catch (error) {
+          Alert.alert(
+            `ERROR!!!`,
+            `Internal Server Error. Please try again later.`,
+            [
               {
                 text: "OK",
-                onPress: () =>
-                  console.log('')
+                onPress: () => console.log(""),
               },
-            ]);
-            setShowConfirm(false);
-              setBtnMsg("Sign Up");
-              console.log(error)
-
-          }
+            ]
+          );
+          setShowConfirm(false);
+          setBtnMsg("Sign Up");
+          console.log(error);
+        }
       }
     }
   };
 
   const showConfirmArea = (
     <View style={styles.confirmArea}>
-         <Text style={styles.info}>
-            {" "}
-              One more step, Check your inbox and put code here.
-          </Text>
-          <TextInput
-            onChangeText={(e) => setCode(e)}
-            style={styles.confirmInput}
-            keyboardType='numeric'
-            underlineColorAndroid='transparent'
-            placeholder="What's the code?"
-          />
-           <TouchableOpacity onPress={handleSubmit} style={styles.Confirmbtn}>
-            <Text style={styles.ConfirmbtnText}>{btnMsg}</Text>
-          </TouchableOpacity>
+      <Text style={styles.info}>
+        {" "}
+        One more step, Check your inbox and put code here.
+      </Text>
+      <TextInput
+        onChangeText={(e) => setCode(e)}
+        style={styles.confirmInput}
+        keyboardType="numeric"
+        underlineColorAndroid="transparent"
+        placeholder="What's the code?"
+      />
+      <TouchableOpacity onPress={handleSubmit} style={styles.Confirmbtn}>
+        <Text style={styles.ConfirmbtnText}>{btnMsg}</Text>
+      </TouchableOpacity>
     </View>
-  )
+  );
 
-  if(showConfirm){
-    return showConfirmArea
+  if (showConfirm) {
+    return showConfirmArea;
   }
 
   return (
@@ -301,11 +293,13 @@ const Register = ({ navigation }) => {
             placeholder="Email Address"
           />
 
-           <View style={styles.roleBox}>
+          <View style={styles.roleBox}>
             <Picker
               style={styles.role}
               selectedValue={churchBranch}
-              onValueChange={(itemValue, itemIndex) => setChurchBranch(itemValue)}
+              onValueChange={(itemValue, itemIndex) =>
+                setChurchBranch(itemValue)
+              }
             >
               <Picker.Item label="Church Branch" value="" />
               <Picker.Item label="Lagos Branch" value="lagos_branch" />
@@ -426,14 +420,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
   },
-  confirmArea:{
+  confirmArea: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#3464eb",
     minHeight: "100%",
     marginBottom: 50,
   },
-  confirmInput:{
+  confirmInput: {
     backgroundColor: "white",
     width: "80%",
     height: 40,
@@ -441,11 +435,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderRadius: 10,
   },
-  ConfirmbtnText:{
+  ConfirmbtnText: {
     fontSize: 17,
     color: "black",
   },
-  Confirmbtn:{
+  Confirmbtn: {
     backgroundColor: "white",
     borderRadius: 10,
     width: "80%",

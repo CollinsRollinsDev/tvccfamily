@@ -1,17 +1,6 @@
 import React from "react";
-import { useState } from "react";
-import Header from "../../Header/Header";
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  Linking,
-  Image,
-  TextInput,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 
 const Location = () => {
   return (
@@ -25,19 +14,18 @@ const Location = () => {
           />
         </View>
 
-
         <View style={styles.words}>
-        <Text style={styles.heading}>Benin HeadQuater</Text>
-        <Text style={styles.content}>
-          bla bla bla bla bla bla bla bla bla bla bla bla bla
-        </Text>
+          <Text style={styles.heading}>Benin HeadQuater</Text>
+          <Text style={styles.content}>
+            bla bla bla bla bla bla bla bla bla bla bla bla bla
+          </Text>
 
-        <Text style={styles.heading}>Lagos Branch</Text>
-        <Text style={styles.content}>
-          No 6, Enilolobo Street, Beside Dopemu Market, Agege, Lagos, Nigeria, West-Africa.
-        </Text>
-
-      </View>
+          <Text style={styles.heading}>Lagos Branch</Text>
+          <Text style={styles.content}>
+            No 6, Enilolobo Street, Beside Dopemu Market, Agege, Lagos, Nigeria,
+            West-Africa.
+          </Text>
+        </View>
       </ScrollView>
     </View>
   );

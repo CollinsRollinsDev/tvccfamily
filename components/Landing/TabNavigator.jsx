@@ -1,29 +1,10 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  Linking,
-  TextInput,
-  Image,
-} from "react-native";
-import Menus from "./Menus";
-import About from "../Landing/Nested/About";
+import { StyleSheet } from "react-native";
 import Bible from "./Nested/Bible";
 import Profile_Settings from "../Profile_Seetings/Profile_Settings";
-import HomePage from './HomePage';
-import ReadPage from "../ReadBiblePage/ReadPage";
+import HomePage from "./HomePage";
 import Event from "../Events/Event";
-import AddEvent from "../Events/AddEvent";
-import Notes from "./Nested/Notes";
-import Note from "./Nested/Note";
-import AddNote from './Nested/AddNote'
-import Login from '../Auth/Login';
-import Register from '../Auth/Register';
-import UpdateNote from "./Nested/UpdateNote";
-import Notification from '../Notification/Notification'
+import Notification from "../Notification/Notification";
 import Payment from "../Payment/Payment";
 
 // import { createNativeTabNavigator } from "@react-navigation/native-Tab";
@@ -31,62 +12,81 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSelector, useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 // const Tab = createNativeTabNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = ({ navigation }) => {
-
   const { userDetails } = useSelector((state) => state.useTheReducer);
   return (
     <>
       <Tab.Navigator
-      screenOptions={({route})=> ({
-          tabBarIcon:({focused, size, color})=>{
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, size, color }) => {
             let iconName;
-            if(route.name === "HomePage"){
-                iconName = 'home';
-                size = focused ? 20 : 17;
-            } else if(route.name === "Bible"){
-                iconName = 'bible';
-                size = focused ? 20 : 17;
-                color = focused ? 'brown' : 'black'
-            } else if(route.name === "Event"){
-                iconName = 'calendar-alt';
-                size = focused ? 20 : 17;
-                color = focused ? 'brown' : 'black'
-            } else if(route.name === "Payment"){
-                iconName = 'money-check-alt';
-                size = focused ? 20 : 17;
-                color = focused ? 'brown' : 'black'
-            } else if(route.name === "Profile"){
-                iconName = 'user-alt';
-                size = focused ? 20 : 17;
-                color = focused ? 'brown' : 'black'
-            }else if(route.name === "Notification"){
-              iconName = 'bell';
+            if (route.name === "HomePage") {
+              iconName = "home";
               size = focused ? 20 : 17;
-              color = focused ? 'brown' : 'black'
-          }
-            return (
-                <FontAwesome5 name={iconName} size={size} color={color}/>
-            )
-
+            } else if (route.name === "Bible") {
+              iconName = "bible";
+              size = focused ? 20 : 17;
+              color = focused ? "brown" : "black";
+            } else if (route.name === "Event") {
+              iconName = "calendar-alt";
+              size = focused ? 20 : 17;
+              color = focused ? "brown" : "black";
+            } else if (route.name === "Payment") {
+              iconName = "money-check-alt";
+              size = focused ? 20 : 17;
+              color = focused ? "brown" : "black";
+            } else if (route.name === "Profile") {
+              iconName = "user-alt";
+              size = focused ? 20 : 17;
+              color = focused ? "brown" : "black";
+            } else if (route.name === "Notification") {
+              iconName = "bell";
+              size = focused ? 20 : 17;
+              color = focused ? "brown" : "black";
+            }
+            return <FontAwesome5 name={iconName} size={size} color={color} />;
           },
-          headerMode: 'screen',
-        headerTintColor: 'whitesmoke',
-        headerStyle: { backgroundColor: '#3464eb' },
-          
-      })}
+          headerMode: "screen",
+          headerTintColor: "whitesmoke",
+          headerStyle: { backgroundColor: "#3464eb" },
+        })}
       >
-            <Tab.Screen name="HomePage" component={HomePage} options={{ headerShown: false }}/>
-            <Tab.Screen name="Bible" component={Bible}  options={{ title: "Bible KJV"}}/>
-            <Tab.Screen name="Event" component={Event} options={{ title:"Events"}}/>
-            <Tab.Screen name="Notification" component={Notification} options={{title:"Notifications"}}/>
-            <Tab.Screen name="Payment" component={Payment} options={{title:"Payment"}}/>
-            <Tab.Screen name="Profile" component={Profile_Settings} options={{ headerShown: false }}/>
-        </Tab.Navigator>
+        <Tab.Screen
+          name="HomePage"
+          component={HomePage}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Bible"
+          component={Bible}
+          options={{ title: "Bible KJV" }}
+        />
+        <Tab.Screen
+          name="Event"
+          component={Event}
+          options={{ title: "Events" }}
+        />
+        <Tab.Screen
+          name="Notification"
+          component={Notification}
+          options={{ title: "Notifications" }}
+        />
+        <Tab.Screen
+          name="Payment"
+          component={Payment}
+          options={{ title: "Payment" }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={Profile_Settings}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
     </>
   );
 };

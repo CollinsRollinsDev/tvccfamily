@@ -30,13 +30,13 @@ const HymnRead = ({ route, navigation }) => {
             </Text>
           ))}
         </View>
-        {currentHymn?.chorus.length > 0 &&
-            <View style={styles.chorusBox}>
-        {  currentHymn.chorus.map((c) => (
+        {currentHymn?.chorus.length > 0 && (
+          <View style={styles.chorusBox}>
+            {currentHymn.chorus.map((c) => (
               <Text style={styles.chorusText}>{c}</Text>
-          ))}
-            </View>
-          }
+            ))}
+          </View>
+        )}
       </>
     );
   });
@@ -46,9 +46,7 @@ const HymnRead = ({ route, navigation }) => {
       <View style={styles.titleSpace}>
         <Text style={styles.hymnTitle}>{title}</Text>
       </View>
-      <ScrollView>
-        {mapped}
-      </ScrollView>
+      <ScrollView>{mapped}</ScrollView>
     </View>
   );
 };

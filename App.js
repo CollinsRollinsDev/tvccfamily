@@ -7,7 +7,7 @@ import {
   Button,
   Linking,
   TextInput,
-  Platform 
+  Platform,
 } from "react-native";
 import { useState, useEffect } from "react";
 import Lunch from "./components/Lunch/Lunch.js";
@@ -32,21 +32,7 @@ export default function App() {
   return (
     <Provider store={Store}>
       <View style={styles.main}>
-        {/* <Lunch /> */}
-        {/* <Login /> */}
-        {/* <HomePage /> */}
-        {/* <About /> */}
-        {/* <Bible /> */}
-        {/* <ReadPage /> */}
-        {/* <Event /> */}
-        {/* <Notes /> */}
-        {/* <AddEvent /> */}
-        {/* <UpdateNote/> */}
         <Index />
-        {/* <Location />         */}
-        {/* <ReadNotifications /> */}
-        {/* <Register /> */}
-        {/* <Profile_Settings /> */}
       </View>
     </Provider>
   );

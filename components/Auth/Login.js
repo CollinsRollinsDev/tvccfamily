@@ -4,21 +4,13 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Linking,
-  Image,
   TextInput,
   TouchableOpacity,
-  ScrollView,
-  FlatList,
-  SafeAreaView,
-  LogBox,
   Alert,
-  RefreshControl,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserDetails } from "../../reduxStore/actions";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -62,7 +54,7 @@ const Login = ({ navigation }) => {
 
       if (data.success == true) {
         let user_data = data.details;
-        console.log("userId from login page:" ,user_data.id)
+        console.log("userId from login page:", user_data.id);
         await AsyncStorage.setItem("userProfile", JSON.stringify(user_data));
         dispatch(setUserDetails(user_data));
         //     // console.log(user_data)
@@ -83,18 +75,18 @@ const Login = ({ navigation }) => {
     }
   };
 
-  const checkAuth = async() => {
+  const checkAuth = async () => {
     const item = await AsyncStorage.getItem("userProfile");
-    if(item != null){
+    if (item != null) {
       dispatch(setUserDetails(JSON.parse(item)));
       navigation.navigate("TabNavigator");
-      console.log(userDetails)
+      console.log(userDetails);
     }
-  }
+  };
 
   useEffect(() => {
     checkAuth();
-  }, [])
+  }, []);
 
   // expo install @react-native-async-storage/async-storage
 

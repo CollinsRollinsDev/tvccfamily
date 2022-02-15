@@ -1,12 +1,8 @@
 import React from "react";
-import { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Linking,
-  TextInput,
 } from "react-native";
 
 const Header = ({name, leftSide}) => {

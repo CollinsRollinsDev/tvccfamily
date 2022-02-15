@@ -1,21 +1,13 @@
 import React from "react";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Linking,
-  Image,
   TextInput,
   TouchableOpacity,
   ScrollView,
-  FlatList,
-  SafeAreaView,
-  LogBox,
   Alert,
-  RefreshControl,
-  CustomButton,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserDetails } from "../../reduxStore/actions";
@@ -49,8 +41,8 @@ const Profile_Settings = () => {
   const [password, setPassword] = useState();
   const [showPasswordInput, setShowPasswordInput] = useState(false);
   const [requestingDept, setRequestingDept] = useState();
-  const [btnMsg, setBtnMsg] = useState("Proceed")
-  const [churchBranch, setChurchBranch] = useState()
+  const [btnMsg, setBtnMsg] = useState("Proceed");
+  const [churchBranch, setChurchBranch] = useState();
 
   const handleEditDynamic = async () => {
     editableText == "Edit Profile"
@@ -58,75 +50,102 @@ const Profile_Settings = () => {
       : setEditableText("Edit Profile");
     editable ? setEditable(false) : setEditable(true);
   };
-  const check = userDetails.userDepartment.filter(data => data.deptName === requestingDept)
+  const check = userDetails.userDepartment.filter(
+    (data) => data.deptName === requestingDept
+  );
   const handleSaving = async () => {
-    const isUserBranch = await userDetails?.churchBranch.filter(branch => branch === churchBranch);
-    if(isUserBranch.length === 0){
+    const isUserBranch = await userDetails?.churchBranch.filter(
+      (branch) => branch === churchBranch
+    );
+    if (isUserBranch.length === 0) {
       Alert.alert(`Not sent`, `This is not your branch!`, [
-        { text: "OK", onPress: () => console.log("not sent due to user error") },
+        {
+          text: "OK",
+          onPress: () => console.log("not sent due to user error"),
+        },
       ]);
       return;
     }
-    if(check.length >= 1){
+    if (check.length >= 1) {
       Alert.alert(`Not sent`, `You already belong to this group....`, [
-        { text: "OK", onPress: () => console.log("not sent due to user error") },
+        {
+          text: "OK",
+          onPress: () => console.log("not sent due to user error"),
+        },
       ]);
-    } else{
+    } else {
       // proceed with updating
       !showPasswordInput
-      ? setShowPasswordInput(true)
-      : setShowPasswordInput(false);
-    if (showPasswordInput && password) {
-      setEditableText("Processing");
-      const res = await fetch("https://tvccserver.vercel.app/updateuser", {
-        body: JSON.stringify({
-          id: userDetails.id,
-          firstName: firstName,
-          lastName: lastName,
-          emailAddress: email,
-          phoneNumber: phoneNumber,
-          churchBranch,
-          password: password,
-          requestingDept: requestingDept == '' ? null : requestingDept
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "PATCH",
-      });
+        ? setShowPasswordInput(true)
+        : setShowPasswordInput(false);
+      if (showPasswordInput && password) {
+        setEditableText("Processing");
+        const res = await fetch("https://tvccserver.vercel.app/updateuser", {
+          body: JSON.stringify({
+            id: userDetails.id,
+            firstName: firstName,
+            lastName: lastName,
+            emailAddress: email,
+            phoneNumber: phoneNumber,
+            churchBranch,
+            password: password,
+            requestingDept: requestingDept == "" ? null : requestingDept,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "PATCH",
+        });
 
-      const data = await res.json();
-      if (data.success === true) {
-        let user_data = data.data;
-        await AsyncStorage.setItem("userProfile", JSON.stringify(user_data));
-        dispatch(setUserDetails(user_data));
-        // console.log(user_data)
+        const data = await res.json();
+        if (data.success === true) {
+          let user_data = data.data;
+          await AsyncStorage.setItem("userProfile", JSON.stringify(user_data));
+          dispatch(setUserDetails(user_data));
+          // console.log(user_data)
+          setEditableText("Cancel Edit");
+          setEditable(false);
+          setShowPasswordInput(false);
+          Alert.alert(`Done!`, `${data.message}`, [
+            { text: "OK", onPress: () => console.log("done") },
+          ]);
+          return;
+        }
         setEditableText("Cancel Edit");
-        setEditable(false);
-        setShowPasswordInput(false);
         Alert.alert(`Done!`, `${data.message}`, [
           { text: "OK", onPress: () => console.log("done") },
-        ])
+        ]);
         return;
       }
-      setEditableText("Cancel Edit");
-      Alert.alert(`Done!`, `${data.message}`, [
-        { text: "OK", onPress: () => console.log("done") },
-      ]);
-      return;
-    }
     }
   };
 
-  const currentDepartments = userDetails.userDepartment ? userDetails.userDepartment.map((dept, index) => {
-    return (
-      <View key={index} style={styles.depts}>
-        <Text style={styles.deptText}>Dept name: {dept.deptName === "media_department" ? 'Media Department' : dept.deptName === "choir_department" ? 'Choir Departmnt' : dept.deptName === "ministers_department" ? 'Ministers Department' : dept.deptName === "ushering_department" ? 'Ushering Department' : dept.deptName === "worker" ? 'Workers' : null}</Text>
-        <Text style={styles.deptText}>Exco? {dept.exco === true ? 'true' : 'false'}</Text>
-        <Text style={styles.deptText}>Position: {dept.position}</Text>
-      </View>
-    );
-  }): null;
+  const currentDepartments = userDetails.userDepartment
+    ? userDetails.userDepartment.map((dept, index) => {
+        return (
+          <View key={index} style={styles.depts}>
+            <Text style={styles.deptText}>
+              Dept name:{" "}
+              {dept.deptName === "media_department"
+                ? "Media Department"
+                : dept.deptName === "choir_department"
+                ? "Choir Departmnt"
+                : dept.deptName === "ministers_department"
+                ? "Ministers Department"
+                : dept.deptName === "ushering_department"
+                ? "Ushering Department"
+                : dept.deptName === "worker"
+                ? "Workers"
+                : null}
+            </Text>
+            <Text style={styles.deptText}>
+              Exco? {dept.exco === true ? "true" : "false"}
+            </Text>
+            <Text style={styles.deptText}>Position: {dept.position}</Text>
+          </View>
+        );
+      })
+    : null;
 
   return (
     <View style={styles.body}>
@@ -210,12 +229,12 @@ const Profile_Settings = () => {
               />
             </View>
 
-            {
-                !editable ? <View style={styles.myDept}>
+            {!editable ? (
+              <View style={styles.myDept}>
                 <Text style={styles.myDeptText}>My Departments</Text>
                 {currentDepartments}
-              </View> : null
-            }
+              </View>
+            ) : null}
 
             {showPasswordInput ? (
               <View style={styles.individualBox}>
@@ -254,10 +273,7 @@ const Profile_Settings = () => {
                   label="Media Department"
                   value="media_department"
                 />
-                 <Picker.Item
-                  label="Workers"
-                  value="worker"
-                />
+                <Picker.Item label="Workers" value="worker" />
               </Picker>
             </View>
 
@@ -270,10 +286,7 @@ const Profile_Settings = () => {
                 }
               >
                 <Picker.Item label="Which Church Branch?" value="" />
-                <Picker.Item
-                  label="Lagos Branch"
-                  value="lagos_branch"
-                />
+                <Picker.Item label="Lagos Branch" value="lagos_branch" />
                 <Picker.Item
                   label="HeadQuater Benin"
                   value="benin_headquater"
@@ -299,7 +312,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     backgroundColor: "#3464eb",
-    paddingTop:30
+    paddingTop: 30,
   },
 
   intro: {
@@ -419,11 +432,11 @@ const styles = StyleSheet.create({
     color: "black",
   },
   depts: {
-      backgroundColor: 'white',
-      borderWidth: 1, 
-      borderRadius:10,
-      marginTop: 10,
-      padding: 5
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderRadius: 10,
+    marginTop: 10,
+    padding: 5,
   },
   deptText: {},
   myDept: {

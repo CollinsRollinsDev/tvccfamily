@@ -1,28 +1,14 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  Linking,
-  TextInput,
-  Image,
-  Platform,
-} from "react-native";
+import { StyleSheet, Text, View, Image, Platform } from "react-native";
 import Menus from "./Menus";
-import About from "../Landing/Nested/About";
-import Bible from "./Nested/Bible";
-import Profile_Settings from "../Profile_Seetings/Profile_Settings";
 
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSelector, useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Device from "expo-device";
 import * as Notifications from "expo-notifications";
-import {setIsNotification} from '../../reduxStore/actions';
+import { setIsNotification } from "../../reduxStore/actions";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -134,26 +120,28 @@ const HomePage = ({ navigation }) => {
     initializeNotepadlocalLibrary();
   }, []);
 
-  const { userDetails, isNotification } = useSelector((state) => state.useTheReducer);
+  const { userDetails, isNotification } = useSelector(
+    (state) => state.useTheReducer
+  );
   const dispatch = useDispatch();
-  const checkforNotification = async() => {
+  const checkforNotification = async () => {
     try {
-      const res = await fetch(`https://tvccserver.vercel.app/checkNotification?emailAddress=${userDetails.emailAddress}`);
-      const {isThereNotification} = await res.json();
-      dispatch(setIsNotification(isThereNotification))
-    } catch (error) {
-      
-    }
-  }
+      const res = await fetch(
+        `https://tvccserver.vercel.app/checkNotification?emailAddress=${userDetails.emailAddress}`
+      );
+      const { isThereNotification } = await res.json();
+      dispatch(setIsNotification(isThereNotification));
+    } catch (error) {}
+  };
   useEffect(() => {
     // const x = setInterval(() => {
-      userDetails?.emailAddress && checkforNotification();
+    userDetails?.emailAddress && checkforNotification();
     // }, 5000);
     // return () => {
     //   x
     // }
-  }, [])
-  
+  }, []);
+
   return (
     <>
       <View style={styles.body}>
@@ -190,7 +178,7 @@ export default HomePage;
 
 const styles = StyleSheet.create({
   body: {
-    paddingTop:30,
+    paddingTop: 30,
     flex: 1,
     justifyContent: "flex-start",
     backgroundColor: "whitesmoke",
@@ -247,7 +235,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     position: "absolute",
     marginLeft: "2%",
-    marginTop:'2%',
+    marginTop: "2%",
     fontSize: 17,
     color: "white",
     fontWeight: "bold",

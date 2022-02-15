@@ -1,32 +1,17 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import Header from "../../Header/Header";
-// import { SearchBar } from 'react-native-elements';
 import { Picker } from "@react-native-picker/picker";
 import scriptures from "../../../assets/newBible.json";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setCurrentBook,
-  setCurrentChapter,
-  setCurrentVerse,
-  setCurrentScripture,
-} from "../../../reduxStore/actions";
-import Slider from 'react-slick'
-import Slick from 'react-native-slick';
 
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
-  Button,
-  Linking,
-  Image,
   TextInput,
   TouchableOpacity,
   ScrollView,
   FlatList,
-  SafeAreaView,
   LogBox,
 } from "react-native";
 import SelectTestament from "./SelectTestament";
@@ -35,7 +20,6 @@ import useSafeState from "react-use-safe-state";
 const updateSearch = () => {};
 
 const Bible = ({ navigation }) => {
-
   const { currentBook, currentChapter, currentVerse, currentScripture } =
     useSelector((state) => state.useTheReducer);
   // const state = useSelector(state => state.state)
@@ -55,46 +39,51 @@ const Bible = ({ navigation }) => {
   let [verseSelected, setVerseSelected] = useState(null);
   let [testamantPicked, setTestamentPicked] = useState(null);
   // let [refreshChapter, setRefreshChapter] = useState();
-  
+
   let testamentIndex = 0;
 
   useEffect(() => {
-    testamantPicked === "newTestament" ? testamentIndex = 0 : testamentIndex = 1;
-    testamantPicked === "newTestament" ? setSelectedBook("Matthew") : setSelectedBook("Genesis")
-  }, [testamantPicked])
-  
+    testamantPicked === "newTestament"
+      ? (testamentIndex = 0)
+      : (testamentIndex = 1);
+    testamantPicked === "newTestament"
+      ? setSelectedBook("Matthew")
+      : setSelectedBook("Genesis");
+  }, [testamantPicked]);
 
   const displayOldTestanmentMapped = scriptures[0].books.map((book, index) => {
-      return (
-          <Picker.Item key={index} label={book.name} value={book.name} />
-      )
-  })
-  
+    return <Picker.Item key={index} label={book.name} value={book.name} />;
+  });
+
   const displayNewTestanmentMapped = scriptures[1].books.map((book, index) => {
-      return (
-          <Picker.Item key={index} label={book.name} value={book.name} />
-      )
-  })
+    return <Picker.Item key={index} label={book.name} value={book.name} />;
+  });
 
   // useEffect(() => {
   //   const set
   // }, [selectedBook])
   const handleChapterPress = (number) => {
-    setSelectedChapter(prevState => prevState = number);
+    setSelectedChapter((prevState) => (prevState = number));
     setDisplayChapters(false);
-
-  }
+  };
 
   const handleVersePress = (number) => {
-    setVerseSelected(prevState => prevState = number)
-    navigation.push("ReadPage", { testament: testamantPicked, book: selectedBook, chapter: selectedChapter, verse: verseSelected});
+    setVerseSelected((prevState) => (prevState = number));
+    navigation.push("ReadPage", {
+      testament: testamantPicked,
+      book: selectedBook,
+      chapter: selectedChapter,
+      verse: verseSelected,
+    });
+  };
 
-  }
-
-  const displayChaptersMapped = scriptures[testamantPicked == "newTestament" ? 1 : 0]?.books?.map((book, index) => {
-      if(book.name === selectedBook){
-        const renderChapter = book.chapters
-         return <FlatList
+  const displayChaptersMapped = scriptures[
+    testamantPicked == "newTestament" ? 1 : 0
+  ]?.books?.map((book, index) => {
+    if (book.name === selectedBook) {
+      const renderChapter = book.chapters;
+      return (
+        <FlatList
           key={index}
           contentContainerStyle={styles.grid}
           numColumns={4}
@@ -110,43 +99,48 @@ const Bible = ({ navigation }) => {
             // {displayChaptersMapped}
           )}
         />
-      }
-  })
-
-  const displayVerseMapped = (selectedBook && selectedChapter) && scriptures[testamantPicked == "newTestament" ? 1 : 0]?.books?.map((book, index) => {
-    if(book.name === selectedBook){
-      return book?.chapters?.map((item, index) => {
-        if(item?.chapter == selectedChapter){
-          return <FlatList
-          key={index}
-          contentContainerStyle={styles.grid}
-          numColumns={4}
-          data={item?.verses}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            //  console.log(item.verse)
-            <TouchableOpacity
-              onPress={() => {
-                handleVersePress(item.verse);
-              }}
-              style={styles.individualVerses}
-            >
-              <Text style={styles.numbers}>{item.verse}</Text>
-            </TouchableOpacity>
-          )}
-        />
-        }
-      })
-      
+      );
     }
-  })
+  });
 
-
+  const displayVerseMapped =
+    selectedBook &&
+    selectedChapter &&
+    scriptures[testamantPicked == "newTestament" ? 1 : 0]?.books?.map(
+      (book, index) => {
+        if (book.name === selectedBook) {
+          return book?.chapters?.map((item, index) => {
+            if (item?.chapter == selectedChapter) {
+              return (
+                <FlatList
+                  key={index}
+                  contentContainerStyle={styles.grid}
+                  numColumns={4}
+                  data={item?.verses}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={({ item }) => (
+                    //  console.log(item.verse)
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleVersePress(item.verse);
+                      }}
+                      style={styles.individualVerses}
+                    >
+                      <Text style={styles.numbers}>{item.verse}</Text>
+                    </TouchableOpacity>
+                  )}
+                />
+              );
+            }
+          });
+        }
+      }
+    );
 
   return (
     <View style={styles.body}>
       {/* <Header name="Bible" leftSide="Search" /> */}
-    
+
       <View style={styles.top}>
         <TextInput
           style={styles.input}
@@ -156,7 +150,7 @@ const Bible = ({ navigation }) => {
         />
       </View>
 
-                    {/* TODO: stop here */}
+      {/* TODO: stop here */}
 
       <SelectTestament setTestamentPicked={setTestamentPicked} />
 
@@ -170,18 +164,17 @@ const Bible = ({ navigation }) => {
           ) : null}
 
           {testamantPicked == "oldTestament" ? (
-              <View style={styles.bookArea}>
+            <View style={styles.bookArea}>
               <Picker
                 style={styles.oldBook}
                 selectedValue={selectedBook}
                 onValueChange={(itemValue, itemIndex) =>
-                  setSelectedBook(prevState=> prevState = itemValue)
+                  setSelectedBook((prevState) => (prevState = itemValue))
                 }
               >
                 {displayOldTestanmentMapped}
               </Picker>
             </View>
-            
           ) : testamantPicked == "newTestament" ? (
             <View style={styles.bookArea}>
               <Picker
@@ -200,49 +193,42 @@ const Bible = ({ navigation }) => {
             <Text style={styles.chapterDecleartion}>Chapters</Text>
           ) : null}
           {!displayChapters ? (
-              <Text style={styles.verseDecleartion}>Verses</Text>
-            ) : null}
+            <Text style={styles.verseDecleartion}>Verses</Text>
+          ) : null}
           <ScrollView>
-
-
             {/* TODO: to modify soon */}
-      
+
             <View style={styles.chapterArea}>
-              {displayChapters ? (
-                    displayChaptersMapped
-                  
-              ) : null}
+              {displayChapters ? displayChaptersMapped : null}
             </View>
 
             {/* {!displayChapters ? (
               <Text style={styles.verseDecleartion}>Verses</Text>
             ) : null} */}
 
-
-
             {/* TODO: */}
             <View style={styles.verseArea}>
-              {!displayChapters ? (
-                // <FlatList
-                //   contentContainerStyle={styles.grid}
-                //   numColumns={4}
-                //   data={verseArr ? verseArr[0].verses : null}
-                //   keyExtractor={(item, index) => index.toString()}
-                //   renderItem={({ item }) => (
-                //     //  console.log(item.verse)
-                //     <TouchableOpacity
-                //       onPress={() => {
-                //         handleVersePress(item.verse);
-                //         navigation.push("ReadPage");
-                //       }}
-                //       style={styles.individualVerses}
-                //     >
-                //       <Text style={styles.numbers}>{item.verse}</Text>
-                //     </TouchableOpacity>
-                //   )}
-                // />
-                displayVerseMapped
-              ) : null}
+              {!displayChapters
+                ? // <FlatList
+                  //   contentContainerStyle={styles.grid}
+                  //   numColumns={4}
+                  //   data={verseArr ? verseArr[0].verses : null}
+                  //   keyExtractor={(item, index) => index.toString()}
+                  //   renderItem={({ item }) => (
+                  //     //  console.log(item.verse)
+                  //     <TouchableOpacity
+                  //       onPress={() => {
+                  //         handleVersePress(item.verse);
+                  //         navigation.push("ReadPage");
+                  //       }}
+                  //       style={styles.individualVerses}
+                  //     >
+                  //       <Text style={styles.numbers}>{item.verse}</Text>
+                  //     </TouchableOpacity>
+                  //   )}
+                  // />
+                  displayVerseMapped
+                : null}
             </View>
           </ScrollView>
         </View>
@@ -303,7 +289,7 @@ const styles = StyleSheet.create({
     paddingLeft: "2%",
   },
   chapterArea: {
-      // backgroundColor: 'red',
+    // backgroundColor: 'red',
     minHeight: 50,
     width: "100%",
     marginBottom: 10,
@@ -311,7 +297,7 @@ const styles = StyleSheet.create({
     padding: "2%",
     flexDirection: "row",
     // paddingBottom: 110,
-    paddingBottom:100,
+    paddingBottom: 100,
   },
 
   verseArea: {

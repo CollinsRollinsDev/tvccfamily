@@ -1,4 +1,4 @@
-import React, {Component, memo } from "react";
+import React, { Component, memo } from "react";
 import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import { Picker } from "@react-native-picker/picker";
@@ -26,33 +26,28 @@ import moment from "moment";
 import DatePicking from "./DatePicking";
 
 const AddEvent = ({ navigation }) => {
-
-  console.log("re-rendering.....")
-
-  // let date = new Date();
-  let [date, setNewDate] = useState(new Date())
+  let [date, setNewDate] = useState(new Date());
   const [dateChoosen, setDate] = useState();
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   const [dateText, setDateText] = useState();
   const [timeText, setTimeText] = useState();
   const { currentTitle, currentPostBody, currentMinistering, userDetails } =
-  useSelector((state) => state.useTheReducer);
+    useSelector((state) => state.useTheReducer);
 
-const [name, setName] = useState();
-// const [date, setDate] = useState();
-const [host, setHost] = useState();
-const [day, setDay] = useState("1");
-const [month, setMonth] = useState("Jan");
-const [year, setYear] = useState("2021");
-const [allowViewsBy, setAllowViewsBy] = useState("all");
-const [poster, setPoster] = useState({
-  firstName: userDetails.firstName,
-  lastName: userDetails.lastName,
-  id: userDetails.id,
-});
-const [leaderAccess, setLeaderAccess] = useState();
-let [hour, setHour] = useState("00");
+  const [name, setName] = useState();
+  const [host, setHost] = useState();
+  const [day, setDay] = useState("1");
+  const [month, setMonth] = useState("Jan");
+  const [year, setYear] = useState("2021");
+  const [allowViewsBy, setAllowViewsBy] = useState("all");
+  const [poster, setPoster] = useState({
+    firstName: userDetails.firstName,
+    lastName: userDetails.lastName,
+    id: userDetails.id,
+  });
+  const [leaderAccess, setLeaderAccess] = useState();
+  let [hour, setHour] = useState("00");
   const [formattedHour, setFormattedHour] = useState("00");
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
@@ -63,11 +58,11 @@ let [hour, setHour] = useState("00");
 
   const onChange = (event, selectedDate) => {
     selectedDate && setBackupSelectedDate(selectedDate);
-    const currentDate = selectedDate || backupSelectedDate || date
+    const currentDate = selectedDate || backupSelectedDate || date;
     setShow(Platform.OS === "ios");
-    setNewDate(currentDate)
+    setNewDate(currentDate);
     let tempDate = new Date(currentDate);
-    console.log(tempDate, "as temp date")
+    console.log(tempDate, "as temp date");
     // get month,
     const newMonth = moment(tempDate.getMonth() + 1, "M").format("MMMM");
     setMonth(newMonth);
@@ -84,10 +79,12 @@ let [hour, setHour] = useState("00");
     let newHour = tempDate.getHours();
     setHour(newHour);
 
-      let Fdate = `${moment(tempDate.getMonth() + 1, "M").format("MMMM")} ${tempDate.getDate()}, ${tempDate.getFullYear()}`
+    let Fdate = `${moment(tempDate.getMonth() + 1, "M").format(
+      "MMMM"
+    )} ${tempDate.getDate()}, ${tempDate.getFullYear()}`;
     let fTime =
       "Hours:" + tempDate.getHours() + "| minutes: " + tempDate.getMinutes();
-      let FTime = `Hour:${tempDate.getHours()}  /  Minutes:${tempDate.getMinutes()}`
+    let FTime = `Hour:${tempDate.getHours()}  /  Minutes:${tempDate.getMinutes()}`;
     setDateText(Fdate);
     setTimeText(FTime);
   };
@@ -125,11 +122,9 @@ let [hour, setHour] = useState("00");
 
   useEffect(() => {
     setDate(`${month} ${day} ${year}`);
-    
   }, [month, day, year]);
 
   const handleSave = async () => {
-    
     if (allowViewsBy == "all" || allowViewsBy == "worker") {
       if (
         userDetails.accountType === "admin" &&
@@ -177,77 +172,77 @@ let [hour, setHour] = useState("00");
         );
       }
     } else {
-      
       setDate(`${month} ${day} ${year}`);
-      let allowCreate = false
-    // const result = await userDetails?.userDepartment.find(item => {
-    //   if(item.deptName === allowViewsBy && item.exco === true && churchBranch === item.churchBranch){
-    //     // allowCreate = true;
-    //   } 
-    // })
+      let allowCreate = false;
+      // const result = await userDetails?.userDepartment.find(item => {
+      //   if(item.deptName === allowViewsBy && item.exco === true && churchBranch === item.churchBranch){
+      //     // allowCreate = true;
+      //   }
+      // })
       const auth = await userDetails.userDepartment.filter((user) => {
         return user.deptName === allowViewsBy;
       });
       console.log("waiting for", auth);
       if (auth.length != 0) {
-        const result = await userDetails?.userDepartment.find(async(item) => {
+        const result = await userDetails?.userDepartment.find(async (item) => {
           console.log(item.deptName === allowViewsBy);
           console.log(item.exco === true);
           console.log(churchBranch === item.churchBranch);
           console.log(churchBranch);
           console.log(item.churchBranch);
-          if(item.deptName === allowViewsBy && item.exco === true && churchBranch === item.churchBranch){
+          if (
+            item.deptName === allowViewsBy &&
+            item.exco === true &&
+            churchBranch === item.churchBranch
+          ) {
             // allowCreate = true;
-            console.log("allowed to create")
-           
-            
-          const res = await fetch("https://tvccserver.vercel.app/event", {
-            body: JSON.stringify({
-              name: name,
-              host: host,
-              description: description,
-              date: date,
-              hour: hour,
-              minutes: minutes,
-              seconds: seconds,
-              churchBranch: churchBranch,
-              poster: poster,
-              allowViewsBy: allowViewsBy,
-              leaderAccess: leaderAccess,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-            method: "POST",
-          });
+            console.log("allowed to create");
 
-          console.log("two");
+            const res = await fetch("https://tvccserver.vercel.app/event", {
+              body: JSON.stringify({
+                name: name,
+                host: host,
+                description: description,
+                date: date,
+                hour: hour,
+                minutes: minutes,
+                seconds: seconds,
+                churchBranch: churchBranch,
+                poster: poster,
+                allowViewsBy: allowViewsBy,
+                leaderAccess: leaderAccess,
+              }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+              method: "POST",
+            });
 
-          const result = await res.json();
-          if (result.success == true) {
-            Alert.alert(
-              `Event Created!`,
-              `Event with name "${name}" to host on ${month} ${day} ${year} at ${hour}:${minutes} has been created successfully.`,
-              [{ text: "OK", onPress: () => navigation.replace("Event") }]
-            );
+            console.log("two");
+
+            const result = await res.json();
+            if (result.success == true) {
+              Alert.alert(
+                `Event Created!`,
+                `Event with name "${name}" to host on ${month} ${day} ${year} at ${hour}:${minutes} has been created successfully.`,
+                [{ text: "OK", onPress: () => navigation.replace("Event") }]
+              );
+            } else {
+              console.log("else");
+              Alert.alert(`UNSUCCESSFUL!!!`, `Something went wrong`, [
+                { text: "OK", onPress: () => console.log("OK Pressed") },
+              ]);
+            }
           } else {
-            console.log("else");
-            Alert.alert(`UNSUCCESSFUL!!!`, `Something went wrong`, [
-              { text: "OK", onPress: () => console.log("OK Pressed") },
-            ]);
+            console.log("not allowed to create");
+            // You can not create event here as you are not an exco
+            Alert.alert(
+              `UNAUTHORIZED!!!`,
+              `You can only create an event in this group if you are part of the exco`,
+              [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+            );
           }
-        
-        } 
-        else {
-          console.log("not allowed to create")
-          // You can not create event here as you are not an exco
-          Alert.alert(
-            `UNAUTHORIZED!!!`,
-            `You can only create an event in this group if you are part of the exco`,
-            [{ text: "OK", onPress: () => console.log("OK Pressed") }]
-          );
-        }
-      })
+        });
       } else {
         // Oops! You dont belong to this group
         Alert.alert(`ERROR!!!`, `Opps! You do not belong to this group`, [
@@ -256,7 +251,6 @@ let [hour, setHour] = useState("00");
       }
     }
   };
-  
 
   return (
     <View style={styles.body}>
@@ -299,13 +293,23 @@ let [hour, setHour] = useState("00");
                 />
               </Picker>
             </View>
-            
+
             {/* <Text style={styles.columnFeel} >:</Text> */}
-            <TouchableOpacity onPress={() => showMode("date")} style={styles.dateBtn}>
-              <Text style={styles.dateContent}>{dateText ? dateText : 'Choose Date'}</Text>
+            <TouchableOpacity
+              onPress={() => showMode("date")}
+              style={styles.dateBtn}
+            >
+              <Text style={styles.dateContent}>
+                {dateText ? dateText : "Choose Date"}
+              </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => showMode("time")} style={styles.dateBtn}>
-              <Text style={styles.dateContent}>{timeText ? timeText : 'Choose Time'}</Text>
+            <TouchableOpacity
+              onPress={() => showMode("time")}
+              style={styles.dateBtn}
+            >
+              <Text style={styles.dateContent}>
+                {timeText ? timeText : "Choose Time"}
+              </Text>
             </TouchableOpacity>
 
             {show && (
@@ -316,12 +320,18 @@ let [hour, setHour] = useState("00");
               //   is24Hour={true}
               //   display="default"
               //   onChange={onChange}
-              // /> 
-              <DatePicking testID="dateTimePicker" date={date} mode={mode} is24Hour={true} display="default" onChange={onChange} />
+              // />
+              <DatePicking
+                testID="dateTimePicker"
+                date={date}
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={onChange}
+              />
             )}
 
             {/* <Text style={styles.columnFeel} >:</Text> */}
-
           </View>
           {/* Date area */}
 
@@ -430,7 +440,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 17,
   },
-  dateContent:{
+  dateContent: {
     color: "black",
     fontSize: 17,
   },
@@ -443,14 +453,14 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderRadius: 10,
   },
-  dateBtn:{
+  dateBtn: {
     backgroundColor: "white",
     borderRadius: 10,
     width: "80%",
     height: 40,
     justifyContent: "center",
     marginTop: 40,
-    marginBottom:20,
+    marginBottom: 20,
     alignItems: "center",
-  }
+  },
 });
