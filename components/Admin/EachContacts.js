@@ -8,38 +8,39 @@ const EachContacts = ({
   index,
   setSelectedContacts,
   selecedContacts,
-  selectAll
+  selectAll,
   // toggleCheckBox,
   // setToggleCheckBox,
   // onChangeValue,
 }) => {
   const [isSelected, setIsSelected] = useState(false);
-  const handleClick = async(newValue) => {
-    console.log(newValue)
-    await setIsSelected(newValue)
-    if(newValue == true){
-      setSelectedContacts([...selecedContacts, item])
+  const handleClick = async (newValue) => {
+    console.log(newValue);
+    await setIsSelected(newValue);
+    if (newValue == true) {
+      setSelectedContacts([...selecedContacts, item]);
       return;
     }
-    const newSelectedContacts = await selecedContacts.filter(contact => {
-      if(item != contact){
-        return contact
+    const newSelectedContacts = await selecedContacts.filter((contact) => {
+      if (item != contact) {
+        return contact;
       }
-    })
-    setSelectedContacts(newSelectedContacts)
+    });
+    setSelectedContacts(newSelectedContacts);
   };
 
   useEffect(() => {
     const unsub = setIsSelected(selectAll);
     return () => {
-      unsub
-    }
-  }, [selectAll])
-  
+      unsub;
+    };
+  }, [selectAll]);
 
   return (
     <View style={styles.eachContact}>
-      <Text>{`${item.firstName} ${item.lastName}`}</Text>
+      <Text>{`${item.firstName} ${
+        item.lastName != undefined ? item.lastName : ""
+      }`}</Text>
       <CheckBox
         disabled={false}
         value={isSelected}
@@ -53,13 +54,13 @@ export default EachContacts;
 
 const styles = StyleSheet.create({
   eachContact: {
-    flex:1,
+    flex: 1,
     height: "auto",
     width: "100%",
-    flexDirection:'row',
-    justifyContent:'space-between',
-    paddingLeft:10,
-    paddingRight:10
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingLeft: 10,
+    paddingRight: 10,
     // backgroundColor: "white",
   },
 });

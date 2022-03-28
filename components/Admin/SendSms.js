@@ -58,8 +58,6 @@ const SendSms = ({ navigation }) => {
     console.log(item, "as checked");
   };
 
-
-  
   const mappedData = myContacts.map((item, index) => {
     loading && setLoading(false)
     return (
@@ -67,25 +65,6 @@ const SendSms = ({ navigation }) => {
         {
           item.phoneNumbers ?  <EachContacts item={item} index={index} setSelectedContacts={setSelectedContacts} selecedContacts={selecedContacts} selectAll={selectAll} /> : null
         }
-        {/* {
-          item.phoneNumbers ? <BouncyCheckbox
-          size={35}
-          ref={(ref) => (bouncyCheckboxRef = ref)}
-          fillColor="white"
-          unfillColor="#3464eb"
-          text={`
-          Name: ${item.firstName ? item.firstName : ''} ${item.lastName ? item.lastName : ''}
-          Phone Number: ${item?.phoneNumbers.length > 0 ? item?.phoneNumbers[0].number : 'none'}
-          `}
-          iconStyle={{ borderColor: "white" }}
-          textStyle={{color:'white'}}
-          // disableBuiltInState={false}
-          // isChecked={false}
-           onPress={(isChecked) => {
-             handleCheck(isChecked, item);
-           }}
-         /> : null
-        } */}
      
       </View>
     );
