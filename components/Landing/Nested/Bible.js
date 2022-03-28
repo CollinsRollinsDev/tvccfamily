@@ -140,7 +140,7 @@ const Bible = ({ navigation }) => {
   return (
     <View style={styles.body}>
       {/* <Header name="Bible" leftSide="Search" /> */}
-
+{/* 
       <View style={styles.top}>
         <TextInput
           style={styles.input}
@@ -148,7 +148,7 @@ const Bible = ({ navigation }) => {
           // value={number}
           placeholder="Search Here..."
         />
-      </View>
+      </View> */}
 
       {/* TODO: stop here */}
 

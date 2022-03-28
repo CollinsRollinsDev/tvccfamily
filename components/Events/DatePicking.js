@@ -3,7 +3,7 @@ import React from 'react'
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 const DatePicking = ({testID, date, mode, is24Hour, display, onChange}) => {
-  console.log("re-rendering-date......")
+  // console.log("re-rendering-date......")
   return (
     <DateTimePicker
                 testID="dateTimePicker"

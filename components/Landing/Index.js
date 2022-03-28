@@ -35,6 +35,7 @@ import AssignLeader from "../Admin/AssignLeader";
 import { useSelector } from "react-redux";
 import HymnSelect from "../Hymn/HymnSelect";
 import HymnRead from "../Hymn/HymnRead";
+import SendSms from "../Admin/SendSms";
 
 const Stack = createNativeStackNavigator();
 const Index = () => {
@@ -76,6 +77,11 @@ const Index = () => {
           name="About"
           component={About}
           options={{ title: "About Us" }}
+        />
+        <Stack.Screen
+          name="SendSms"
+          component={SendSms}
+          options={{ title: "Send Sms" }}
         />
         <Stack.Screen
           name="Bible"

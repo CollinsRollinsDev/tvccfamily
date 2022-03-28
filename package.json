@@ -8,7 +8,9 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@freakycoder/react-native-bounceable": "^0.2.5",
     "@react-native-async-storage/async-storage": "^1.15.9",
+    "@react-native-community/checkbox": "^0.5.12",
     "@react-native-community/datetimepicker": "^5.1.0",
     "@react-native-picker/picker": "^2.1.0",
     "@react-navigation/bottom-tabs": "^6.0.9",
@@ -16,6 +18,7 @@
     "@react-navigation/native-stack": "^6.2.5",
     "axios": "^0.25.0",
     "expo": "~42.0.1",
+    "expo-contacts": "~9.2.5",
     "expo-dev-client": "~0.7.2",
     "expo-device": "~3.3.0",
     "expo-notifications": "~0.12.3",
@@ -25,6 +28,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+    "react-native-bouncy-checkbox": "^2.1.10",
     "react-native-date-picker": "^4.1.3",
     "react-native-gesture-handler": "^2.2.0",
     "react-native-paystack-webview": "^4.0.3",
@@ -33,6 +37,7 @@
     "react-native-scroll-into-view": "^2.0.2",
     "react-native-slick": "^1.6.0",
     "react-native-super-grid": "^4.2.0",
+    "react-native-svg": "^12.1.1",
     "react-native-textarea": "^1.0.4",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "^0.17.5",
@@ -49,7 +54,10 @@
     "socket.io-client": "^4.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0"
+    "@babel/core": "^7.9.0",
+    "@types/react-native": "^0.67.3"
   },
-  "private": true
+  "private": true,
+  "aws-export": "echo 'Update Expo AWS_EXPORTS secret with value: \n\n' && cat aws-exports.js |base64",
+  "eas-build-pre-install": "echo $AWS_EXPORTS | base64 -di > ./aws-exports.js"
 }

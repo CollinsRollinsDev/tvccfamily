@@ -62,7 +62,7 @@ const AddEvent = ({ navigation }) => {
     setShow(Platform.OS === "ios");
     setNewDate(currentDate);
     let tempDate = new Date(currentDate);
-    console.log(tempDate, "as temp date");
+    // console.log(tempDate, "as temp date");
     // get month,
     const newMonth = moment(tempDate.getMonth() + 1, "M").format("MMMM");
     setMonth(newMonth);
@@ -150,7 +150,7 @@ const AddEvent = ({ navigation }) => {
           method: "POST",
         });
 
-        console.log("two");
+        // console.log("two");
 
         const result = await res.json();
         if (result.success == true) {
@@ -182,21 +182,21 @@ const AddEvent = ({ navigation }) => {
       const auth = await userDetails.userDepartment.filter((user) => {
         return user.deptName === allowViewsBy;
       });
-      console.log("waiting for", auth);
+      // console.log("waiting for", auth);
       if (auth.length != 0) {
         const result = await userDetails?.userDepartment.find(async (item) => {
-          console.log(item.deptName === allowViewsBy);
-          console.log(item.exco === true);
-          console.log(churchBranch === item.churchBranch);
-          console.log(churchBranch);
-          console.log(item.churchBranch);
+          // console.log(item.deptName === allowViewsBy);
+          // console.log(item.exco === true);
+          // console.log(churchBranch === item.churchBranch);
+          // console.log(churchBranch);
+          // console.log(item.churchBranch);
           if (
             item.deptName === allowViewsBy &&
             item.exco === true &&
             churchBranch === item.churchBranch
           ) {
             // allowCreate = true;
-            console.log("allowed to create");
+            // console.log("allowed to create");
 
             const res = await fetch("https://tvccserver.vercel.app/event", {
               body: JSON.stringify({
@@ -218,7 +218,7 @@ const AddEvent = ({ navigation }) => {
               method: "POST",
             });
 
-            console.log("two");
+            // console.log("two");
 
             const result = await res.json();
             if (result.success == true) {

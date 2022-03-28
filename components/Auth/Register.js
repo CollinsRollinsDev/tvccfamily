@@ -235,7 +235,7 @@ const Register = ({ navigation }) => {
           );
           setShowConfirm(false);
           setBtnMsg("Sign Up");
-          console.log(error);
+          // console.log(error);
         }
       }
     }

@@ -74,7 +74,7 @@ const HomePage = ({ navigation }) => {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token, "as token");
+    // console.log(token, "as token");
     try {
       const res = await fetch(
         `https://tvccserver.vercel.app/addNotificationToken?emailAddress=${userDetails.emailAddress}&token=${token}`
@@ -104,7 +104,7 @@ const HomePage = ({ navigation }) => {
   const initializeNotepadlocalLibrary = async () => {
     const item = await AsyncStorage.getItem("myNotes");
     let newItem = await JSON.parse(item);
-    console.log(newItem);
+    // console.log(newItem);
 
     if (
       newItem == null ||

@@ -6,7 +6,7 @@ const Admin = ({ navigation }) => {
   const [items, setItems] = React.useState([
     { name: "Assign Leader To Group", path: "AssignLeader" },
     { name: "Assign Deputy Leader To Group", path: "" },
-    { name: "Send Message To All Members", path: "" },
+    { name: "Send Message To All Members", path: "SendSms" },
     { name: "Add An Event", path: "" },
     { name: "View Councelling Requests", path: "" },
     { name: "Sign Out", path: "" },

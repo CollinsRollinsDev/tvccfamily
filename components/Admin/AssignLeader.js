@@ -10,6 +10,7 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -29,7 +30,7 @@ const AssignLeader = ({ navigation }) => {
 
   const handleSubmit = async (e) => {
     setDisplayCurrentPerson(false);
-    console.log(e);
+    // console.log(e);
     let match = e.match(/^[a-zA-Z ]*/);
     let match2 = e.match(/\s*/);
     if (match2[0] === e) {

@@ -54,7 +54,7 @@ const Login = ({ navigation }) => {
 
       if (data.success == true) {
         let user_data = data.details;
-        console.log("userId from login page:", user_data.id);
+        // console.log("userId from login page:", user_data.id);
         await AsyncStorage.setItem("userProfile", JSON.stringify(user_data));
         dispatch(setUserDetails(user_data));
         //     // console.log(user_data)
@@ -80,7 +80,7 @@ const Login = ({ navigation }) => {
     if (item != null) {
       dispatch(setUserDetails(JSON.parse(item)));
       navigation.navigate("TabNavigator");
-      console.log(userDetails);
+      // console.log(userDetails);
     }
   };
 
