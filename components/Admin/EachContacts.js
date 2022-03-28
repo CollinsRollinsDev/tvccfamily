@@ -38,7 +38,7 @@ const EachContacts = ({
 
   return (
     <View style={styles.eachContact}>
-      <Text>{`${item.firstName} ${
+      <Text style={styles.listContact}>{`${item.firstName} ${
         item.lastName != undefined ? item.lastName : ""
       }`}</Text>
       <CheckBox
@@ -59,8 +59,14 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems:'center',
     paddingLeft: 10,
     paddingRight: 10,
     // backgroundColor: "white",
   },
+  listContact:{
+    color:'white',
+    fontSize:18,
+    fontWeight:'600'
+  }
 });

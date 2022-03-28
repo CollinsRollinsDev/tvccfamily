@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -32,10 +32,14 @@ import Location from "./Nested/Location";
 import Payment from "../Payment/Payment";
 import Admin from "../Admin/Admin";
 import AssignLeader from "../Admin/AssignLeader";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import HymnSelect from "../Hymn/HymnSelect";
 import HymnRead from "../Hymn/HymnRead";
 import SendSms from "../Admin/SendSms";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setUserDetails } from "../../reduxStore/actions.js";
+import CheckAuth from "../CheckAuth";
+import ConfirmSendSms from "../Admin/ConfirmSendSms";
 
 const Stack = createNativeStackNavigator();
 const Index = () => {
@@ -59,15 +63,23 @@ const Index = () => {
         }}
       >
         <Stack.Screen
+          name="CheckAuth"
+          component={CheckAuth}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
           name="Login"
           component={Login}
           options={{ headerShown: false }}
         />
+
         <Stack.Screen
           name="TabNavigator"
           component={TabNavigator}
           options={{ headerShown: false }}
         />
+
         <Stack.Screen
           name="HomePage"
           component={HomePage}
@@ -172,6 +184,11 @@ const Index = () => {
           name="Location"
           component={Location}
           options={{ title: "Location" }}
+        />
+        <Stack.Screen
+          name="ConfirmSendSms"
+          component={ConfirmSendSms}
+          options={{ title: "Let's Send Your Sms?" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

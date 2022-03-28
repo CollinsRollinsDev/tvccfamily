@@ -75,18 +75,18 @@ const Login = ({ navigation }) => {
     }
   };
 
-  const checkAuth = async () => {
-    const item = await AsyncStorage.getItem("userProfile");
-    if (item != null) {
-      dispatch(setUserDetails(JSON.parse(item)));
-      navigation.navigate("TabNavigator");
-      // console.log(userDetails);
-    }
-  };
+  // const checkAuth = async () => {
+  //   const item = await AsyncStorage.getItem("userProfile");
+  //   if (item != null) {
+  //     dispatch(setUserDetails(JSON.parse(item)));
+  //     navigation.navigate("TabNavigator");
+  //     // console.log(userDetails);
+  //   }
+  // };
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
+  // useEffect(() => {
+  //   checkAuth();
+  // }, []);
 
   // expo install @react-native-async-storage/async-storage
 
