@@ -20,7 +20,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package":"tvccmobileapp.collinsrollins",
+      "package":"tvccmobileappbeta.collinsrollins",
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#FFFFFF"
