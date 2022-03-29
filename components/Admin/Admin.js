@@ -1,10 +1,22 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { FlatGrid } from "react-native-super-grid";
+import betaVersion from '../../Hooks/betaVersion.js';
 
 const Admin = ({ navigation }) => {
+  // const [items, setItems] = React.useState([
+  //   { name: "Assign Leader To Group", path: "AssignLeader" },
+  //   { name: "Assign Deputy Leader To Group", path: "" },
+  //   { name: "Send Message To All Members", path: "SendSms" },
+  //   { name: "Add An Event", path: "" },
+  //   { name: "View Councelling Requests", path: "" },
+  //   { name: "Sign Out", path: "" },
+  // ]);
+
+
+  // for beta state
   const [items, setItems] = React.useState([
-    { name: "Assign Leader To Group", path: "AssignLeader" },
+    { name: "Assign Leader To Group", path: "" },
     { name: "Assign Deputy Leader To Group", path: "" },
     { name: "Send Message To All Members", path: "SendSms" },
     { name: "Add An Event", path: "" },
@@ -26,7 +38,7 @@ const Admin = ({ navigation }) => {
         spacing={10}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => item.path !== "" && navigation.push(item.path)}
+            onPress={() => item.path !== "" ? navigation.push(item.path) : betaVersion()}
             style={styles.itemContainer}
           >
             <Text style={styles.itemName}>{item.name}</Text>

@@ -59,12 +59,8 @@ export default About;
 
 const styles = StyleSheet.create({
   body: {
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     backgroundColor: "#3464eb",
     width: "100%",
-    // paddingBottom: 30,
   },
   stretch: {
     height: "100%",

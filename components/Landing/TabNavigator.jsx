@@ -13,6 +13,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSelector, useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import betaVersion from "../../Hooks/betaVersion";
 
 // const Tab = createNativeTabNavigator();
 const Tab = createBottomTabNavigator();
@@ -61,26 +62,29 @@ const TabNavigator = ({ navigation }) => {
           component={HomePage}
           options={{ headerShown: false }}
         />
-        <Tab.Screen
+        {/* commented for beta version */}
+
+        
+        {/* <Tab.Screen
           name="Bible"
           component={Bible}
           options={{ title: "Bible KJV" }}
-        />
-        <Tab.Screen
+        /> */}
+        {/* <Tab.Screen
           name="Event"
           component={Event}
           options={{ title: "Events" }}
-        />
+        /> */}
         <Tab.Screen
           name="Notification"
           component={Notification}
           options={{ title: "Notifications" }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Payment"
           component={Payment}
           options={{ title: "Payment" }}
-        />
+        /> */}
         <Tab.Screen
           name="Profile"
           component={Profile_Settings}

@@ -7,14 +7,16 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { useSelector } from "react-redux";
+import betaVersion from "../../Hooks/betaVersion";
 
 const Menus = ({ navigation }) => {
   const { isNotification } = useSelector((state) => state.useTheReducer);
+  const { userDetails } = useSelector((state) => state.useTheReducer);
+  console.log(userDetails, "as user detals");
+
   return (
     <ScrollView>
       <View style={styles.bodyMenus}>
@@ -33,11 +35,11 @@ const Menus = ({ navigation }) => {
           <FontAwesome5 name={"map-marker-alt"} size={18} color={"white"} />
           <Text style={styles.content}>Location</Text>
         </TouchableOpacity>
-        {/* 
-            <TouchableOpacity style={styles.menu}>
-            <FontAwesome5 name={'book-reader'} size={18} color={'white'}/>
-                <Text style={styles.content}>Word Bliss</Text>
-            </TouchableOpacity> */}
+
+        <TouchableOpacity onPress={() => betaVersion() } style={styles.menu}>
+          <FontAwesome5 name={"book-reader"} size={18} color={"white"} />
+          <Text style={styles.content}>Word Bliss</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => navigation.push("Notes")}
@@ -48,7 +50,8 @@ const Menus = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.push("Bible")}
+          // onPress={() => navigation.push("Bible")}
+          onPress={() => betaVersion()}
           style={styles.menu}
         >
           <FontAwesome5 name={"bible"} size={18} color={"white"} />
@@ -69,7 +72,8 @@ const Menus = ({ navigation }) => {
             </TouchableOpacity> */}
 
         <TouchableOpacity
-          onPress={() => navigation.push("Event")}
+          // onPress={() => navigation.push("Event")}
+          onPress={() => betaVersion() }
           style={styles.menu}
         >
           <FontAwesome5 name={"calendar-check"} size={18} color={"white"} />
@@ -93,13 +97,17 @@ const Menus = ({ navigation }) => {
           <Text style={styles.content}>Settings/Profile</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => navigation.push("Admin")}
-          style={styles.menu}
-        >
-          <FontAwesome5 name={"superpowers"} size={18} color={"white"} />
-          <Text style={styles.content}>Admin</Text>
-        </TouchableOpacity>
+        {userDetails.accountType === "admin" ||
+        userDetails.accountType === "sub-admin" ||
+        userDetails.accountType === "moderator" ? (
+          <TouchableOpacity
+            onPress={() => navigation.push("Admin")}
+            style={styles.menu}
+          >
+            <FontAwesome5 name={"superpowers"} size={18} color={"white"} />
+            <Text style={styles.content}>Admin</Text>
+          </TouchableOpacity>
+        ) : null}
 
         <TouchableOpacity
           onPress={() => {

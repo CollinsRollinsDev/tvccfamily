@@ -2,7 +2,6 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList,
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
@@ -10,10 +9,7 @@ import {
 } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 import * as Contacts from "expo-contacts";
-import CheckBox from "@react-native-community/checkbox";
 import EachContacts from "./EachContacts";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
-// import RNBounceable from "@freakycoder/react-native-bounceable";
 
 const SendSms = ({ navigation }) => {
   let ref = useRef();

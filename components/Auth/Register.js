@@ -84,21 +84,27 @@ const Register = ({ navigation }) => {
       ]);
       return;
     }
+    const phoneNumberLength = phoneNumber;
+    const newPhoneNumber = phoneNumberLength.slice(phoneNumber.length - 10)
+    let myPhoneNumber = `${234}${newPhoneNumber}`;
+    // console.log(234+newPhoneNumber, "phoneNumber")
     try {
       setBtnMsg("Registering, please wait...");
-      const res = await fetch("https://tvccserver.vercel.app/validateemail", {
+      console.log("going 1")
+      // const res = await fetch("https://tvccserver.vercel.app/validateemail", {
+        const res = await fetch("https://tvccserver.vercel.app/validatePhoneNumber", {
         body: JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
-          fullName: `${firstName} ${lastName}`,
-          phoneNumber: phoneNumber,
+          firstName: firstName.replace(/\s+/g, ''),
+          lastName: lastName.replace(/\s+/g, ''),
+          fullName: `${firstName.replace(/\s+/g, '')} ${lastName.replace(/\s+/g, '')}`,
+          phoneNumber: myPhoneNumber.replace(/\s+/g, ''),
           userRole: userRole,
           password: password,
           churchBranch: churchBranch,
-          emailAddress: emailAddress,
+          emailAddress: emailAddress.replace(/\s+/g, ''),
           userDepartment:
             userRole == "member"
-              ? (userDepartment = null)
+            ? (userDepartment = null)
               : (userDepartment = {
                   exco: isExco,
                   deptName: userDepartment,
@@ -110,7 +116,9 @@ const Register = ({ navigation }) => {
         },
         method: "POST",
       });
+      console.log("going 2")
       const data = await res.json();
+      console.log("going 3")
       if (data.message !== "message is on its way!") {
         console.log(data.message);
         // setSignupbtnEnabler(false)
@@ -167,20 +175,24 @@ const Register = ({ navigation }) => {
         ]);
         return;
       } else {
+        const phoneNumberLength = phoneNumber;
+        const newPhoneNumber = phoneNumberLength.slice(phoneNumber.length - 10)
+        let myPhoneNumber = `${234}${newPhoneNumber}`;
+        // console.log(234+newPhoneNumber, "phoneNumber")
         try {
           setBtnMsg("Registering, please wait...");
           const res = await fetch(
             `https://tvccserver.vercel.app/signup?code=${code}`,
             {
               body: JSON.stringify({
-                firstName: firstName,
-                lastName: lastName,
-                fullName: `${firstName} ${lastName}`,
-                phoneNumber: phoneNumber,
+                firstName: firstName.replace(/\s+/g, ''),
+                lastName: lastName.replace(/\s+/g, ''),
+                fullName: `${firstName.replace(/\s+/g, '')} ${lastName.replace(/\s+/g, '')}`,
+                phoneNumber: myPhoneNumber.replace(/\s+/g, ''),
                 userRole: userRole,
                 password: password,
                 churchBranch: churchBranch,
-                emailAddress: emailAddress,
+                emailAddress: emailAddress.replace(/\s+/g, ''),
                 userDepartment:
                   userRole == "member"
                     ? (userDepartment = null)
@@ -245,7 +257,7 @@ const Register = ({ navigation }) => {
     <View style={styles.confirmArea}>
       <Text style={styles.info}>
         {" "}
-        One more step, Check your inbox and put code here.
+        One more step, Check your phone inbox and put code here.
       </Text>
       <TextInput
         onChangeText={(e) => setCode(e)}
@@ -285,7 +297,9 @@ const Register = ({ navigation }) => {
           <TextInput
             onChangeText={(e) => setPhoneNumber(e)}
             style={styles.input}
+            keyboardType='numeric'
             placeholder="Phone Number"
+            maxLength={11}  //setting limit of input
           />
           <TextInput
             onChangeText={(e) => setEmailAddress(e)}
@@ -325,11 +339,13 @@ const Register = ({ navigation }) => {
             onChangeText={(e) => setPassword(e)}
             style={styles.input}
             placeholder="Password"
+            secureTextEntry={true}
           />
           <TextInput
             onChangeText={(e) => setConfirmPassword(e)}
             style={styles.input}
             placeholder="Confirm Password"
+            secureTextEntry={true}
           />
           <TouchableOpacity onPress={validateEmail} style={styles.btn}>
             <Text style={styles.btnText}>{btnMsg}</Text>

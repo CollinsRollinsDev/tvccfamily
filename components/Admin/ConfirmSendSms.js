@@ -2,10 +2,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
   Alert,
   TouchableOpacity,
-  ScrollView,
 } from "react-native";
 import React, { useState, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,7 +13,7 @@ const ConfirmSendSms = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { userDetails } = useSelector((state) => state.useTheReducer);
   const [btnMsg, setBtnMsg] = useState("Send");
-  const [balance, setBalance] = useState("Getting");
+  const [liquid, setLiquid] = useState("Getting");
 
   const { selectedPeople } = route.params;
   const [sender, setSender] = useState(userDetails?.firstName);
@@ -23,7 +21,7 @@ const ConfirmSendSms = ({ route, navigation }) => {
   const [message, setMessage] = useState("");
   const [newContactNumbers, setNewContactNumbers] = useState([]);
 
-    const getBalance = async() => {
+    const getLiquid = async() => {
       try {
         const res = await fetch(`https://tvccserver.vercel.app/handleSms`, {
         headers: {
@@ -33,19 +31,19 @@ const ConfirmSendSms = ({ route, navigation }) => {
       });
       const data = await res.json();
       if (data.success != true) {
-        setBalance("Error while fetching balance");
+        setLiquid("Error while fetching liquid");
         return;
       }
-      setBalance(data.data);
+      setLiquid(data.data);
       return;
 
       } catch (error) {
-        setBalance("Error while fetching balance");
+        setLiquid("Error while fetching liquid");
       }
     }
 
     useLayoutEffect(() => {
-      const unsub = getBalance()
+      const unsub = getLiquid()
       return () => {
         unsub
       };
@@ -70,6 +68,17 @@ const ConfirmSendSms = ({ route, navigation }) => {
       ]);
       return;
     }
+
+    // check if liquid is enough to send to numbers of selected contacts.
+    const possibleSms = Math.floor(liquid / 1.9);
+    const smsToSend = (selectedPeople.length * 1.9 + 5);
+    if(smsToSend > possibleSms){
+      Alert.alert(`OOPS!!`, `Not enough liquid to send to ${selectedPeople.length} people. Buy some liquid if you wish to proceed.`, [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
+      return;
+    }
+
     setBtnMsg("Sending");
     // extract all numbers from contacts selected
     const extraction = selectedPeople.map(async (person) => {
@@ -113,8 +122,7 @@ const ConfirmSendSms = ({ route, navigation }) => {
       Alert.alert(`Hurray!`, `${data.message}`, [
         { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
-      setMessage('');
-      const waitForRefresh = await getBalance();
+      const waitForRefresh = await getLiquid();
       return;
     } catch (error) {
       Alert.alert(`Sad!`, `Something went wrong.`, [
@@ -142,7 +150,7 @@ const ConfirmSendSms = ({ route, navigation }) => {
         style={styles.inputPost}
         onChangeText={(e) => setMessage(e)}
         // defaultValue={"here"}
-        maxLength={150}
+        maxLength={140}
         placeholder={"type message..."}
         placeholderTextColor={"#5661db"}
         underlineColorAndroid={"transparent"}
@@ -154,21 +162,21 @@ const ConfirmSendSms = ({ route, navigation }) => {
         </Text>
       </TouchableOpacity>
       {/* </ScrollView> */}
-      <View style={styles.balanceDetails}>
-        <Text style={styles.balanceText}>
-          Sms Balance:
+      <View style={styles.liquidDetails}>
+        <Text style={styles.liquidText}>
+          Sms Liquid:
         </Text>
-        <Text style={styles.balanceText}>
-          {balance} Naira
+        <Text style={styles.liquidText}>
+          {liquid} Liquid
         </Text>
       </View>
 
-      <View style={styles.balanceDetails}>
-        <Text style={styles.balanceText}>
+      <View style={styles.liquidDetails}>
+        <Text style={styles.liquidText}>
           Possible SMS:
         </Text>
-        <Text style={styles.balanceText}>
-          {Math.floor(balance / 1.9)}
+        <Text style={styles.liquidText}>
+          {Math.floor(liquid / 1.9)}
         </Text>
       </View>
     </View>
@@ -230,7 +238,7 @@ const styles = StyleSheet.create({
     color: "#3464eb",
     fontWeight: "700",
   },
-  balanceDetails:{
+  liquidDetails:{
     height: 40,
     width: "100%",
     padding: 2,
@@ -241,7 +249,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  balanceText:{
+  liquidText:{
     fontSize:14,
     color:'white',
   }

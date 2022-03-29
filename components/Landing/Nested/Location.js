@@ -17,7 +17,7 @@ const Location = () => {
         <View style={styles.words}>
           <Text style={styles.heading}>Benin HeadQuater</Text>
           <Text style={styles.content}>
-            bla bla bla bla bla bla bla bla bla bla bla bla bla
+          Truevine Christian Center, Truevine Close, Evbouvbuke Community, Ekenwan Barracks, Benin City.
           </Text>
 
           <Text style={styles.heading}>Lagos Branch</Text>

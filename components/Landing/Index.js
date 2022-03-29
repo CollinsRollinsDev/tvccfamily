@@ -1,14 +1,5 @@
 import React from "react";
 import { useState, useLayoutEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  Linking,
-  TextInput,
-  Image,
-} from "react-native";
 import Menus from "./Menus";
 import About from "../Landing/Nested/About";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";

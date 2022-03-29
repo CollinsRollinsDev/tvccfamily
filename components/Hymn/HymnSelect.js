@@ -10,11 +10,8 @@ import hymns from "../../assets/hymns.json";
 import { useEffect } from "react";
 
 const HymnSelect = ({ navigation }) => {
-  // const [searchTerms, setSearchTerms] = useState();
   const [returnedHymn, setReturnedHymn] = useState([]);
   const [selectedHymn, setSelectedHymn] = useState({ title: "", id: "" });
-
-  // console.log(hymns)
 
   const searchHymn = async (e) => {
     let match = e.match(/^[a-zA-Z ]*/);

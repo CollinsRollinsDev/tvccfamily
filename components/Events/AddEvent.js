@@ -1,6 +1,5 @@
 import React, { Component, memo } from "react";
 import { useState, useEffect } from "react";
-import Header from "../Header/Header";
 import { Picker } from "@react-native-picker/picker";
 
 // TODO; Update screen for major bug when ready!!!
@@ -185,11 +184,6 @@ const AddEvent = ({ navigation }) => {
       // console.log("waiting for", auth);
       if (auth.length != 0) {
         const result = await userDetails?.userDepartment.find(async (item) => {
-          // console.log(item.deptName === allowViewsBy);
-          // console.log(item.exco === true);
-          // console.log(churchBranch === item.churchBranch);
-          // console.log(churchBranch);
-          // console.log(item.churchBranch);
           if (
             item.deptName === allowViewsBy &&
             item.exco === true &&

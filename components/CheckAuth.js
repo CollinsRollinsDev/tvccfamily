@@ -19,7 +19,7 @@ const CheckAuth = ({navigation}) => {
       // console.log(userDetails);
       return
     }
-    navigation.navigate("Login");
+    navigation.replace("Login");
 
   };
 

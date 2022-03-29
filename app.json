@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "Truevine Family",
-    "slug": "tvccfamily",
-    "version": "1.0.0",
+    "name": "Truevine Family Beta",
+    "slug": "tvccfamily_beta",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "splash": {
-      "image": "./assets/tvcc_splash.png",
+      "image": "./assets/splashTvccBeta.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
