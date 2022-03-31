@@ -14,7 +14,7 @@ const CheckAuth = ({navigation}) => {
       dispatch(setUserDetails(JSON.parse(item)));
       // setIsLoggedIn(true);
       setTimeout(() => {
-        navigation.navigate("TabNavigator");
+        navigation.replace("TabNavigator");
       }, 2000);
       // console.log(userDetails);
       return
