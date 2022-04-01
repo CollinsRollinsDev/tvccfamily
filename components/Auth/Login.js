@@ -41,7 +41,7 @@ const Login = ({ navigation }) => {
       setBtnMsg("Authenticating...");
       const res = await fetch("https://tvccserver.vercel.app/signin", {
         body: JSON.stringify({
-          emailAddress: emailAddress,
+          emailAddress: emailAddress.toLowerCase(),
           password: password,
         }),
         headers: {
@@ -62,13 +62,12 @@ const Login = ({ navigation }) => {
 
         Alert.alert(
           `ACCESS GRANTED!!!`,
-          `Welcome ${user_data.firstName} ${user_data.lastName}`,
+          data.message,
           [{ text: "OK", onPress: () => navigation.replace("TabNavigator") }]
-          // [{ text: "OK", onPress: () => navigation.push("TabNavigator") }]
         );
       } else {
         setBtnMsg("Sign In");
-        Alert.alert(`ERROR!!!`, `Something went wrong`, [
+        Alert.alert(`ERROR!!!`, data.message, [
           { text: "OK", onPress: () => console.log("OK Pressed") },
         ]);
       }
@@ -107,6 +106,13 @@ const Login = ({ navigation }) => {
         style={styles.alt}
       >
         <Text style={styles.altClick}>Don't have an account? Sign up!</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => navigation.push("ForgetPassword")}
+        style={styles.alt}
+      >
+        <Text style={styles.altClick}>Forgotten Password? Cick here!</Text>
       </TouchableOpacity>
       {/* <RefreshControl
             refreshing={refreshing}

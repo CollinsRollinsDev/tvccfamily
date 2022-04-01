@@ -101,7 +101,7 @@ const Register = ({ navigation }) => {
           userRole: userRole,
           password: password,
           churchBranch: churchBranch,
-          emailAddress: emailAddress.replace(/\s+/g, ''),
+          emailAddress: emailAddress.toLowerCase().replace(/\s+/g, ''),
           userDepartment:
             userRole == "member"
             ? (userDepartment = null)
@@ -192,7 +192,7 @@ const Register = ({ navigation }) => {
                 userRole: userRole,
                 password: password,
                 churchBranch: churchBranch,
-                emailAddress: emailAddress.replace(/\s+/g, ''),
+                emailAddress: emailAddress.toLowerCase().replace(/\s+/g, ''),
                 userDepartment:
                   userRole == "member"
                     ? (userDepartment = null)

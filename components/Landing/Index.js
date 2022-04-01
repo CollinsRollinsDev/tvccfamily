@@ -31,6 +31,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setUserDetails } from "../../reduxStore/actions.js";
 import CheckAuth from "../CheckAuth";
 import ConfirmSendSms from "../Admin/ConfirmSendSms";
+import ForgetPassword from '../Auth/ForgetPassword.js'
 
 const Stack = createNativeStackNavigator();
 const Index = () => {
@@ -56,6 +57,12 @@ const Index = () => {
         <Stack.Screen
           name="CheckAuth"
           component={CheckAuth}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="ForgetPassword"
+          component={ForgetPassword}
           options={{ headerShown: false }}
         />
 
