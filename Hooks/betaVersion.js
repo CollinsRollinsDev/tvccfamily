@@ -5,7 +5,7 @@ import {
 
 const betaVersion = async() => {
   return (
-    Alert.alert(`You are on beta version.`, `Sorry, this feature is only avaliable on the release version. You are currently using the beta app version 0.0.1`, [
+    Alert.alert(`You are on beta version.`, `Sorry, this feature is only avaliable on the release version. You are currently using the beta app version 1.0.0`, [
       { text: "OK", onPress: () => console.log("OK Pressed") },
     ])
   )
