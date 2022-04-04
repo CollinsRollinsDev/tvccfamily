@@ -63,18 +63,19 @@ const HomePage = ({ navigation }) => {
     let token;
     // if (Device.isDevice) {
     const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
+    await Notifications.getPermissionsAsync();
+    console.log(existingStatus, "as status")
     let finalStatus = existingStatus;
     if (existingStatus !== "granted") {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
     }
-    if (finalStatus !== "granted") {
-      alert("Failed to get push token for push notification!");
-      return;
-    }
+    // if (finalStatus !== "granted") {
+    //   alert("Failed to get push token for push notification!");
+    //   return;
+    // }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    // console.log(token, "as token");
+    console.log(token, "as token");
     try {
       const res = await fetch(
         `https://tvccserver.vercel.app/addNotificationToken?emailAddress=${userDetails.emailAddress}&token=${token}`

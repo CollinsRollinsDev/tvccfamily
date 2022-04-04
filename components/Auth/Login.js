@@ -41,7 +41,7 @@ const Login = ({ navigation }) => {
       setBtnMsg("Authenticating...");
       const res = await fetch("https://tvccserver.vercel.app/signin", {
         body: JSON.stringify({
-          emailAddress: emailAddress.toLowerCase(),
+          emailAddress: emailAddress.toLowerCase().trim(),
           password: password,
         }),
         headers: {

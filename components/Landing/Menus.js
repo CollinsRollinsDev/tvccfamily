@@ -15,7 +15,7 @@ import betaVersion from "../../Hooks/betaVersion";
 const Menus = ({ navigation }) => {
   const { isNotification } = useSelector((state) => state.useTheReducer);
   const { userDetails } = useSelector((state) => state.useTheReducer);
-  console.log(userDetails, "as user detals");
+  // console.log(userDetails, "as user detals");
 
   return (
     <ScrollView>
@@ -121,7 +121,7 @@ const Menus = ({ navigation }) => {
                 text: "OK",
                 onPress: async () => {
                   await AsyncStorage.removeItem("userProfile");
-                  navigation.navigate("Login");
+                  navigation.replace("Login");
                 },
               },
             ]);
