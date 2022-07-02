@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
-import CheckBox from "@react-native-community/checkbox";
+// import CheckBox from "@react-native-community/checkbox";
+import Checkbox from 'expo-checkbox';
 
 const EachContacts = ({
   item,
@@ -40,11 +41,17 @@ const EachContacts = ({
       <Text style={styles.listContact}>{`${item.firstName} ${
         item.lastName != undefined ? item.lastName : ""
       }`}</Text>
-      <CheckBox
+      {/* <CheckBox
         disabled={false}
         value={isSelected}
         onValueChange={(newValue) => handleClick(newValue)}
-      />
+      /> */}
+      <Checkbox
+          // style={styles.checkbox}
+          value={isSelected}
+          onValueChange={(newValue) => handleClick(newValue)}
+          color={isSelected ? '#4630EB' : undefined}
+        />
     </View>
   );
 };

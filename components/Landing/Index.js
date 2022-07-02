@@ -32,6 +32,11 @@ import { setUserDetails } from "../../reduxStore/actions.js";
 import CheckAuth from "../CheckAuth";
 import ConfirmSendSms from "../Admin/ConfirmSendSms";
 import ForgetPassword from '../Auth/ForgetPassword.js'
+import AI from "../Admin/AI";
+import AddNumberForTextMsg from "../Admin/AIMenusComponents/AddNumberForTextMessage";
+import viewProfiles from "../Admin/AIMenusComponents/ViewProfiles";
+import PodcastSermons from "../Sermons/PodcastSermons";
+import AddPodcastSermon from "../Sermons/AddPodcastSermon";
 
 const Stack = createNativeStackNavigator();
 const Index = () => {
@@ -92,6 +97,31 @@ const Index = () => {
           name="SendSms"
           component={SendSms}
           options={{ title: "Send Sms" }}
+        />
+        <Stack.Screen
+          name="AI"
+          component={AI}
+          options={{ title: "Aritificial Intelligience" }}
+        />
+        <Stack.Screen
+          name="AddNumberForTextMsg"
+          component={AddNumberForTextMsg}
+          options={{ title: "Add Phone Number" }}
+        />
+        <Stack.Screen
+          name="ViewProfiles"
+          component={viewProfiles}
+          options={{ title: "Viewing Profiles" }}
+        />
+        <Stack.Screen
+          name="PodcastSermons"
+          component={PodcastSermons}
+          options={{ title: "Podcast Sermons" }}
+        />
+        <Stack.Screen
+          name="AddPodcastSermon"
+          component={AddPodcastSermon}
+          options={{ title: "Add A Podcast Sermon" }}
         />
         <Stack.Screen
           name="Bible"

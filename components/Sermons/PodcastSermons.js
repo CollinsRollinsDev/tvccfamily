@@ -1,26 +1,23 @@
-import React, { useEffect, useLayoutEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-
+import React, { useLayoutEffect } from "react";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import { FlatGrid } from "react-native-super-grid";
-import betaVersion from '../../Hooks/betaVersion.js';
+import betaVersion from "../../Hooks/betaVersion.js";
+import * as Speech from "expo-speech";
 
-const Admin = ({ navigation }) => {
-
-
-  // for beta state
+const PodcastSermons = ({ navigation }) => {
   const [items, setItems] = React.useState([
-    { name: "Assign Leader To Group", path: "" },
-    { name: "Assign Deputy Leader To Group", path: "" },
-    { name: "Send Message To All Members", path: "SendSms" },
-    { name: "Artificial Intelligience (AI)", path: "AI" },
-    { name: "Add An Event", path: "" },
-    { name: "View Councelling Requests", path: "" },
-    { name: "Sign Out", path: "" },
+    {
+      name: "Get all avaliable podcast sermons",
+      path: "AddNumberForTextMsg",
+    },
+    { name: "Add A Podcast Sermon", path: "AddPodcastSermon" },
+    // { name: "Assign Deputy Leader To Group", path: "" },
+    // { name: "Send Message To All Members", path: "SendSms" },
   ]);
   return (
     <View style={styles.body}>
       <Text style={styles.heading1}>
-        Welcome Admin, what are you doing now?
+        Let's listen to the word
       </Text>
 
       <FlatGrid
@@ -32,7 +29,9 @@ const Admin = ({ navigation }) => {
         spacing={10}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => item.path !== "" ? navigation.push(item.path) : betaVersion()}
+            onPress={() =>
+              item.path !== "" ? navigation.push(item.path) : betaVersion()
+            }
             style={styles.itemContainer}
           >
             <Text style={styles.itemName}>{item.name}</Text>
@@ -43,7 +42,7 @@ const Admin = ({ navigation }) => {
   );
 };
 
-export default Admin;
+export default PodcastSermons;
 
 const styles = StyleSheet.create({
   body: {

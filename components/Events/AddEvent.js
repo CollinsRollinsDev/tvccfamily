@@ -129,7 +129,7 @@ const AddEvent = ({ navigation }) => {
         userDetails.accountType === "admin" &&
         userDetails.churchBranch.includes(churchBranch)
       ) {
-        const res = await fetch("https://tvccserver.vercel.app/event", {
+        const res = await fetch("http://192.168.43.224:8000/event", {
           body: JSON.stringify({
             name: name,
             host: host,
@@ -192,7 +192,7 @@ const AddEvent = ({ navigation }) => {
             // allowCreate = true;
             // console.log("allowed to create");
 
-            const res = await fetch("https://tvccserver.vercel.app/event", {
+            const res = await fetch("http://192.168.43.224:8000/event", {
               body: JSON.stringify({
                 name: name,
                 host: host,

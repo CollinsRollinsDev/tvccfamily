@@ -67,7 +67,7 @@ const Notes = ({ navigation }) => {
 
   const fetchNote = async () => {
     const res = await fetch(
-      `https://tvccserver.vercel.app/notes?id=${userDetails.id}`
+      `http://192.168.43.224:8000/notes?id=${userDetails.id}`
     );
     const data = await res.json();
     if (data.success === true) {
@@ -99,7 +99,7 @@ const Notes = ({ navigation }) => {
         {
           text: "Yes",
           onPress: async () => {
-            const res = await fetch("https://tvccserver.vercel.app/notes", {
+            const res = await fetch("http://192.168.43.224:8000/notes", {
               body: JSON.stringify({
                 userId: userId,
                 postId: postId,

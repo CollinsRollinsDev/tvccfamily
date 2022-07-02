@@ -38,7 +38,7 @@ const AssignLeader = ({ navigation }) => {
     }
 
     const options = {
-      url: "https://tvccserver.vercel.app/searchUsers",
+      url: "http://192.168.43.224:8000/searchUsers",
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -145,7 +145,7 @@ const AssignLeader = ({ navigation }) => {
               setBtnMsg("Assigning Person...");
               console.log(userDetails);
               const res = await fetch(
-                `https://tvccserver.vercel.app/assignGroupLeader?id=${currentPerson._id}&assignerId=${userDetails?.id}&churchBranch=${churchBranch}&deptName=${userDepartment}`,
+                `http://192.168.43.224:8000/assignGroupLeader?id=${currentPerson._id}&assignerId=${userDetails?.id}&churchBranch=${churchBranch}&deptName=${userDepartment}`,
                 {
                   method: "PATCH",
                 }

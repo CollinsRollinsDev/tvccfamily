@@ -36,7 +36,7 @@ const Notification = ({ navigation }) => {
 
   const fetchNotitifications = async () => {
     const res = await fetch(
-      `https://tvccserver.vercel.app/notifications?id=${userDetails.id}`
+      `http://192.168.43.224:8000/notifications?id=${userDetails.id}`
     );
     const data = await res.json();
     if (data.success === true) {
@@ -69,7 +69,7 @@ const Notification = ({ navigation }) => {
     // set notification to read!
     try {
       const res = await fetch(
-        `https://tvccserver.vercel.app/notifications/readnotification?id=${userDetails.id}&notificationId=${id}`
+        `http://192.168.43.224:8000/notifications/readnotification?id=${userDetails.id}&notificationId=${id}`
       );
       const data = await res.json();
     } catch (error) {

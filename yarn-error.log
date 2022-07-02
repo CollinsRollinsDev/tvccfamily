@@ -1,14 +1,14 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\DeveloperEmpier\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react-native-bouncy-checkbox
+  C:\Program Files\nodejs\node.exe C:\Users\DevRollins\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js
 
 PATH: 
-  C:\Users\DeveloperEmpier\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\DeveloperEmpier\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Files\cpp\bin\Intel64;C:\Python310\Scripts;C:\Python310;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\dotnet;C:\Program Files\nodejs;C:\Program Files\OpenJDK\openjdk-11.0.13_8\bin;C:\Users\DeveloperEmpier\AppData\Local\Microsoft\WindowsApps;C:\Users\DeveloperEmpier\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\heroku\bin;C:\Users\DeveloperEmpier\AppData\Roaming\npm;C:\Users\DeveloperEmpier\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  C:\Users\DevRollins\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\DevRollins\bin;C:\Python310\Scripts;C:\Python310;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet;C:\Program Files\OpenJDK\openjdk-11.0.14.1_1\bin;C:\Program Files\nodejs;C:\Users\DevRollins\AppData\Local\Microsoft\WindowsApps;C:\Users\DevRollins\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\DevRollins\.dotnet\tools;C:\Users\DevRollins\AppData\Local\Android\Sdk\platform-tools;C:\Users\DevRollins\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
-  1.22.17
+  1.22.18
 
 Node version: 
-  16.14.0
+  16.15.0
 
 Platform: 
   win32 x64
@@ -28,6 +28,7 @@ npm manifest:
       "eject": "expo eject"
     },
     "dependencies": {
+      "@freakycoder/react-native-bounceable": "^0.2.5",
       "@react-native-async-storage/async-storage": "^1.15.9",
       "@react-native-community/checkbox": "^0.5.12",
       "@react-native-community/datetimepicker": "^5.1.0",
@@ -43,6 +44,7 @@ npm manifest:
       "expo-notifications": "~0.12.3",
       "expo-permissions": "~12.1.1",
       "expo-status-bar": "~1.0.4",
+      "expo-updates": "~0.8.2",
       "moment": "^2.29.1",
       "react": "16.13.1",
       "react-dom": "16.13.1",
@@ -1243,7 +1245,7 @@ Lockfile:
       xcode "^3.0.1"
       xml2js "^0.4.23"
   
-  "@expo/config-plugins@3.1.0", "@expo/config-plugins@^3.0.0":
+  "@expo/config-plugins@3.1.0", "@expo/config-plugins@^3.0.0", "@expo/config-plugins@^3.0.6":
     version "3.1.0"
     resolved "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-3.1.0.tgz"
     integrity sha512-V5qxaxCAExBM0TXmbU1QKiZcAGP3ecu7KXede8vByT15cro5PkcWu2sSdJCYbHQ/gw6Vf/i8sr8gKlN8V8TSLg==
@@ -1300,7 +1302,7 @@ Lockfile:
     resolved "https://registry.npmjs.org/@expo/config-types/-/config-types-43.0.1.tgz"
     integrity sha512-EtllpCGDdB/UdwAIs5YXJwBLpbFQNdlLLrxIvoILA9cXrpQMWkeDCT9lQPJzFRMFcLUaMuGvkzX2tR4tx5EQFQ==
   
-  "@expo/config@5.0.9":
+  "@expo/config@5.0.9", "@expo/config@^5.0.6":
     version "5.0.9"
     resolved "https://registry.npmjs.org/@expo/config/-/config-5.0.9.tgz"
     integrity sha512-eZj+cf03wkQQdHSpYvrmiqAsn2dJV10uhHIwXyeFBaFvhds0NgThOldJZfOppQ4QUaGobB/vaJ7UqUa3B0PCMw==
@@ -1382,7 +1384,7 @@ Lockfile:
       json5 "^1.0.1"
       write-file-atomic "^2.3.0"
   
-  "@expo/metro-config@^0.1.70":
+  "@expo/metro-config@^0.1.70", "@expo/metro-config@^0.1.81":
     version "0.1.84"
     resolved "https://registry.npmjs.org/@expo/metro-config/-/metro-config-0.1.84.tgz"
     integrity sha512-xWSfM0+AxcKw0H8mc1RuKs4Yy4JT4SJfn4yDnGLAlKkHlEC+D2seZvb/Tdd173e/LANmcarNd+OcDYu03AmVWA==
@@ -1442,6 +1444,11 @@ Lockfile:
       lodash.omit "^4.5.0"
       lodash.pick "^4.4.0"
       lodash.template "^4.5.0"
+  
+  "@freakycoder/react-native-bounceable@^0.2.5":
+    version "0.2.5"
+    resolved "https://registry.yarnpkg.com/@freakycoder/react-native-bounceable/-/react-native-bounceable-0.2.5.tgz#ad61bdafbf68465e9c2145e99c09b500ae091f0e"
+    integrity sha512-J8WBOYxbm/um7SqXYneduZ08T5Kin9z+ixsS3wOLtpeNvKscuqmDEgsgefTYydeSIoI5dOfWmklnRRgu5i/8nA==
   
   "@hapi/address@2.x.x":
     version "2.1.4"
@@ -3332,10 +3339,34 @@ Lockfile:
     resolved "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.0.4.tgz"
     integrity sha512-s7nc496D/Zn1NGiMJ5wu6HyIdXxbgGtmZZtbHm7rpbcmLdf28GmMSNHDx7M0t00BMhky7VAurTCUo+BJs8ugsw==
   
+  expo-structured-headers@~1.1.1:
+    version "1.1.1"
+    resolved "https://registry.yarnpkg.com/expo-structured-headers/-/expo-structured-headers-1.1.1.tgz#95e28ff8686a2c06fe6ad1decdbb94cc44716683"
+    integrity sha512-OxDsWTDxwAhfW82DDXYTcT9UzSk2fYUb3YHiz/tQ1MObQMh0QVHgxcTe9vvtzguc6O4A2Y+f8tO1g3LcUEN2lg==
+  
+  expo-updates-interface@~0.2.2:
+    version "0.2.2"
+    resolved "https://registry.yarnpkg.com/expo-updates-interface/-/expo-updates-interface-0.2.2.tgz#f754ce2c562f427d87893a9d22a4cbab39e0defd"
+    integrity sha512-Gvjk/6DntlPfkoRrrmbl9jzD2YtlNVa9jV9/T1+zdvg9XvO7H+BUgAQ1NYFFx/3Wdk03z+xfCYugRWk9X5nZ5A==
+  
   expo-updates-interface@~0.5.0:
     version "0.5.1"
     resolved "https://registry.npmjs.org/expo-updates-interface/-/expo-updates-interface-0.5.1.tgz"
     integrity sha512-RLvC69o1BkhHP6hNaWiIvSiTgXABB9v4HnoietoXKFHlAyxlQCupy6ki164KpZNrOS/PFJ2WWqZOvKfiyDVO+w==
+  
+  expo-updates@~0.8.2:
+    version "0.8.5"
+    resolved "https://registry.yarnpkg.com/expo-updates/-/expo-updates-0.8.5.tgz#38da04bb68a222297a1d36a2cc3c2159a0b1f221"
+    integrity sha512-MX4YI80oPvbjLzdo+sNvxRma8TEOxESliADHdbrJQpdILhPZTz6GLSypqDKZps68oyvYWxJqID55EBam1nFlAg==
+    dependencies:
+      "@expo/config" "^5.0.6"
+      "@expo/config-plugins" "^3.0.6"
+      "@expo/metro-config" "^0.1.81"
+      expo-structured-headers "~1.1.1"
+      expo-updates-interface "~0.2.2"
+      fbemitter "^2.1.1"
+      resolve-from "^5.0.0"
+      uuid "^3.4.0"
   
   expo@~42.0.1:
     version "42.0.4"

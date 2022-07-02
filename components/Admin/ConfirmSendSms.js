@@ -23,7 +23,7 @@ const ConfirmSendSms = ({ route, navigation }) => {
 
     const getLiquid = async() => {
       try {
-        const res = await fetch(`https://tvccserver.vercel.app/handleSms`, {
+        const res = await fetch(`http://192.168.43.224:8000/handleSms`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -99,7 +99,7 @@ const ConfirmSendSms = ({ route, navigation }) => {
       console.log(message)
       console.log(sender)
       console.log(newContactNumbers)
-      const res = await fetch(`https://tvccserver.vercel.app/handleSms`, {
+      const res = await fetch(`http://192.168.43.224:8000/handleSms`, {
         body: JSON.stringify({
           message,
           sender,

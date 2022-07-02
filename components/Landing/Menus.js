@@ -90,6 +90,15 @@ const Menus = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
+          onPress={() => navigation.push("PodcastSermons")}
+          style={styles.menu}
+        >
+          <FontAwesome5 name={"podcast"} size={18} color={"white"} />
+          <Text style={styles.content}>PodCast Sermons</Text>
+        </TouchableOpacity>
+
+
+        <TouchableOpacity
           onPress={() => navigation.push("Profile")}
           style={styles.menu}
         >
