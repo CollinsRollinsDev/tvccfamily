@@ -5,15 +5,6 @@ import betaVersion from "../../Hooks/betaVersion.js";
 import * as Speech from "expo-speech";
 
 const AI = ({ navigation }) => {
-  // const [items, setItems] = React.useState([
-  //   { name: "Assign Leader To Group", path: "AssignLeader" },
-  //   { name: "Assign Deputy Leader To Group", path: "" },
-  //   { name: "Send Message To All Members", path: "SendSms" },
-  //   { name: "Add An Event", path: "" },
-  //   { name: "View Councelling Requests", path: "" },
-  //   { name: "Sign Out", path: "" },
-  // ]);
-
   const welcomeSpeech = () => {
     const thingToSay =
       "Welcome to Truevine Artificial Intellegence. I am Raina. Do you want me to be your A.I companion?";
@@ -56,10 +47,9 @@ const AI = ({ navigation }) => {
       name: "Add phone number to automate text message for.",
       path: "AddNumberForTextMsg",
     },
-    { name: "View Profiles/Phone Numbers Added", path: "ViewProfiles" },
-    // { name: "Assign Deputy Leader To Group", path: "" },
-    // { name: "Send Message To All Members", path: "SendSms" },
+    {name: "View Profiles/Phone Numbers Added", path: "ViewProfiles"},
   ]);
+  
   return (
     <View style={styles.body}>
       <Text style={styles.heading1}>

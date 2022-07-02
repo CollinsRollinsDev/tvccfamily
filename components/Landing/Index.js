@@ -37,6 +37,7 @@ import AddNumberForTextMsg from "../Admin/AIMenusComponents/AddNumberForTextMess
 import viewProfiles from "../Admin/AIMenusComponents/ViewProfiles";
 import PodcastSermons from "../Sermons/PodcastSermons";
 import AddPodcastSermon from "../Sermons/AddPodcastSermon";
+import GetPodcasts from "../Sermons/GetPodcasts";
 
 const Stack = createNativeStackNavigator();
 const Index = () => {
@@ -112,6 +113,11 @@ const Index = () => {
           name="ViewProfiles"
           component={viewProfiles}
           options={{ title: "Viewing Profiles" }}
+        />
+        <Stack.Screen
+          name="GetPodcasts"
+          component={GetPodcasts}
+          options={{ title: "Podcasts" }}
         />
         <Stack.Screen
           name="PodcastSermons"
