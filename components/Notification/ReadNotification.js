@@ -37,7 +37,7 @@ const ReadNotifications = ({ navigation }) => {
   const [denyBtn, setDenyBtn] = useState("Deny This Person");
 
   // const fetchNotitifications = async() => {
-  //   const res = await fetch(`http://192.168.43.224:8000/notifications?id=${userDetails.id}`);
+  //   const res = await fetch(`https://tvccserver.vercel.app/notifications?id=${userDetails.id}`);
   //   const data = await res.json();
   //   if(data.success === true){
   //     console.log(data.response)
@@ -90,9 +90,9 @@ const ReadNotifications = ({ navigation }) => {
       currentNotification.sender ===
       "Automatic by a user request to join department"
     ) {
-      url = `http://192.168.43.224:8000/responseToDepartmentProposal?response=${response}&email=${emailToAuth}&departmentName=${requestDepartment}&churchBranch=${churchBranch}`;
+      url = `https://tvccserver.vercel.app/responseToDepartmentProposal?response=${response}&email=${emailToAuth}&departmentName=${requestDepartment}&churchBranch=${churchBranch}`;
     } else {
-      url = `http://192.168.43.224:8000/signuprequestresponse?response=${response}&email=${emailToAuth}`;
+      url = `https://tvccserver.vercel.app/signuprequestresponse?response=${response}&email=${emailToAuth}`;
     }
 
     try {
@@ -149,9 +149,9 @@ const ReadNotifications = ({ navigation }) => {
       currentNotification.sender ===
       "Automatic by a user request to join department"
     ) {
-      url = `http://192.168.43.224:8000/responseToDepartmentProposal?response=${response}&email=${emailToAuth}&departmentName=${requestDepartment}&churchBranch=${churchBranch}`;
+      url = `https://tvccserver.vercel.app/responseToDepartmentProposal?response=${response}&email=${emailToAuth}&departmentName=${requestDepartment}&churchBranch=${churchBranch}`;
     } else {
-      url = `http://192.168.43.224:8000/signuprequestresponse?response=${response}&email=${emailToAuth}`;
+      url = `https://tvccserver.vercel.app/signuprequestresponse?response=${response}&email=${emailToAuth}`;
     }
 
     try {

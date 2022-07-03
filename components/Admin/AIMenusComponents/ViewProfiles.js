@@ -16,7 +16,7 @@ const ViewProfiles = ({ navigation }) => {
 
   const getProfiles = async() => {
     try {
-        const res = await fetch(`http://192.168.43.224:8000/ai/getProfiles`);
+        const res = await fetch(`https://tvccserver.vercel.app/ai/getProfiles`);
         const data = await res.json();
         if(data?.success === false){
             Alert.alert(`ERROR!!!`, `${data?.message}`, [

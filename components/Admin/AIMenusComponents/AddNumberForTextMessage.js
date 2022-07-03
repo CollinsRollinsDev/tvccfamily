@@ -36,7 +36,7 @@ const AddNumberForTextMsg = ({ navigation }) => {
     }
     setBtnMsg("Adding....")
     try {
-        const res = await fetch(`http://192.168.43.224:8000/ai/addProfile`, {
+        const res = await fetch(`https://tvccserver.vercel.app/ai/addProfile`, {
         method:"POST",
         body:JSON.stringify({
             phoneNumber:phoneNumber.trim(),

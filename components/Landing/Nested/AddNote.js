@@ -83,7 +83,7 @@ const Note = ({ navigation }) => {
       //     { text: "OK", onPress: () => console.log("OK Pressed") },
       //   ]);
       // } else{
-      //   const res = await fetch(`http://192.168.43.224:8000/notes?id=${userDetails.id}`, {
+      //   const res = await fetch(`https://tvccserver.vercel.app/notes?id=${userDetails.id}`, {
       //     body: JSON.stringify({
       //       title: addTitle,
       //       ministering: addMinistering,

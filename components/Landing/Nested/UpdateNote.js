@@ -67,7 +67,7 @@ const UpdateNote = ({
 
       console.log("updated....");
 
-      //   const res = await fetch(`http://192.168.43.224:8000/notes?userId=${userDetails.id}&postId=${currentPostId}`, {
+      //   const res = await fetch(`https://tvccserver.vercel.app/notes?userId=${userDetails.id}&postId=${currentPostId}`, {
       //     body: JSON.stringify({
       //       title: addTitle,
       //       ministering: addMinistering,

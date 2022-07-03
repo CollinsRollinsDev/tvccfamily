@@ -13,16 +13,16 @@ import {
 import betaVersion from "../../Hooks/betaVersion.js";
 import { Picker } from "@react-native-picker/picker";
 import * as Speech from "expo-speech";
-// import { firebase } from "../../config.js";
 import { ref, uploadBytesResumable, getDownloadURL } from "@firebase/storage";
 import { storage } from "../../firebase.js";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import * as MediaLibrary from "expo-media-library";
 import { ScrollView } from "react-native";
-import { TabRouter } from "react-navigation";
 import { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
+// import jsmediatags from 'jsmediatags'
+// const jsmediatags = require('jsmediatags');
 
 const AddPodcastSermon = ({ navigation }) => {
     const { userDetails } = useSelector((state) => state.useTheReducer);
@@ -50,6 +50,7 @@ const AddPodcastSermon = ({ navigation }) => {
 
   useEffect(() => {
     getPermission();
+
   }, []);
 
   const getPermission = async () => {
@@ -146,7 +147,7 @@ const AddPodcastSermon = ({ navigation }) => {
   const uploadUrlFromFirebaseToDb = async (url) => {
   try {
     setMusicUploadMsg(`Adding song. Please wait.`)
-    const res = await fetch(`http://192.168.43.224:8000/audio/addAudio`, {
+    const res = await fetch(`https://tvccserver.vercel.app/audio/addAudio`, {
         body: JSON.stringify({
           title,
           podcastUrl:url,

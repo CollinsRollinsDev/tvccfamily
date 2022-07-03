@@ -80,7 +80,7 @@ const Profile_Settings = () => {
         : setShowPasswordInput(false);
       if (showPasswordInput && password) {
         setEditableText("Processing");
-        const res = await fetch("http://192.168.43.224:8000/updateuser", {
+        const res = await fetch("https://tvccserver.vercel.app/updateuser", {
           body: JSON.stringify({
             id: userDetails.id,
             firstName: firstName,

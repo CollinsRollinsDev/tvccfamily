@@ -11,6 +11,7 @@ import {
   SET_CURRENT_POST_ID,
   SET_Current_Notification,
   SET_IS_NOTIFICATION,
+  SET_MUSIC_SOUND,
 } from "./actions";
 
 let initialState = {
@@ -26,6 +27,7 @@ let initialState = {
   currentPostId: "",
   currentNotification: {},
   isNotification: false,
+  musicSound:null
 };
 
 function useTheReducer(state = initialState, action) {
@@ -63,6 +65,8 @@ function useTheReducer(state = initialState, action) {
       return { ...state, updateTabSwitch: action.payload };
     case SET_IS_NOTIFICATION:
       return { ...state, isNotification: action.payload };
+    case SET_MUSIC_SOUND:
+      return { ...state, musicSound: action.payload };
     default:
       return state;
   }

@@ -28,7 +28,7 @@ const ForgetPassword = ({ navigation }) => {
     try {
       setBtnMsg("Sending code...Please wait..");
       const res = await fetch(
-        `http://192.168.43.224:8000/forgotpasswordCode?phoneNumberTagged=${myPhoneNumber}`
+        `https://tvccserver.vercel.app/forgotpasswordCode?phoneNumberTagged=${myPhoneNumber}`
       );
       const data = await res.json();
       if (data.success !== true) {
@@ -71,7 +71,7 @@ const ForgetPassword = ({ navigation }) => {
     try {
       setBtnMsg("Processing....");
       const res = await fetch(
-        `http://192.168.43.224:8000/resetpassword?code=${code}&phoneNumber=${newPhoneFormat}&newPassword=${password}`
+        `https://tvccserver.vercel.app/resetpassword?code=${code}&phoneNumber=${newPhoneFormat}&newPassword=${password}`
       );
       const data = await res.json();
   // console.log(data, "as data")

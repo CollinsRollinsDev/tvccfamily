@@ -91,8 +91,8 @@ const Register = ({ navigation }) => {
     try {
       setBtnMsg("Registering, please wait...");
       console.log("going 1")
-      // const res = await fetch("http://192.168.43.224:8000/validateemail", {
-        const res = await fetch("http://192.168.43.224:8000/validatePhoneNumber", {
+      // const res = await fetch("https://tvccserver.vercel.app/validateemail", {
+        const res = await fetch("https://tvccserver.vercel.app/validatePhoneNumber", {
         body: JSON.stringify({
           firstName: firstName.replace(/\s+/g, ''),
           lastName: lastName.replace(/\s+/g, ''),
@@ -182,7 +182,7 @@ const Register = ({ navigation }) => {
         try {
           setBtnMsg("Registering, please wait...");
           const res = await fetch(
-            `http://192.168.43.224:8000/signup?code=${code}`,
+            `https://tvccserver.vercel.app/signup?code=${code}`,
             {
               body: JSON.stringify({
                 firstName: firstName.replace(/\s+/g, ''),

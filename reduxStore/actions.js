@@ -11,6 +11,7 @@ export const SET_USER_DETAILS = "SET_USER_DETAILS";
 export const SET_UPDATE_TAB_SWITCH = "SET_UPDATE_TAB_SWITCH";
 export const SET_Current_Notification = "SET_Current_Notification";
 export const SET_IS_NOTIFICATION = "SET_IS_NOTIFICATION";
+export const SET_MUSIC_SOUND = "SET_MUSIC_SOUND";
 
 export let setCurrentNotification = (payload) => (dispatch) => {
   dispatch({
@@ -92,6 +93,12 @@ export let setCurrentPostBody = (payload) => (dispatch) => {
   export let setUpdateTebSwitch = (payload) => (dispatch) => {
     dispatch({
       type: SET_UPDATE_TAB_SWITCH,
+      payload: payload,
+    });
+};
+  export let setMusicSound = (payload) => (dispatch) => {
+    dispatch({
+      type: SET_MUSIC_SOUND,
       payload: payload,
     });
 };

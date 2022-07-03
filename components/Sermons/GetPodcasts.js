@@ -1,11 +1,13 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, {  useEffect, useLayoutEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Alert, FlatList } from "react-native";
 import { FlatGrid } from "react-native-super-grid";
 import * as Speech from "expo-speech";
 import { Audio } from 'expo-av';
-
+import { useSelector, useDispatch } from "react-redux";
+import { setMusicSound, } from "../../reduxStore/actions";
 
 const GetPodcasts = ({ navigation }) => {
+    const dispatch = useDispatch()
   const [message, setMessage] = useState("Getting Profiles....");
   const [podcasts, setPodcasts] = useState([]);
   const [sound, setSound] = React.useState();
@@ -19,6 +21,7 @@ const GetPodcasts = ({ navigation }) => {
       await sound.playAsync();
 }
 
+
 React.useEffect(() => {
     return sound
       ? () => {
@@ -29,7 +32,7 @@ React.useEffect(() => {
 
   const getAudios = async () => {
     try {
-      const res = await fetch(`http://192.168.43.224:8000/audio/getAudio`);
+      const res = await fetch(`https://tvccserver.vercel.app/audio/getAudio`);
       const data = await res.json();
       if (data?.success === false) {
         Alert.alert(`ERROR!!!`, `${data?.message}`, [
@@ -54,6 +57,11 @@ React.useEffect(() => {
   useEffect(() => {
     console.log(podcasts, "podcasts");
   }, [podcasts]);
+
+  const handleSelectMedia = (audio) => {
+    dispatch(setMusicSound(audio));
+    navigation.push("Player")
+  }
 
   return (
     <View style={styles.body}>
@@ -83,7 +91,7 @@ React.useEffect(() => {
           data={podcasts}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => playAudio(item)} style={styles.audioTab}>
+            <TouchableOpacity onPress={() => handleSelectMedia(item)} style={styles.audioTab}>
               <Text style={styles.itemName}>
                 Preacher.............. {item?.preacher.toUpperCase().replace(/_/g, " ")}
               </Text>

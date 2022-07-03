@@ -38,6 +38,7 @@ import viewProfiles from "../Admin/AIMenusComponents/ViewProfiles";
 import PodcastSermons from "../Sermons/PodcastSermons";
 import AddPodcastSermon from "../Sermons/AddPodcastSermon";
 import GetPodcasts from "../Sermons/GetPodcasts";
+import Player from "../Sermons/Player";
 
 const Stack = createNativeStackNavigator();
 const Index = () => {
@@ -118,6 +119,11 @@ const Index = () => {
           name="GetPodcasts"
           component={GetPodcasts}
           options={{ title: "Podcasts" }}
+        />
+        <Stack.Screen
+          name="Player"
+          component={Player}
+          options={{ title: "Player" }}
         />
         <Stack.Screen
           name="PodcastSermons"

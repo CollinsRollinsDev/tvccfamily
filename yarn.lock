@@ -2647,6 +2647,11 @@
   dependencies:
     invariant "^2.2.4"
 
+"@react-native-community/slider@^4.2.4":
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-4.2.4.tgz#8d88adceeb32f7997a122feba48d7186fca80346"
+  integrity sha512-uY51UoipQW4ELnFWMU6rTHRc4EUYaW+Z1O9Teijej6NYVYdUcUKq+t7WeBGjMAEc1ipyooMeBqRXToWO5zAU2Q==
+
 "@react-native-picker/picker@2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.0.tgz#7ca2e01a3bdf854ee01ca752762ffa73c0e83313"
@@ -3285,6 +3290,11 @@ balanced-match@^1.0.0:
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
+base-64@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/base-64/-/base-64-0.1.0.tgz#780a99c84e7d600260361511c4877613bf24f6bb"
+  integrity sha512-Y5gU45svrR5tI2Vt/X9GPd3L0HNIKzGu202EjxrXMpuc2V2CiKgemAbUUsqYmZJvPtCXoUKjNZwBJzsNScUbXA==
+
 base64-arraybuffer@~1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/base64-arraybuffer/-/base64-arraybuffer-1.0.1.tgz"
@@ -3470,6 +3480,14 @@ buffer@^5.5.0:
   dependencies:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
+
+buffer@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-6.0.3.tgz#2ace578459cc8fbe2a70aaa8f52ee63b6a74c6c6"
+  integrity sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==
+  dependencies:
+    base64-js "^1.3.1"
+    ieee754 "^1.2.1"
 
 builtins@^1.0.3:
   version "1.0.3"
@@ -5270,7 +5288,7 @@ iconv-lite@0.4.24:
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
-ieee754@^1.1.13:
+ieee754@^1.1.13, ieee754@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.2.1.tgz#8eb7a10a63fff25d15a57b001586d177d1b0d352"
   integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
@@ -5902,6 +5920,13 @@ jsesc@~0.5.0:
   version "0.5.0"
   resolved "https://registry.npmjs.org/jsesc/-/jsesc-0.5.0.tgz"
   integrity sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=
+
+jsmediatags@^3.9.7:
+  version "3.9.7"
+  resolved "https://registry.yarnpkg.com/jsmediatags/-/jsmediatags-3.9.7.tgz#808c6713b5ccb9712a4dc4b2149a0cb253c641a2"
+  integrity sha512-xCAO8C3li3t5hYkXqn8iv8zQQUB4T1QqRN2aSONHMls21ICdEvXi4xtb6W70/fAFYSDwMHd32hIqvo4YuXoNcQ==
+  dependencies:
+    xhr2 "^0.1.4"
 
 json-parse-better-errors@^1.0.1:
   version "1.0.2"
@@ -7476,6 +7501,14 @@ react-native-date-picker@^4.1.3:
   resolved "https://registry.npmjs.org/react-native-date-picker/-/react-native-date-picker-4.1.3.tgz"
   integrity sha512-ct1SR9LqQ9qczdKV4K/fWuV9wOVrlENMc3GyvwASP+obNbRid09OOJ6YHXIGx3B6CzZ1dAbzF++Jtxuo85XW8A==
 
+react-native-fs@^2.20.0:
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.20.0.tgz#05a9362b473bfc0910772c0acbb73a78dbc810f6"
+  integrity sha512-VkTBzs7fIDUiy/XajOSNk0XazFE9l+QlMAce7lGuebZcag5CnjszB+u4BdqzwaQOdcYb5wsJIsqq4kxInIRpJQ==
+  dependencies:
+    base-64 "^0.1.0"
+    utf8 "^3.0.0"
+
 react-native-gesture-handler@~2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.2.1.tgz#672258aa5a40c92a97c736bdde0a8bd6c8c6c692"
@@ -8974,6 +9007,11 @@ use@^3.1.0:
   resolved "https://registry.npmjs.org/use/-/use-3.1.1.tgz"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
 
+utf8@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/utf8/-/utf8-3.0.0.tgz#f052eed1364d696e769ef058b183df88c87f69d1"
+  integrity sha512-E8VjFIQ/TyQgp+TZfS6l8yp/xWppSAHzidGiRrqe4bK4XP9pTRyKFgGJpO3SN7zdX4DeomTrwaseCHovfpFcqQ==
+
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
@@ -9212,6 +9250,11 @@ xcode@^3.0.0, xcode@^3.0.1:
   dependencies:
     simple-plist "^1.1.0"
     uuid "^7.0.3"
+
+xhr2@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/xhr2/-/xhr2-0.1.4.tgz#7f87658847716db5026323812f818cadab387a5f"
+  integrity sha512-3QGhDryRzTbIDj+waTRvMBe8SyPhW79kz3YnNb+HQt/6LPYQT3zT3Jt0Y8pBofZqQX26x8Ecfv0FXR72uH5VpA==
 
 xml2js@0.4.23:
   version "0.4.23"

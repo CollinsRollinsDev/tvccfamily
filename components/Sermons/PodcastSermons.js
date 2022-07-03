@@ -8,6 +8,7 @@ const PodcastSermons = ({ navigation }) => {
   const [items, setItems] = React.useState([
     {
       name: "Get all avaliable podcast sermons",
+    //   path: "Player",
       path: "GetPodcasts",
     },
     { name: "Add A Podcast Sermon", path: "AddPodcastSermon" },
